@@ -147,18 +147,11 @@ private static IBlockState getState(BlockPos pos) {
         }
 
 
-        /**
-
         boolean checkForLiquid() {
         return getGroundPosY(true) == -999.0;
         }
 
-        /**
-         * Get the height of the ground surface below, and check for liquid if [checkLiquid] is true
-         *
-         * @return The y position of the ground surface, -999.0 if found liquid below and [checkLiquid]
-
-
+ 
         double getGroundPosY(boolean checkLiquid) {
         AxisAlignedBB boundingBox = mc.player.boundingBox;
         double yOffset = mc.player.posY - boundingBox.minY;
@@ -190,10 +183,7 @@ private static IBlockState getState(BlockPos pos) {
         return mc.world.getBlockState(pos).getBlock() == Blocks.WATER;
         }
 
-        /**
-         * Checks if given [pos] is able to place block in it
-         *
-
+ 
         boolean isPlaceable(BlockPos pos) {
         AxisAlignedBB bBox = mc.player.boundingBox;
             int[] xArray = new int[]{(int) Math.floor(bBox.minX), (int) Math.floor(bBox.maxX)};
@@ -212,10 +202,7 @@ private static IBlockState getState(BlockPos pos) {
         return mc.world.isAirBlock(pos) && !mc.world.isAirBlock(pos.down());
         }
 
-        /**
-         * Checks if given [pos] is able to chest (air above) block in it
-         *
-
+   
         boolean isPlaceableForChest(BlockPos pos) {
         return isPlaceable(pos) && mc.world.isAirBlock(pos.up());
         }

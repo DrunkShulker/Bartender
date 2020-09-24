@@ -1,5 +1,6 @@
 package com.drunkshulker.bartender.client.input;
 
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 
 import com.drunkshulker.bartender.Bartender;
@@ -58,18 +59,21 @@ public class Keybinds
         endTasks = new KeyBinding("End all tasks", Keyboard.KEY_END, Bartender.NAME);
         ClientRegistry.registerKeyBinding(endTasks);
 
-        hotkeyCommand[0] = new KeyBinding("Command 1", Keyboard.KEY_NUMPAD1, Bartender.NAME);
-        hotkeyCommand[1] = new KeyBinding("Command 2", Keyboard.KEY_NUMPAD2, Bartender.NAME);
-        hotkeyCommand[2] = new KeyBinding("Command 3", Keyboard.KEY_NUMPAD3, Bartender.NAME);
-        hotkeyCommand[3] = new KeyBinding("Command 4", Keyboard.KEY_NUMPAD4, Bartender.NAME);
-        hotkeyCommand[4] = new KeyBinding("Command 5", Keyboard.KEY_NUMPAD5, Bartender.NAME);   
-        hotkeyCommand[5] = new KeyBinding("Command 6", Keyboard.KEY_NUMPAD6, Bartender.NAME);
-        hotkeyCommand[6] = new KeyBinding("Command 7", Keyboard.KEY_NUMPAD7, Bartender.NAME);
-        hotkeyCommand[7] = new KeyBinding("Command 8", Keyboard.KEY_NUMPAD8, Bartender.NAME);
-        hotkeyCommand[8] = new KeyBinding("Command 9", Keyboard.KEY_NUMPAD9, Bartender.NAME);
-        
+        hotkeyCommand[0] = new KeyBinding("Command 1", Keyboard.KEY_NONE, Bartender.NAME);
+        hotkeyCommand[1] = new KeyBinding("Command 2", Keyboard.KEY_NONE, Bartender.NAME);
+        hotkeyCommand[2] = new KeyBinding("Command 3", Keyboard.KEY_NONE, Bartender.NAME);
+        hotkeyCommand[3] = new KeyBinding("Command 4", Keyboard.KEY_NONE, Bartender.NAME);
+        hotkeyCommand[4] = new KeyBinding("Command 5", Keyboard.KEY_NONE, Bartender.NAME);
+        hotkeyCommand[5] = new KeyBinding("Command 6", Keyboard.KEY_NONE, Bartender.NAME);
+        hotkeyCommand[6] = new KeyBinding("Command 7", Keyboard.KEY_NONE, Bartender.NAME);
+        hotkeyCommand[7] = new KeyBinding("Command 8", Keyboard.KEY_NONE, Bartender.NAME);
+        hotkeyCommand[8] = new KeyBinding("Command 9", Keyboard.KEY_NONE, Bartender.NAME);
+
         for (int i = 0; i < 9; i++) {
         	ClientRegistry.registerKeyBinding(hotkeyCommand[i]);
 		}
+
     }
+
+
 }

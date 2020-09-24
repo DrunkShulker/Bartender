@@ -3,6 +3,7 @@ package com.drunkshulker.bartender.client.gui.overlaygui;
 import com.drunkshulker.bartender.client.input.Keybinds;
 import com.drunkshulker.bartender.client.module.EntityRadar;
 import com.drunkshulker.bartender.util.Config;
+import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.opengl.GL11;
 
 import com.drunkshulker.bartender.Bartender;
@@ -31,17 +32,25 @@ public class OverlayGui extends Gui
 	static long lastPopupMessage = 0;
 	static String lastTargetedEnemy = "";
 
+    
+    
+    
+
+	public static String lastGuiAction = "";
+	public static long lastGuiActionStamp = System.currentTimeMillis();
 
     public OverlayGui(Minecraft mc)
     {
         ScaledResolution scaled = new ScaledResolution(mc);
         int width = scaled.getScaledWidth();
         int height = scaled.getScaledHeight();
+
         
-        
+		if (mc.currentScreen==null&&GuiHandler.showBindInfo&&System.currentTimeMillis()-lastGuiActionStamp<1700) drawCenteredString(mc.fontRenderer, lastGuiAction, width / 2, (height / 2) + 36, Integer.parseInt("FFFFFF", 16));
+
+		
 		if(Bodyguard.enabled&&BaseFinder.enabled){
 			drawCenteredString(mc.fontRenderer, "ERROR: YOU CANNOT HAVE BASEFINDER AND BODYGUARD ENABLED AT THE SAME TIME", width / 2, (height / 2) - 25, Integer.parseInt("FF0000", 16));
-
 		}
         else if(ChatObserver.partyTPA)
         	drawCenteredString(mc.fontRenderer, "Party TPA enabled", width / 2, (height / 2) - 25, Integer.parseInt("FF0000", 16));

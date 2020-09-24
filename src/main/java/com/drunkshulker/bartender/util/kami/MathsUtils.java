@@ -3,7 +3,6 @@ package com.drunkshulker.bartender.util.kami;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 
-
 public class MathsUtils {
 
     public static BlockPos mcPlayerPosFloored(Minecraft mc) {

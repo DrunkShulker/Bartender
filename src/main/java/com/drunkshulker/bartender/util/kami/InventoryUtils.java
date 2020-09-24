@@ -11,12 +11,10 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-
-
 public class InventoryUtils {
     private Minecraft mc = Minecraft.getMinecraft();
 
-
+   
     public ArrayList<Integer> getSlots(int min, int max, int itemID) {
         ArrayList<Integer> slots = new ArrayList<>();
         for(int i = min; i <= max; i++) {
@@ -29,7 +27,7 @@ public class InventoryUtils {
         else return null;
     }
 
-
+ 
     public ArrayList<Integer> getSlotsHotbar(int itemId) {
         return getSlots(0, 8, itemId);
     }
@@ -71,7 +69,6 @@ public class InventoryUtils {
         return currentCount;
     }
 
-
     public boolean inProgress = false;
 
 
@@ -79,7 +76,6 @@ public class InventoryUtils {
         mc.player.inventory.currentItem = slot;
         
     }
-
 
     public void swapSlotToItem(int itemID) {
         if (getSlotsHotbar(itemID) != null) {
@@ -92,7 +88,7 @@ public class InventoryUtils {
         mc.playerController.windowClick(mc.player.inventoryContainer.windowId, slot, 0, type, mc.player);
     }
 
-
+  
     public void moveToHotbar(int itemID, int exceptionID, long delayMillis) {
     	ArrayList<Integer> gsfinh = getSlotsFullInvNoHotbar(itemID);
     	if(gsfinh==null) return;
@@ -113,7 +109,6 @@ public class InventoryUtils {
         }
         moveToSlot(slot1, slot2, delayMillis);
     }
-
 
     public void moveToSlot(int slotFrom, int slotTo, long delayMillis) {
         if (inProgress) return;
@@ -151,7 +146,7 @@ public class InventoryUtils {
 	    thread.start();
     }
 
- 
+  
     public void moveAllToSlot(int slotFrom, int slotTo, long delayMillis) {
         if (inProgress) return;
         Thread thread = new Thread(){

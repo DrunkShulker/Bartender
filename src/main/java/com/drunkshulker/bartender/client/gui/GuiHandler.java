@@ -29,6 +29,7 @@ public class GuiHandler {
 	public static boolean showTooltips = true;
 	public static boolean txtHpAndFood = false;
 	public static boolean showTargetListing = true;
+	public static boolean showBindInfo = true;
 
 	public static int currentTheme = 0;
 
@@ -60,7 +61,6 @@ public class GuiHandler {
 			if(mc.player.getHealth()==20&&!showHP)
 			event.setCanceled(true);
 		}
-
     }
 	
 	@SubscribeEvent
@@ -125,6 +125,8 @@ public class GuiHandler {
 				break;
 			case "dimmed":
 				showDimmed = setting.value==0;
+			case "bind info":
+				showBindInfo = setting.value==0;
 			case "watermark":
 				String val = setting.values.get(setting.value).getAsString();
 				if(val.equals("show")) {

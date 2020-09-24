@@ -2,7 +2,6 @@ package com.drunkshulker.bartender.util.kami;
 
 import com.google.gson.annotations.SerializedName;
 
-
 public class CoordinateInfo {
     @SerializedName("position")
     public Coordinate xyz;

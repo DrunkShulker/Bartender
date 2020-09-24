@@ -3,11 +3,14 @@ package com.drunkshulker.bartender.client.gui;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGui;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiPanel;
+import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
+import com.drunkshulker.bartender.client.input.Keybinds;
 import com.drunkshulker.bartender.util.AssetLoader;
 import com.drunkshulker.bartender.util.Config;
 import com.google.gson.Gson;
@@ -21,7 +24,9 @@ public class GuiConfig {
 	public static JsonObject config;
 	final static String FILENAME = "bartender-gui.json";
 	public static boolean usingDefaultConfig = false;
-	
+
+	public static HashMap<String, Integer> guiBinds;
+
 	public static void save() {
 		
 		config = new JsonObject();
@@ -55,6 +60,9 @@ public class GuiConfig {
 	}
 	
 	public static void load() {
+		if(guiBinds==null) guiBinds = new HashMap<>();
+		guiBinds.clear();
+
 		File f = new File(Bartender.BARTENDER_DIR+"/"+FILENAME);
 		
 		if(Config.DEBUG_IGNORE_SAVES) {
@@ -108,5 +116,72 @@ public class GuiConfig {
 		
 		ClickGuiPanel[] itemsArray = new ClickGuiPanel[temp.size()];
         return temp.toArray(itemsArray);
+	}
+
+	public static JsonObject getPanelByName(String panelName) {
+		if(config==null) load();
+
+		JsonArray array = config.get("click_gui").getAsJsonArray();
+		List<JsonObject> temp = new ArrayList<>();
+
+		array.forEach((elem) ->
+		{
+			if (elem.isJsonObject())
+			{
+				if(elem.getAsJsonObject().get("name").getAsString().equals(panelName)) {
+					temp.add(elem.getAsJsonObject());
+
+				}
+			}
+		});
+		if(temp.isEmpty())return null;
+		else return temp.get(0);
+	}
+
+	public static void bindKey(String currentEditingBind, int keyCode) {
+		if(config==null) load();
+
+		GuiConfig.guiBinds.remove(currentEditingBind);
+		GuiConfig.guiBinds.put(currentEditingBind, keyCode);
+
+		String panelName;
+		String[] l = currentEditingBind.split("->");
+		panelName = l[0];
+
+		JsonArray array = config.get("click_gui").getAsJsonArray();
+		JsonArray temp = new JsonArray();
+
+		ClickGuiSetting s = ClickGuiSetting.fromString(currentEditingBind);
+		if(s!=null) s.keyBind = keyCode;
+
+		array.forEach((elem) ->
+		{
+			if (elem.isJsonObject())
+			{
+				if(elem.getAsJsonObject().get("name").getAsString().equals(panelName)) {
+					elem.getAsJsonObject().addProperty("bind",keyCode);
+				}
+			}
+			temp.add(elem.getAsJsonObject());
+		});
+
+		config.add("click_gui",temp);
+		save();
+	}
+
+	public static JsonObject getSettingByName(JsonArray array, String name) {
+		List<JsonObject> temp = new ArrayList<>();
+
+		array.forEach((elem) ->
+		{
+			if (elem.isJsonObject())
+			{
+				if(elem.getAsJsonObject().get("title").getAsString().equals(name)) {
+					temp.add(elem.getAsJsonObject());
+				}
+			}
+		});
+		if(temp.isEmpty())return null;
+		else return temp.get(0);
 	}
 }

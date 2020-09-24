@@ -784,7 +784,6 @@ public class Bodyguard {
 		if(senderName.equals(PlayerGroup.mainAccount)){
 			lastKnownProtectedLocation=blockPos;
 		}
-		
 	}
 
 	static long lastAskedTpStamp = 0;

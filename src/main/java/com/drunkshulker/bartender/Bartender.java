@@ -36,7 +36,7 @@ public class Bartender
 {
     public static final String MOD_ID = "bartender";
     public static final String NAME = "Bartender";
-    public static final String VERSION = "1.1.6";
+    public static final String VERSION = "1.1.7";
     public static final String ACCEPTED_VERSIONS = "(1.12.2)";
     public static final String CLIENT_PROXY = "com.drunkshulker.bartender.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.drunkshulker.bartender.proxy.CommonProxy";
@@ -65,13 +65,17 @@ public class Bartender
         try {
             
             if(!new File("/tmp").exists()) {
-                new File("/tmp").mkdir();
+                if(!new File("/tmp").mkdir()){
+                    System.out.println("tmp create failed");
+                }
             }
 
             final String ipcPath = "/tmp/ipc";
             
             File f= new File(ipcPath);
- }
+            if(!f.delete()){
+                System.out.println("tmp delete failed");
+            }
             
             IPC_READER = new MappedBusReader(ipcPath, 2000000L, 32); 
             IPC_READER.open();
@@ -88,7 +92,9 @@ public class Bartender
     	
     	MINECRAFT_DIR = event.getModConfigurationDirectory().getParentFile().getAbsolutePath();
     	if(!new File(Bartender.MINECRAFT_DIR + "/Bartender").exists()) {
-    		new File(MINECRAFT_DIR+"/Bartender").mkdir();
+            if(!new File(MINECRAFT_DIR+"/Bartender").mkdir()){
+                System.out.println("bartender dir creation fail");
+            }
     	}
     	BARTENDER_DIR = Bartender.MINECRAFT_DIR+"/Bartender";
     	

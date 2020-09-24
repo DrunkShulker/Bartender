@@ -14,8 +14,8 @@ public class AddEnemyMessage implements MappedBusMessage {
 
     public static final int TYPE = IPCHandler.ADD_ENEMY;
 
-    private int x,y,z; 
-    byte[] enemyName; 
+    private int x,y,z;
+    byte[] enemyName;
 
     public AddEnemyMessage() {}
 
@@ -68,24 +68,24 @@ public class AddEnemyMessage implements MappedBusMessage {
     }
 
     public void write(MemoryMappedFile mem, long pos) {
-        
+
         mem.putInt(pos, x);
         mem.putInt(pos + 4, y);
         mem.putInt(pos + 8, z);
         mem.putInt(pos + 12, enemyName.length);
-        
+
         mem.setBytes(pos + 16 , enemyName, 0, enemyName.length);
     }
 
     public void read(MemoryMappedFile mem, long pos) {
-        
+
         x = mem.getInt(pos);
         y = mem.getInt(pos + 4);
         z = mem.getInt(pos + 8);
 
         int bufferSize = mem.getInt(pos + 12);
 
-        
+
         enemyName = new byte[bufferSize];
         mem.getBytes(pos + 16 , enemyName, 0, enemyName.length);
     }

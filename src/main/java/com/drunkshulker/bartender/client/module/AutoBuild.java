@@ -36,7 +36,7 @@ public class AutoBuild {
 		}
 
 		BaritoneAPI.getProvider().getPrimaryBaritone().getBuilderProcess().build("Nether portal", schematicFile, playerPos);
-		
+
 	}
 	
 	public static void buildOpenSchematic() {

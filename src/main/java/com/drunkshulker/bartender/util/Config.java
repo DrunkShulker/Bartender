@@ -90,7 +90,6 @@ public class Config {
 			
 			
 			
-			
 		}
 		else
 		{
@@ -132,7 +131,6 @@ public class Config {
 		jsonObject.addProperty("chat_post_fix", CHAT_POST_FIX);
 
 
-		
 		
 		
 		

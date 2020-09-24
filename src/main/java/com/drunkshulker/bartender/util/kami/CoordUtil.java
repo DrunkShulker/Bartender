@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class CoordUtil {
     private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
     public static final String coordsLogFilename = "KAMIBlueCoords.json";
@@ -20,17 +19,6 @@ public class CoordUtil {
     public static Coordinate getCurrentCoord() {
         Minecraft mc = Minecraft.getMinecraft();
         return new Coordinate((int) mc.player.posX, (int) mc.player.posY, (int) mc.player.posZ);
-    }
-
-    public static Coordinate writePlayerCoords(String locationName) {
-        Coordinate coords = getCurrentCoord();
-        writeCoords(coords, locationName, coordsLogFilename);
-        return coords;
-    }
-
-    public static Coordinate writeCustomCoords(Coordinate xyz, String locationName) {
-        writeCoords(xyz, locationName, coordsLogFilename);
-        return xyz;
     }
 
     public static void writeCoords(Coordinate xyz, String locationName, String filename) {

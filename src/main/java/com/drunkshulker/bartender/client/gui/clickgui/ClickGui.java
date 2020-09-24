@@ -2,9 +2,9 @@ package com.drunkshulker.bartender.client.gui.clickgui;
 
 import java.io.IOException;
 
-import com.drunkshulker.bartender.Bartender;
-import com.drunkshulker.bartender.client.gui.clickgui.theme.GuiTheme;
-import com.drunkshulker.bartender.client.gui.clickgui.theme.GuiThemeDrunk;
+import com.drunkshulker.bartender.client.input.Keybinds;
+import com.google.gson.JsonObject;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import com.drunkshulker.bartender.client.gui.GuiConfig;
@@ -27,6 +27,7 @@ public class ClickGui extends GuiScreen{
 	
 	public static int dragBeginX = 0;
 	public static int dragBeginY = 0;
+	public static String currentEditingBind = null;
 	
 	public static ClickGuiPanel currentDraggable;
 
@@ -55,29 +56,67 @@ public class ClickGui extends GuiScreen{
 	    	GuiInventory.drawEntityOnScreen(width / 2, ey, size, mX , mY, mc.player);
 	    	GL11.glPopMatrix();
 		}
+
+		
+		if(currentEditingBind==null){
+			if(GuiScreen.isAltKeyDown()){
+				String bindWarning = "Middle click the setting you want to bind";
+				drawString(mc.fontRenderer,bindWarning,
+						width-mc.fontRenderer.getStringWidth(bindWarning)-2,
+						height-12,
+						Integer.parseInt("FFFFFF", 16));
+			}
+		}else{
+			String bindWarning = getBindName(currentEditingBind)+" ["+currentEditingBind+"]";
+			drawString(mc.fontRenderer,bindWarning,
+					width-mc.fontRenderer.getStringWidth(bindWarning)-2,
+					height-21,
+					Integer.parseInt("FFFFFF", 16));
+
+			String bindDelWarning = "Press any key to bind | Backspace to reset";
+			drawString(mc.fontRenderer,bindDelWarning,
+					width-mc.fontRenderer.getStringWidth(bindDelWarning)-2,
+					height-12,
+					Integer.parseInt("FFFFFF", 16));
+		}
+
     	drawPanels(mouseX, mouseY);
-    	
+
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	private void drawPanels(int mouseX, int mouseY) {
-		for (int i = 0; i < panels.length; i++) {
-			panels[i].draw(mouseX, mouseY);
+	private String getBindName(String bind) {
+		String panelName, settingName;
+		String[] l = currentEditingBind.split("->");
+		panelName = l[0];
+		settingName = l[1];
+
+		JsonObject j = GuiConfig.getPanelByName(panelName);
+		JsonObject s = GuiConfig.getSettingByName(j.get("contents").getAsJsonArray(), settingName);
+
+		if(s.has("bind")){
+			int b = s.get("bind").getAsInt();
+			if(b==0) return "";
+			else return b+"";
 		}
+
+		return "";
+	}
+
+	private void drawPanels(int mouseX, int mouseY) {
+		for (ClickGuiPanel panel : panels) {
+			panel.draw(mouseX, mouseY);
+		}
+
 		boolean hovered = false;
 		for (int i = panels.length-1; i >=0; i--) {
-			hovered = panels[i].listen(mouseX, mouseY, hovered);
+			hovered = panels[i].listen(mouseX, mouseY, hovered, GuiScreen.isAltKeyDown());
 		}
 	}
 
 	@Override
 	public void initGui() {
 		if(GuiConfig.usingDefaultConfig) resetLayout();
-		if(!Bartender.NAME.equals("Bartender")){
-			if(Minecraft.getMinecraft().player!=null){
-				Minecraft.getMinecraft().player.sendChatMessage(Bartender.NAME+" is just Bartender with name changed. I thought I would look cool but I'm just a newfag.");
-			}
-		}
 		super.initGui();
 	}
 	
@@ -88,12 +127,27 @@ public class ClickGui extends GuiScreen{
 	
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		if(keyCode==Keyboard.KEY_BACK){
+			
+			GuiConfig.bindKey(currentEditingBind, 0);
+			currentEditingBind=null;
+		}else if(keyCode==Keyboard.KEY_ESCAPE){
+			
+			currentEditingBind=null;
+		}else if(keyCode==Keyboard.KEY_LMENU||keyCode==Keyboard.KEY_RMENU){
+			
+		}else{
+			
+			if(currentEditingBind!=null){
+				GuiConfig.bindKey(currentEditingBind, keyCode);
+				currentEditingBind=null;
+			}
+		}
 		super.keyTyped(typedChar, keyCode);
 	}
 	
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-		
 		lastMouseKey = mouseButton;
 
 		if(mouseButton==1) {
@@ -130,7 +184,7 @@ public class ClickGui extends GuiScreen{
 		KeyInputHandler.guiMouseHold = false;
 		
 		GuiConfig.save();
-		
+		currentEditingBind = null;
 		super.onGuiClosed();
 	}
 
@@ -151,5 +205,5 @@ public class ClickGui extends GuiScreen{
 		
 		GuiConfig.save();
 	}
-	
+
 }

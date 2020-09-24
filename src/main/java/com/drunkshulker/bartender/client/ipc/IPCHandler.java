@@ -108,7 +108,6 @@ public class IPCHandler {
         }
         catch (EOFException e){}
     }
-
     
     public static void push(int ipcMessageCode, String text, int x, int y, int z){
         try {

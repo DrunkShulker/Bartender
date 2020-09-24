@@ -51,20 +51,19 @@ public class DimensionUpdateMessage implements MappedBusMessage {
     }
 
     public void write(MemoryMappedFile mem, long pos) {
-        
+
         mem.putInt(pos, x);
         mem.putInt(pos + 4, senderName.length);
-        
+
         mem.setBytes(pos + 8 , senderName, 0, senderName.length);
     }
 
     public void read(MemoryMappedFile mem, long pos) {
-        
+
         x = mem.getInt(pos);
 
         int bufferSize = mem.getInt(pos + 4);
 
-        
         senderName = new byte[bufferSize];
         mem.getBytes(pos + 8 , senderName, 0, senderName.length);
     }

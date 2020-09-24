@@ -44,7 +44,6 @@ public class SafeTotemSwap {
 	
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
-		
 		if(Minecraft.getMinecraft().player==null||Minecraft.getMinecraft().player.isDead) return;
 		if(!enabled
 				||Minecraft.getMinecraft().playerController.getCurrentGameType()==GameType.CREATIVE

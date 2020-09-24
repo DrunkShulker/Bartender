@@ -225,7 +225,7 @@ public class ChatObserver {
 		String m = "Im currently afk";
 		if(!message.contains(" whispers:") ||message.contains(m)) return;
 		Minecraft mc = Minecraft.getMinecraft();
-		if(mc.isGamePaused()) return; 
+		if(mc.isGamePaused()) return;
 		
 		for (String member : PlayerGroup.members) {
 			String predicate = member+" whispers:";

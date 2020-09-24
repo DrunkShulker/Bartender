@@ -3,6 +3,7 @@ package com.drunkshulker.bartender.client.gui.clickgui;
 import java.util.ArrayList;
 
 import com.drunkshulker.bartender.client.gui.GuiConfig;
+import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.util.Config;
 import com.drunkshulker.bartender.util.Preferences;
 import com.google.gson.JsonArray;
@@ -12,7 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 
 public class ClickGuiSetting {
-	
+
 	enum SettingType {
 			CLICK, 
 			CLICK_COMMAND, 
@@ -25,6 +26,7 @@ public class ClickGuiSetting {
 	public int value;
 	public JsonArray values;
 	public boolean closeOnClick;
+	public int keyBind = 0;
 	
 	
 	public int renderMinX=0, renderMinY=0, renderMaxX=0, renderMaxY=0;
@@ -46,6 +48,12 @@ public class ClickGuiSetting {
         return settings.toArray(i);
 	}
 
+	public static String getBindingCode(ClickGuiSetting setting, String title) {
+		if(setting.type == SettingType.CLICK_COMMAND) return null;
+		return title+"->"+setting.title;
+	}
+
+
 	private static ClickGuiSetting settingFromJson(JsonObject json, String pTitle) {
 		ClickGuiSetting setting = new ClickGuiSetting();
 		setting.title = json.get("title").getAsString();
@@ -61,10 +69,18 @@ public class ClickGuiSetting {
 		switch (json.get("type").getAsString()) {
 		case "text":
 			setting.type = SettingType.TEXT;
+			if(json.has("bind")){
+				setting.keyBind = json.get("bind").getAsInt();
+				GuiConfig.guiBinds.put(pTitle+"->"+setting.title, setting.keyBind);
+			}
 			break;
 		case "click":	
 			setting.type = SettingType.CLICK;
 			setting.closeOnClick = json.get("closeOnClick").getAsBoolean();
+			if(json.has("bind")){
+				setting.keyBind = json.get("bind").getAsInt();
+				GuiConfig.guiBinds.put(pTitle+"->"+setting.title, setting.keyBind);
+			}
 			break;
 		case "clickCommand":	
 			setting.type = SettingType.CLICK_COMMAND;
@@ -73,7 +89,6 @@ public class ClickGuiSetting {
 		default:		
 			break;
 		}
-		
 
 		if(setting.type==SettingType.TEXT) {
 			setting.value = json.get("value").getAsInt();
@@ -87,7 +102,8 @@ public class ClickGuiSetting {
 		JsonObject obj = new JsonObject();
 		
 		obj.addProperty("title", title);
-		
+		obj.addProperty("bind", keyBind);
+
 		JsonArray descs = new JsonArray();
 		for (String s : desc) {
 			descs.add(s);
@@ -114,45 +130,69 @@ public class ClickGuiSetting {
 		
 		return obj;
 	}
-	
+
 	public static void handleClick(ClickGuiSetting setting, boolean middleClick) {
+		if(setting==null) return;
 		switch (setting.type) {
 		case TEXT:
 			if(middleClick){
 				if(setting.value<=0) setting.value = setting.values.size()-1;
 				else setting.value--;
-
 			}else {
 				if(setting.value>=setting.values.size()-1) setting.value = 0;
 				else setting.value++;
-
 			}
 			
 			Preferences.apply();
 			break;
-
 		case CLICK:
 			
-			Preferences.execute(setting);
+			if(!middleClick) Preferences.execute(setting);
 			
-			if(setting.closeOnClick) {
+			if(setting.closeOnClick&&!middleClick) {
 				Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
 			}
 			break;
 		case CLICK_COMMAND:
-			Minecraft.getMinecraft().player.sendChatMessage(Config.HOTKEY_COMMANDS[Integer.parseInt(setting.title)]);
+			if(!middleClick) Minecraft.getMinecraft().player.sendChatMessage(Config.HOTKEY_COMMANDS[Integer.parseInt(setting.title)]);
 			
-			if(setting.closeOnClick) {
+			if(setting.closeOnClick&&!middleClick) {
 				Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
 			}
-
 			break;
 		default:
 			System.out.println("handleClick() unexpected default case!");
 			return;
 		}
 
+		if(setting.type==SettingType.TEXT) {
+			OverlayGui.lastGuiAction = setting.panelTitle+"->"+setting.title+": "+setting.values.get(setting.value).getAsString();
+			OverlayGui.lastGuiActionStamp = System.currentTimeMillis();
+		} else {
+			OverlayGui.lastGuiAction = setting.panelTitle+"->"+setting.title;
+			OverlayGui.lastGuiActionStamp = System.currentTimeMillis();
+		}
+
 		
 		GuiConfig.save();
 	}
+
+	public static ClickGuiSetting fromString(String key) {
+		String panelName, settingName;
+		String[] l = key.split("->");
+		panelName = l[0];
+		settingName = l[1];
+
+		for (ClickGuiPanel panel:ClickGui.panels) {
+			if(panelName.equals(panel.title)){
+				for (ClickGuiSetting setting:panel.contents) {
+					if(setting.title.equals(settingName)){
+						return setting;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 }

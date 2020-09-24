@@ -146,6 +146,18 @@
 					]
 				},
 				{
+					"title": "bind info",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"ON",
+						"OFF"
+					],
+					"desc": [
+						"SHOW BIND SETTING WHEN PRESSED"
+					]
+				},
+				{
 					"title": "watermark",
 					"type": "text",
 					"value": 0,

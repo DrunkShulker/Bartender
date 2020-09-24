@@ -71,6 +71,13 @@ public class Tracers {
 			}
 		}
 
+		
+
+
+
+
+		
+
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopAttrib();
 		GL11.glPopMatrix();

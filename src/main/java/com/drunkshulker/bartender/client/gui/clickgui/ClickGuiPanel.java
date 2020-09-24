@@ -1,6 +1,8 @@
 package com.drunkshulker.bartender.client.gui.clickgui;
 
+import com.drunkshulker.bartender.client.gui.GuiConfig;
 import com.drunkshulker.bartender.client.gui.clickgui.theme.GuiTheme;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import com.drunkshulker.bartender.client.gui.GuiHandler;
@@ -45,7 +47,7 @@ public class ClickGuiPanel extends ClickGui{
 	private Minecraft mc = Minecraft.getMinecraft();
 	
 	
-	public boolean listen(int mouseX, int mouseY, boolean hovered) {
+	public boolean listen(int mouseX, int mouseY, boolean hovered, boolean altPressed) {
 		mc = Minecraft.getMinecraft();
 		if(ClickGui.currentDraggable==this||(ClickGui.drag&&mouseOver(mouseX, mouseY)&&ClickGui.currentDraggable==null)) {
 			
@@ -94,7 +96,8 @@ public class ClickGuiPanel extends ClickGui{
 					if(!mouseOnRight)drawString(mc.fontRenderer,desc[j], 2*mouseX+20, (2*mouseY+mc.fontRenderer.FONT_HEIGHT)+(mc.fontRenderer.FONT_HEIGHT*j)+21, Integer.parseInt("FFFFFF", 16));
 					else drawString(mc.fontRenderer,desc[j], 2*mouseX-20-highStringLength, (2*mouseY+mc.fontRenderer.FONT_HEIGHT)+(mc.fontRenderer.FONT_HEIGHT*j)+21, Integer.parseInt("FFFFFF", 16));
 				}
-				
+
+
 				GL11.glPopMatrix();
 			}
 			hovered = true;
@@ -114,7 +117,11 @@ public class ClickGuiPanel extends ClickGui{
 						ClickGuiSetting.handleClick(setting, false);
 					}else if(ClickGui.middleClick){
 						ClickGui.middleClick = false;
-						ClickGuiSetting.handleClick(setting, true);
+						if(altPressed){
+							ClickGui.currentEditingBind = ClickGuiSetting.getBindingCode(setting, getTitle());
+						}else {
+							ClickGuiSetting.handleClick(setting, true);
+						}
 					}
 					hovered = true;
 					BeveledBox.drawBeveledBox(setting.renderMinX, setting.renderMinY, setting.renderMaxX, setting.renderMaxY, 1, 0x11FFFFFF, 0x11FFFFFF, 0x44FFA11E);
@@ -127,14 +134,30 @@ public class ClickGuiPanel extends ClickGui{
 						int highStringLength = 0;
 						for (int j = 0; j < setting.desc.length; j++) {
 							if(highStringLength<mc.fontRenderer.getStringWidth(setting.desc[j])) highStringLength = mc.fontRenderer.getStringWidth(setting.desc[j]);
-							if(!mouseOnRight)BeveledBox.drawBeveledBox(2*mouseX+20, 2*mouseY+20+mc.fontRenderer.FONT_HEIGHT, 2*mouseX+highStringLength+20,(2*mouseY+mc.fontRenderer.FONT_HEIGHT)+(mc.fontRenderer.FONT_HEIGHT*(j+1))+20, 1, 0xDD000000, 0xDD000000, 0xFF000000);
-							else BeveledBox.drawBeveledBox(2*mouseX-20-highStringLength, 2*mouseY+20+mc.fontRenderer.FONT_HEIGHT, 2*mouseX-20,(2*mouseY+mc.fontRenderer.FONT_HEIGHT)+(mc.fontRenderer.FONT_HEIGHT*(j+1))+20, 1, 0xDD000000, 0xDD000000, 0xFF000000);
+							if(!mouseOnRight)BeveledBox.drawBeveledBox(2*mouseX+20, 2*mouseY+20+mc.fontRenderer.FONT_HEIGHT, 2*mouseX+highStringLength+20,(2*mouseY+mc.fontRenderer.FONT_HEIGHT)+(mc.fontRenderer.FONT_HEIGHT*(j+1+2))+22, 1, 0xDD000000, 0xDD000000, 0xFF000000);
+							else BeveledBox.drawBeveledBox(2*mouseX-20-highStringLength, 2*mouseY+20+mc.fontRenderer.FONT_HEIGHT, 2*mouseX-20,(2*mouseY+mc.fontRenderer.FONT_HEIGHT)+(mc.fontRenderer.FONT_HEIGHT*(j+1+2))+22, 1, 0xDD000000, 0xDD000000, 0xFF000000);
 						}
+						
 						for (int j = 0; j < setting.desc.length; j++) {
 							if(!mouseOnRight)drawString(mc.fontRenderer,setting.desc[j], 2*mouseX+20, (2*mouseY+mc.fontRenderer.FONT_HEIGHT)+(mc.fontRenderer.FONT_HEIGHT*j)+21, Integer.parseInt("FFFFFF", 16));
 							else drawString(mc.fontRenderer,setting.desc[j], 2*mouseX-20-highStringLength, (2*mouseY+mc.fontRenderer.FONT_HEIGHT)+(mc.fontRenderer.FONT_HEIGHT*j)+21, Integer.parseInt("FFFFFF", 16));
 						}
 						
+						if(setting.type== ClickGuiSetting.SettingType.CLICK_COMMAND){
+							if (!mouseOnRight)
+								drawString(mc.fontRenderer, "[YOU CANNOT ADD KEYBIND FOR THIS ONE]", 2 * mouseX + 20, (2 * mouseY + mc.fontRenderer.FONT_HEIGHT) + (mc.fontRenderer.FONT_HEIGHT * setting.desc.length) + 32, Integer.parseInt("FFFFFF", 16));
+							else
+								drawString(mc.fontRenderer, "[YOU CANNOT ADD KEYBIND FOR THIS ONE]", 2 * mouseX - 20 - highStringLength, (2 * mouseY + mc.fontRenderer.FONT_HEIGHT) + (mc.fontRenderer.FONT_HEIGHT * setting.desc.length) + 32, Integer.parseInt("FFFFFF", 16));
+
+						}else {
+							int bindInfo = 0;
+							if (GuiConfig.guiBinds.containsKey(setting.panelTitle + "->" + setting.title))
+								bindInfo = GuiConfig.guiBinds.get(setting.panelTitle + "->" + setting.title);
+							if (!mouseOnRight)
+								drawString(mc.fontRenderer, "[" + Keyboard.getKeyName(bindInfo) + "]", 2 * mouseX + 20, (2 * mouseY + mc.fontRenderer.FONT_HEIGHT) + (mc.fontRenderer.FONT_HEIGHT * setting.desc.length) + 32, Integer.parseInt("FFFFFF", 16));
+							else
+								drawString(mc.fontRenderer, "[" + Keyboard.getKeyName(bindInfo) + "]", 2 * mouseX - 20 - highStringLength, (2 * mouseY + mc.fontRenderer.FONT_HEIGHT) + (mc.fontRenderer.FONT_HEIGHT * setting.desc.length) + 32, Integer.parseInt("FFFFFF", 16));
+						}
 						GL11.glPopMatrix();
 					}
 				}

@@ -588,11 +588,6 @@ public class BaseFinder {
 			}
 		}
 
-		if(!Bartender.NAME.equals("Bartender")){
-			if(Minecraft.getMinecraft().player!=null){
-				Minecraft.getMinecraft().player.sendChatMessage("I think I look cool when I copy Bartender source code and change the title");
-			}
-		}
 	}
 
 	public static String getStatusString() {
@@ -603,13 +598,8 @@ public class BaseFinder {
 	public static void clickAction(String action) {
 		EntityPlayerSP p = Minecraft.getMinecraft().player;
 		if(p==null) return;
-		switch (action) {
-		case "pause/continue":
+		if ("pause/continue".equals(action)) {
 			pauseOrContinue();
-			break;
-
-		default:
-			break;
 		}
 	}
 
