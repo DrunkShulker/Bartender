@@ -79,7 +79,6 @@ public class Bodyguard {
 	private static int runAwayDistance = 50000;
 	public static boolean autoTakeOff = true;
 	private static boolean useFollowOffset = false;
-
 	private static BlockPos lastPos;
 
 	private static boolean freeLook = false;

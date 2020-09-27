@@ -20,7 +20,7 @@ public class ClickOnEntity {
     private static long lastClickStamp=-1;
     @SubscribeEvent
     public void onMouseInput(InputEvent.MouseInputEvent event) {
-
+            if(!PlayerGroup.useClickEntity) return;
             Minecraft mc = Minecraft.getMinecraft();
             
             if (Mouse.getEventButton() == 0) { 

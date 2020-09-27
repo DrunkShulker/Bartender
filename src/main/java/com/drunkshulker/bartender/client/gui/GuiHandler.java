@@ -19,7 +19,7 @@ public class GuiHandler {
 	
 	public static boolean showAP = false;
 	public static boolean showHP = false;
-	public static boolean showTots = true;
+	public static boolean showSafetotem = true;
 	public static boolean showBinds = true;
 	public static boolean showGroup = true;
 	public static boolean showDimmed = true;
@@ -114,8 +114,8 @@ public class GuiHandler {
 			case "draw player":
 				showPlayer = setting.value==0;
 				break;
-			case "tot count":
-				showTots = setting.value==1;
+			case "safe totem":
+				showSafetotem = setting.value==1;
 				break;
 			case "tooltips":
 				showTooltips = setting.value==0;

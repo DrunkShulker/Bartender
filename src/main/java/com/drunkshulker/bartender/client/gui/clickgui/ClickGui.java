@@ -2,6 +2,7 @@ package com.drunkshulker.bartender.client.gui.clickgui;
 
 import java.io.IOException;
 
+import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.input.Keybinds;
 import com.google.gson.JsonObject;
 import org.lwjgl.input.Keyboard;
@@ -185,6 +186,7 @@ public class ClickGui extends GuiScreen{
 		
 		GuiConfig.save();
 		currentEditingBind = null;
+		OverlayGui.lastGuiActionStamp-=5000;
 		super.onGuiClosed();
 	}
 

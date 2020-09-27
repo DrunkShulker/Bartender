@@ -34,7 +34,9 @@ public class SafeTotemSwap {
 	static long lastSwapStamp = operationIntervalMillis;
 	public static NearDeathBehavior nearDeathBehavior;
 	public static int totalUselessCount=0;
+
 	final static int totID = Item.getIdFromItem(Items.TOTEM_OF_UNDYING);
+
 	enum NearDeathBehavior{	
 		NONE,
 		DISCONNECT,

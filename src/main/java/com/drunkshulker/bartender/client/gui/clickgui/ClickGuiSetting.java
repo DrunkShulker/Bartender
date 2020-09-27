@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.drunkshulker.bartender.client.gui.GuiConfig;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
+import com.drunkshulker.bartender.client.module.BaseFinder;
 import com.drunkshulker.bartender.util.Config;
 import com.drunkshulker.bartender.util.Preferences;
 import com.google.gson.JsonArray;
@@ -135,6 +136,12 @@ public class ClickGuiSetting {
 		if(setting==null) return;
 		switch (setting.type) {
 		case TEXT:
+			
+			
+			if(BaseFinder.enabled&&setting.panelTitle.equals("base finder")&&setting.title.equals("travel")){
+				ClickGuiSetting.handleClick(ClickGuiSetting.fromString("base finder->state"), false);
+			}
+			
 			if(middleClick){
 				if(setting.value<=0) setting.value = setting.values.size()-1;
 				else setting.value--;
@@ -148,17 +155,11 @@ public class ClickGuiSetting {
 		case CLICK:
 			
 			if(!middleClick) Preferences.execute(setting);
-			
-			if(setting.closeOnClick&&!middleClick) {
-				Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
-			}
+
 			break;
 		case CLICK_COMMAND:
 			if(!middleClick) Minecraft.getMinecraft().player.sendChatMessage(Config.HOTKEY_COMMANDS[Integer.parseInt(setting.title)]);
-			
-			if(setting.closeOnClick&&!middleClick) {
-				Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
-			}
+
 			break;
 		default:
 			System.out.println("handleClick() unexpected default case!");
@@ -171,6 +172,13 @@ public class ClickGuiSetting {
 		} else {
 			OverlayGui.lastGuiAction = setting.panelTitle+"->"+setting.title;
 			OverlayGui.lastGuiActionStamp = System.currentTimeMillis();
+		}
+
+		if(setting.type!=SettingType.TEXT){
+			
+			if(setting.closeOnClick&&!middleClick) {
+				Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
+			}
 		}
 
 		

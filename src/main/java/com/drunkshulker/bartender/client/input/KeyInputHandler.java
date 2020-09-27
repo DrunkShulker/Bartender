@@ -29,7 +29,7 @@ public class KeyInputHandler
 		for(Map.Entry<String, Integer> entry : GuiConfig.guiBinds.entrySet()) {
 			String key = entry.getKey();
 			Integer value = entry.getValue();
-
+			if(value==0) continue;
 			if(Keyboard.isKeyDown(value)){
 				ClickGuiSetting.handleClick(ClickGuiSetting.fromString(key), false);
 			}

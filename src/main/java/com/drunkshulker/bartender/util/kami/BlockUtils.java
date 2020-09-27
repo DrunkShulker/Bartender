@@ -12,10 +12,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class BlockUtils {
 
-    public static Block[] blackList = new Block[]{
+    public static ArrayList<Block> blackList = new ArrayList<Block>(Arrays.asList(
             Blocks.ENDER_CHEST,
             Blocks.CHEST,
             Blocks.TRAPPED_CHEST,
@@ -27,9 +30,9 @@ public class BlockUtils {
             Blocks.DISPENSER,
             Blocks.TRAPDOOR,
             Blocks.ENCHANTING_TABLE
-    };
+    ));
 
-    public static Block[] shulkerList = new Block[]{
+    public static ArrayList<Block> shulkerList = new ArrayList<Block>(Arrays.asList(
             Blocks.WHITE_SHULKER_BOX,
             Blocks.ORANGE_SHULKER_BOX,
             Blocks.MAGENTA_SHULKER_BOX,
@@ -46,7 +49,7 @@ public class BlockUtils {
             Blocks.GREEN_SHULKER_BOX,
             Blocks.RED_SHULKER_BOX,
             Blocks.BLACK_SHULKER_BOX
-    };
+    ));
 
 
     public static BlockPos[] surroundOffset = new BlockPos[]{
@@ -147,11 +150,12 @@ private static IBlockState getState(BlockPos pos) {
         }
 
 
+
         boolean checkForLiquid() {
         return getGroundPosY(true) == -999.0;
         }
 
- 
+
         double getGroundPosY(boolean checkLiquid) {
         AxisAlignedBB boundingBox = mc.player.boundingBox;
         double yOffset = mc.player.posY - boundingBox.minY;
@@ -183,7 +187,7 @@ private static IBlockState getState(BlockPos pos) {
         return mc.world.getBlockState(pos).getBlock() == Blocks.WATER;
         }
 
- 
+
         boolean isPlaceable(BlockPos pos) {
         AxisAlignedBB bBox = mc.player.boundingBox;
             int[] xArray = new int[]{(int) Math.floor(bBox.minX), (int) Math.floor(bBox.maxX)};
@@ -202,7 +206,7 @@ private static IBlockState getState(BlockPos pos) {
         return mc.world.isAirBlock(pos) && !mc.world.isAirBlock(pos.down());
         }
 
-   
+
         boolean isPlaceableForChest(BlockPos pos) {
         return isPlaceable(pos) && mc.world.isAirBlock(pos.up());
         }

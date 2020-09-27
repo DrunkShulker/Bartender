@@ -24,6 +24,7 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new IPCHandler());
         MinecraftForge.EVENT_BUS.register(new AutoLight());
         MinecraftForge.EVENT_BUS.register(new Scaffold());
+        MinecraftForge.EVENT_BUS.register(new AutoSpawn());
         
 	}
 }

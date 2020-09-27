@@ -27,6 +27,7 @@ public class PlayerGroup {
 	public static boolean groupAcceptTpa = false;
 	public static boolean groupAcceptTpaHere = false;
 	public static String mainAccount;
+	public static boolean useClickEntity = false;
 
 	public static boolean isPlayerOnline(String username){
 		Minecraft minecraft = Minecraft.getMinecraft();
@@ -175,6 +176,9 @@ public class PlayerGroup {
 					}else if(setting.value == 3) {
 						Bodyguard.friendly = Bodyguard.Friendly.NONE;
 					}
+			}
+			else if(setting.title.equals("click player")){
+				useClickEntity = setting.value == 1;
 			}
 		}
 	}

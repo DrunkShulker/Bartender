@@ -30,10 +30,11 @@ public class ChatObserver {
 	
 	public static boolean partyTPA = false;
 	
-	public static final char commandPrefix = '@', botMsgPrefix = '$';
+	public static String commandPrefix = "@";
+	public static String botMsgPrefix = "$";
 	private long lastDrinks = 0;
 	
-	final String pornUrl = "https://www.pornhub.com/random";
+	final String pornUrl = "https:/"+""+"/www.pornhub.com/random";
 	private long lastPornhubSearch = 0;
 	public static boolean pornhub = false;
 	Timer timer;
@@ -167,8 +168,8 @@ public class ChatObserver {
 						r = r.replaceAll("[^A-Za-z0-9()$'!?:.,_> \\[\\]]", "");
 	    				safeSendPublicChatMessage(r.substring(0, r.length()-13));
 	    			} else {
-	    				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> @sex failed due to pornhub api."));
-	    			}}catch (Exception e) {Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> @sex failed with exception!"));}
+	    				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> "+commandPrefix+"sex failed due to pornhub api."));
+	    			}}catch (Exception e) {Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> "+commandPrefix+"sex failed with exception!"));}
 	    	    	timer.cancel();
 	    	    	timer=null;
 	    	    }
@@ -237,7 +238,9 @@ public class ChatObserver {
 	}
 
 	public boolean messageIsCommand(String msg) {
-		final char[] cs = {'/', ',', '.', '-', ';', '?', '*', '^', '&', '%', '#', '$', '!', commandPrefix};
+		final char[] cs = {
+				'/', ',', '.', '-', ';', '?', '*', '^', '&', '%', '#', '$', '!', commandPrefix.charAt(0), '>', '|', '+'
+		};
 		for (char c : cs) {
 			if(c==msg.charAt(0)) return true;
 		}
@@ -264,7 +267,7 @@ public class ChatObserver {
 
 			String fix = Config.CHAT_POST_FIX;
 			if(event.getMessage().contains(fix)) return; 
-			event.setMessage(event.getMessage()+fix);
+			event.setMessage(event.getMessage()+" "+fix);
 		}
 	}
 
@@ -290,6 +293,12 @@ public class ChatObserver {
 			}
 			else if(setting.title.equals("pornhub")) {
 				pornhub = setting.value == 0;
+			}
+			else if(setting.title.equals("bot prefix")) {
+				botMsgPrefix = setting.values.get(setting.value).getAsString();
+			}
+			else if(setting.title.equals("command prefix")) {
+				commandPrefix = setting.values.get(setting.value).getAsString();
 			}
 		}
 	}
@@ -338,7 +347,7 @@ public class ChatObserver {
 			return;
 		}
 		else {
-			Minecraft.getMinecraft().player.sendChatMessage(botMsgPrefix+" Need a drink? Type @order or @order (player)");
+			Minecraft.getMinecraft().player.sendChatMessage(botMsgPrefix+" Need a drink? Type "+commandPrefix+"order or "+commandPrefix+"order (player)");
 		}
 		
 	}

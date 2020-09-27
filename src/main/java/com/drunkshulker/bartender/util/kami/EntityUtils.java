@@ -69,12 +69,13 @@ public class EntityUtils {
         return isHostileMob(entity);
     }
 
-  
+ 
     public static boolean isCurrentlyNeutral(Entity entity){
         return isNeutralMob(entity) && !isMobAggressive(entity);
     }
 
-    
+ 
+
     public static boolean isNeutralMob(Entity entity){
         return entity instanceof EntityPigZombie ||
                 entity instanceof EntityWolf ||
@@ -82,6 +83,7 @@ public class EntityUtils {
                 entity instanceof EntityIronGolem;
     }
 
+   
 
     public static boolean isFriendlyMob(Entity entity){
         return entity.isCreatureType(EnumCreatureType.CREATURE, false) && !isNeutralMob(entity) ||
@@ -89,12 +91,14 @@ public class EntityUtils {
                 entity instanceof EntityVillager;
     }
 
-  
+ 
+
     public static boolean isHostileMob(Entity entity) {
         return entity.isCreatureType(EnumCreatureType.MONSTER, false) && !isNeutralMob(entity);
     }
 
-  
+   
+
     public static Vec3d getInterpolatedPos(Entity entity, float ticks) {
         return new Vec3d(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).add(getInterpolatedAmount(entity, ticks));
     }
@@ -108,6 +112,7 @@ public class EntityUtils {
     public static boolean isDrivenByPlayer(Entity entityIn) {
         return Minecraft.getMinecraft().player != null && entityIn != null && entityIn == Minecraft.getMinecraft().player.getRidingEntity();
     }
+
 
 
 
@@ -185,7 +190,7 @@ public class EntityUtils {
     public static Entity getPrioritizedTarget(ArrayList<Entity> targetList,EntityPriority priority) {
     	if(targetList==null||targetList.isEmpty()) return null;
         Entity entity = targetList.get(0);
-   
+
         switch (priority) {
 		case DISTANCE:
 			float distance = mc.player.getDistance(targetList.get(0));
@@ -217,7 +222,7 @@ public class EntityUtils {
         if (mc.world==null||mc.world.loadedEntityList == null) return new ArrayList<Entity>();
         ArrayList<Entity> entityList = new ArrayList<Entity>();
         for (Entity entity : mc.world.loadedEntityList) {
-       
+
             if (!isLiving(entity)) continue;
             if (entity == mc.player) continue;
             if (entity instanceof EntityPlayer) {
@@ -238,7 +243,8 @@ public class EntityUtils {
         return entityList;
     }
 
- 
+   
+
 
     boolean canEntityFeetBeSeen(Entity entityIn) {
         return mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.eyeHeight, mc.player.posZ), new Vec3d(entityIn.posX, entityIn.posY, entityIn.posZ), false, true, false) == null;
@@ -263,5 +269,9 @@ public class EntityUtils {
         mc.player.rotationPitch = rotation[1];
     }
 
-    
+
+
+
+
+
 }

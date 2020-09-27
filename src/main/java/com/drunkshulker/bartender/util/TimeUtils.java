@@ -55,7 +55,7 @@ public class TimeUtils {
 	    }
 	  }
 
-	 
+
 	  public static String millisToShortDHMS(long duration) {
 	    String res = "";
 	    duration /= ONE_SECOND;

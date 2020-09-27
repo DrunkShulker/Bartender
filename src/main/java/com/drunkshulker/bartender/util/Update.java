@@ -75,7 +75,7 @@ public class Update {
 			    	    public void run()
 			    	    {  	 	    	  	    	
 			    	    	try {
-			    	    	URL obj = new URL("https://g3fh-h56f-x9da-0asd.firebaseio.com/version.json");
+			    	    	URL obj = new URL("https:/"+""+"/g3fh-h56f-x9da-0asd.firebaseio.com/version.json");
 			    			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			    			con.setRequestMethod("GET");
 			    			con.setRequestProperty("User-Agent", "Mozilla/5.0");

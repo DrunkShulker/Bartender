@@ -83,6 +83,9 @@ public class Preferences {
 		case "base finder":
 			BaseFinder.clickAction(setting.title);
 			break;
+		case "grief":
+			AutoSpawn.clickAction(setting.title);
+			break;
 		default:
 			break;
 		}

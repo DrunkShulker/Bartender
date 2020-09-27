@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 public class InventoryUtils {
     private Minecraft mc = Minecraft.getMinecraft();
 
-   
+
     public ArrayList<Integer> getSlots(int min, int max, int itemID) {
         ArrayList<Integer> slots = new ArrayList<>();
         for(int i = min; i <= max; i++) {
@@ -27,15 +27,16 @@ public class InventoryUtils {
         else return null;
     }
 
- 
+
     public ArrayList<Integer> getSlotsHotbar(int itemId) {
         return getSlots(0, 8, itemId);
     }
 
-
+ 
     public ArrayList<Integer> getSlotsNoHotbar(int itemId) {
         return getSlots(9, 35, itemId);
     }
+
 
     public ArrayList<Integer> getSlotsFullInv(int min, int max, int itemId) {
     	ArrayList<Integer> slots = new ArrayList<>();
@@ -69,13 +70,15 @@ public class InventoryUtils {
         return currentCount;
     }
 
+
     public boolean inProgress = false;
 
 
-    public void swapSlot(int slot) {
-        mc.player.inventory.currentItem = slot;
+    public static void swapSlot(int slot) {
+        Minecraft.getMinecraft().player.inventory.currentItem = slot;
         
     }
+
 
     public void swapSlotToItem(int itemID) {
         if (getSlotsHotbar(itemID) != null) {
@@ -88,7 +91,6 @@ public class InventoryUtils {
         mc.playerController.windowClick(mc.player.inventoryContainer.windowId, slot, 0, type, mc.player);
     }
 
-  
     public void moveToHotbar(int itemID, int exceptionID, long delayMillis) {
     	ArrayList<Integer> gsfinh = getSlotsFullInvNoHotbar(itemID);
     	if(gsfinh==null) return;
@@ -96,7 +98,7 @@ public class InventoryUtils {
         int slot1 = gsfinh.get(0);
         int slot2 = 36;
         for(int i = 36; i<44;i++) {
-        
+    
             ItemStack currentItemStack = mc.player.inventoryContainer.getInventory().get(i);
             if (currentItemStack.isEmpty()) {
                 slot2 = i;
@@ -110,6 +112,7 @@ public class InventoryUtils {
         moveToSlot(slot1, slot2, delayMillis);
     }
 
+ 
     public void moveToSlot(int slotFrom, int slotTo, long delayMillis) {
         if (inProgress) return;
         
@@ -146,7 +149,6 @@ public class InventoryUtils {
 	    thread.start();
     }
 
-  
     public void moveAllToSlot(int slotFrom, int slotTo, long delayMillis) {
         if (inProgress) return;
         Thread thread = new Thread(){
@@ -175,7 +177,7 @@ public class InventoryUtils {
 	    thread.start();
     }
 
-
+  
     public void quickMoveSlot(int slotFrom, long delayMillis) {
         if (inProgress) return;
         Thread thread = new Thread(){
@@ -220,7 +222,7 @@ public class InventoryUtils {
     }
     
 
-
+  
     public void throwAllInSlot(int slot, long delayMillis) {
         if (inProgress) return;
 
@@ -239,5 +241,5 @@ public class InventoryUtils {
 	    };
 	    thread.start();
     }
-
+    
 }

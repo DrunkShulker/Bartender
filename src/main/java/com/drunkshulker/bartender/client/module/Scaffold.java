@@ -23,7 +23,7 @@ public class Scaffold {
     public static void applyPreferences(ClickGuiSetting[] contents) {
         for (ClickGuiSetting setting : contents) {
             switch (setting.title) {
-                case "auto tnt":
+                case "scaffold":
                     enabled = setting.value == 1;
                     break;
 
@@ -46,6 +46,7 @@ public class Scaffold {
         Vec3d vec3d = EntityUtils.getInterpolatedPos(mc.player, 2f);
 
         BlockPos blockPos = new BlockPos(vec3d).down();
+        if(mc.player.isElytraFlying()) blockPos = blockPos.down(); 
         BlockPos belowBlockPos = blockPos.down();
         BlockPos legitPos = new BlockPos(EntityUtils.getInterpolatedPos(mc.player, 2f));
 
@@ -62,20 +63,20 @@ public class Scaffold {
         int oldSlot = mc.player.inventory.currentItem;
         setSlotToBlocks(belowBlockPos);
 
-
+        
         if (!BlockUtils.checkForNeighbours(blockPos)) return;
 
-
+        
         if (enabled
                 &&isTNT(mc.player.getHeldItemMainhand())) {
             BlockUtils.placeBlockScaffold(blockPos);
         }
 
-
+        
         if (!holding) mc.player.inventory.currentItem = oldSlot;
 
         if (towering) {
-            double motion = 0.42 ;
+            double motion = 0.42; 
             if (mc.player.onGround) {
                 towerStart = mc.player.posY;
                 mc.player.motionY = motion;
@@ -88,7 +89,6 @@ public class Scaffold {
         } else {
             towerStart = 0.0;
         }
-
     }
 
     private static void setSlotToBlocks(BlockPos belowBlockPos) {
@@ -98,10 +98,10 @@ public class Scaffold {
         }
         holding = false;
 
-
+        
         int newSlot = -1;
         for (int i = 0; i<=8; i++) {
-
+            
             ItemStack stack = Minecraft.getMinecraft().player.inventory.getStackInSlot(i);
 
             if (isTNT(stack)) {
@@ -110,7 +110,7 @@ public class Scaffold {
             }
         }
 
-
+        
         if (newSlot != -1) {
             Minecraft.getMinecraft().player.inventory.currentItem = newSlot;
         }
