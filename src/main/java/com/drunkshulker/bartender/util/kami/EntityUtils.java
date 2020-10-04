@@ -43,7 +43,6 @@ public class EntityUtils {
         return entity != null && entity.getEntityId() == -100 && Minecraft.getMinecraft().player != entity;
     }
 
-
     public static Vec3d getInterpolatedAmount(Entity entity, float ticks){
         return new Vec3d(
                 (entity.posX - entity.lastTickPosX) * ticks,
@@ -69,12 +68,12 @@ public class EntityUtils {
         return isHostileMob(entity);
     }
 
- 
+   
     public static boolean isCurrentlyNeutral(Entity entity){
         return isNeutralMob(entity) && !isMobAggressive(entity);
     }
 
- 
+  
 
     public static boolean isNeutralMob(Entity entity){
         return entity instanceof EntityPigZombie ||
@@ -83,21 +82,20 @@ public class EntityUtils {
                 entity instanceof EntityIronGolem;
     }
 
-   
-
+    
     public static boolean isFriendlyMob(Entity entity){
         return entity.isCreatureType(EnumCreatureType.CREATURE, false) && !isNeutralMob(entity) ||
                 entity.isCreatureType(EnumCreatureType.AMBIENT, false) ||
                 entity instanceof EntityVillager;
     }
 
- 
+    
 
     public static boolean isHostileMob(Entity entity) {
         return entity.isCreatureType(EnumCreatureType.MONSTER, false) && !isNeutralMob(entity);
     }
 
-   
+    
 
     public static Vec3d getInterpolatedPos(Entity entity, float ticks) {
         return new Vec3d(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).add(getInterpolatedAmount(entity, ticks));
@@ -180,7 +178,7 @@ public class EntityUtils {
         return (float) Math.sqrt(entity.motionX * entity.motionX + entity.motionZ * entity.motionZ);
     }
 
- 
+  
 
 
     public enum EntityPriority {
@@ -243,8 +241,7 @@ public class EntityUtils {
         return entityList;
     }
 
-   
-
+ 
 
     boolean canEntityFeetBeSeen(Entity entityIn) {
         return mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.eyeHeight, mc.player.posZ), new Vec3d(entityIn.posX, entityIn.posY, entityIn.posZ), false, true, false) == null;

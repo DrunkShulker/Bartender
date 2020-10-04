@@ -61,22 +61,28 @@ public class ClickGui extends GuiScreen{
 		
 		if(currentEditingBind==null){
 			if(GuiScreen.isAltKeyDown()){
-				String bindWarning = "Middle click the setting you want to bind";
-				drawString(mc.fontRenderer,bindWarning,
-						width-mc.fontRenderer.getStringWidth(bindWarning)-2,
+				String msg = "Middle click the setting you want to bind";
+				drawString(mc.fontRenderer,msg,
+						width-mc.fontRenderer.getStringWidth(msg)-2,
+						height-12,
+						Integer.parseInt("FFFFFF", 16));
+			}else if(GuiScreen.isShiftKeyDown()){
+				String msg = "Middle click the setting you want to reset";
+				drawString(mc.fontRenderer,msg,
+						width-mc.fontRenderer.getStringWidth(msg)-2,
 						height-12,
 						Integer.parseInt("FFFFFF", 16));
 			}
 		}else{
-			String bindWarning = getBindName(currentEditingBind)+" ["+currentEditingBind+"]";
-			drawString(mc.fontRenderer,bindWarning,
-					width-mc.fontRenderer.getStringWidth(bindWarning)-2,
+			String msg = getBindName(currentEditingBind)+" ["+currentEditingBind+"]";
+			drawString(mc.fontRenderer,msg,
+					width-mc.fontRenderer.getStringWidth(msg)-2,
 					height-21,
 					Integer.parseInt("FFFFFF", 16));
 
-			String bindDelWarning = "Press any key to bind | Backspace to reset";
-			drawString(mc.fontRenderer,bindDelWarning,
-					width-mc.fontRenderer.getStringWidth(bindDelWarning)-2,
+			String rMsg = "Press any key to bind | Backspace to reset";
+			drawString(mc.fontRenderer,rMsg,
+					width-mc.fontRenderer.getStringWidth(rMsg)-2,
 					height-12,
 					Integer.parseInt("FFFFFF", 16));
 		}
@@ -111,7 +117,7 @@ public class ClickGui extends GuiScreen{
 
 		boolean hovered = false;
 		for (int i = panels.length-1; i >=0; i--) {
-			hovered = panels[i].listen(mouseX, mouseY, hovered, GuiScreen.isAltKeyDown());
+			hovered = panels[i].listen(mouseX, mouseY, hovered, GuiScreen.isAltKeyDown(),GuiScreen.isShiftKeyDown());
 		}
 	}
 

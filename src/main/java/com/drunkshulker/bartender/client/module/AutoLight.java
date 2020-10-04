@@ -69,33 +69,35 @@ public class AutoLight {
 
     @SubscribeEvent
     public void onMouseInput(TickEvent.ClientTickEvent event) {
+        if(Minecraft.getMinecraft().player==null) return;
         if(!enabled) return;
         if(SafeTotemSwap.enabled&&SafeTotemSwap.taskInProgress) return;
+        if(Dupe.inProgress()) return;
         if(AutoEat.eating) return;
-        if(Minecraft.getMinecraft().player==null) return;
         Minecraft mc = Minecraft.getMinecraft();
+        if(mc.objectMouseOver==null||mc.objectMouseOver.typeOfHit==null) return;
 
-            if (mc.objectMouseOver.typeOfHit == RayTraceResult.Type.BLOCK) {
-                BlockPos blockpos = mc.objectMouseOver.getBlockPos();
-                if(Item.getIdFromItem(Item.getItemFromBlock(BlockUtils.getBlock(blockpos))) == Item.getIdFromItem(Item.getItemFromBlock(Blocks.TNT))){
-                    if(Item.getIdFromItem(mc.player.getHeldItemMainhand().getItem()) == Item.getIdFromItem(Items.FLINT_AND_STEEL)){
-                        lightItUp(blockpos);
-                    }
-                    else {
-                       int beforeSwap = mc.player.inventory.currentItem;
+        if (mc.objectMouseOver.typeOfHit == RayTraceResult.Type.BLOCK) {
+            BlockPos blockpos = mc.objectMouseOver.getBlockPos();
+            if(Item.getIdFromItem(Item.getItemFromBlock(BlockUtils.getBlock(blockpos))) == Item.getIdFromItem(Item.getItemFromBlock(Blocks.TNT))){
+                if(Item.getIdFromItem(mc.player.getHeldItemMainhand().getItem()) == Item.getIdFromItem(Items.FLINT_AND_STEEL)){
+                    lightItUp(blockpos);
+                }
+                else {
+                   int beforeSwap = mc.player.inventory.currentItem;
 
-                       ArrayList<Integer> slots = Bartender.INVENTORY_UTILS.getSlotsHotbar(Item.getIdFromItem(Items.FLINT_AND_STEEL));
-                       if(slots==null||slots.isEmpty()) return;
+                   ArrayList<Integer> slots = Bartender.INVENTORY_UTILS.getSlotsHotbar(Item.getIdFromItem(Items.FLINT_AND_STEEL));
+                   if(slots==null||slots.isEmpty()) return;
 
-                       int flintNSteelSlot = slots.get(0);
-                       if(flintNSteelSlot==-1) return;
+                   int flintNSteelSlot = slots.get(0);
+                   if(flintNSteelSlot==-1) return;
 
-                       AutoWeapon.equip(flintNSteelSlot);
-                       lightItUp(blockpos);
-                       AutoWeapon.equip(beforeSwap);
-                    }
+                   AutoWeapon.equip(flintNSteelSlot);
+                   lightItUp(blockpos);
+                   AutoWeapon.equip(beforeSwap);
                 }
             }
+        }
 
     }
 }

@@ -7,13 +7,22 @@ import com.drunkshulker.bartender.client.gui.overlaygui.MainMenuOverlayGui;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.gui.overlaygui.PauseOverlayGui;
 
+import com.drunkshulker.bartender.client.module.Dupe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiCrafting;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.recipebook.GuiButtonRecipeTab;
+import net.minecraft.client.gui.recipebook.GuiRecipeBook;
+import net.minecraft.client.gui.recipebook.GuiRecipeOverlay;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.io.IOException;
 
 public class GuiHandler {
 	
@@ -30,6 +39,8 @@ public class GuiHandler {
 	public static boolean txtHpAndFood = false;
 	public static boolean showTargetListing = true;
 	public static boolean showBindInfo = true;
+	long lastDupeClickStamp = System.currentTimeMillis();
+	final long dupeClickIntervalMillis = 800;
 
 	public static int currentTheme = 0;
 
@@ -61,21 +72,40 @@ public class GuiHandler {
 			if(mc.player.getHealth()==20&&!showHP)
 			event.setCanceled(true);
 		}
+
     }
 	
 	@SubscribeEvent
 	public void onScreenDrawing(DrawScreenEvent.Post event)
 	{
+		Minecraft mc = Minecraft.getMinecraft();
 	    if (event.getGui() instanceof GuiMainMenu)
 	    {
-	    	Minecraft mc = Minecraft.getMinecraft();
 	        new MainMenuOverlayGui(mc);
 	    }
 	    else if (event.getGui() instanceof GuiIngameMenu)
 	    {
-	    	Minecraft mc = Minecraft.getMinecraft();
 	        new PauseOverlayGui(mc);
 	    }
+	    else if(event.getGui() instanceof GuiInventory){
+	    	
+			
+			
+			
+			
+			if(Dupe.currentWaitPhase!=Dupe.WaitPhase.WAIT_PICKUP) return;
+			if(System.currentTimeMillis()-lastDupeClickStamp<dupeClickIntervalMillis) return;
+			lastDupeClickStamp = System.currentTimeMillis();
+			lastDupeClickStamp = System.currentTimeMillis();
+
+			GuiRecipeBook recipeBook = ((GuiInventory) event.getGui()).func_194310_f();
+			if(recipeBook.isVisible()) {
+				int w = (event.getGui().width/2)-138;
+				int h = (event.getGui().height/2)-40;
+				recipeBook.mouseClicked(w,h,0);
+			}
+
+		}
 	}
 
 	public static void clickAction(String action) {

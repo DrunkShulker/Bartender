@@ -235,6 +235,19 @@
 					]
 				},
 				{
+					"title": "group",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON",
+						"ONLY"
+					],
+					"desc": [
+						"RENDER PARTICLES ON GROUP MEMBERS"
+					]
+				},
+				{
 					"title": "type",
 					"type": "text",
 					"value": 0,
@@ -782,6 +795,28 @@
 						"PLACE TNT BLOCKS UNDER YOU",
 						"THE TNT MUST BE IN YOUR HOTBAR FOR THIS TO WORK"
 					]
+				}
+			]
+		},
+		{
+			"name": "dupe",
+			"desc": [
+				"DUPING TOOLS"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "dupe current",
+					"type": "click",
+					"desc": [
+						"DUPE THE CURRENT SELECTED ITEM IN HOTBAR",
+						"- ONLY WORKS ON 8B8T",
+						"- THE AUTO CLICKER TARGETS THE FIRST CRAFTING RECIPE SLOT FROM TOP LEFT",
+						"- YOU NEED 1 STACK OF DUPING MATERIAL IN YOUR INVENTORY (WOODEN PLANKS RECOMMENDED)"
+					],
+					"closeOnClick": true
 				}
 			]
 		},

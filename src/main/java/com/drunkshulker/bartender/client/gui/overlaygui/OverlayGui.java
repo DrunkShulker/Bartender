@@ -192,16 +192,7 @@ public class OverlayGui extends Gui
     }
     
     
-    /*
-     * Draws a texture at the specified 2D coordinates
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param u X coordinate of the texture inside of the .png
-     * @param v Y coordinate of the texture inside of the .png
-     * @param width width of the texture
-     * @param height height of the texture
-     * @param resourceLocation A reference to the texture's ResourceLocation. If null, it'll use the last used resource.
-
+ 
     public static void renderCustomTexture(int x, int y, int u, int v, int width, int height, ResourceLocation resourceLocation, float scale){
       Minecraft mc = Minecraft.getMinecraft();
       

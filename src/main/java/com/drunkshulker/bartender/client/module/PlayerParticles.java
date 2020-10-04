@@ -5,6 +5,7 @@ import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -20,7 +21,8 @@ public class PlayerParticles {
 	public static boolean enabled = true;
 	public static boolean enabledWhenFlying = false;
 	public static int rate = 1, lift = 0;
-	
+	private static boolean showOnGroup = false;
+	private static boolean hideOnSelf = false;
 
 	public static void setParticle(String name) {
         try {
@@ -62,7 +64,26 @@ public class PlayerParticles {
                 double d7 = d3 + (player.posX - d3) * d6 + (player.getEntityWorld().rand .nextDouble() - 0.5D) * (double)player.width * 2.0D;
                 double d8 = d4 + (player.posY - d4) * d6 - player.getEntityWorld().rand.nextDouble() * (double)player.height;
                 double d9 = d5 + (player.posZ - d5) * d6 + (player.getEntityWorld().rand.nextDouble() - 0.5D) * (double)player.width * 2.0D;
-                player.world.spawnParticle(particle, d7, d8+lift, d9, (double)f, (double)f1, (double)f2);
+                if(!hideOnSelf) player.world.spawnParticle(particle, d7, d8+lift, d9, (double)f, (double)f1, (double)f2);
+
+                if(showOnGroup){
+					for (String p:EntityRadar.nearbyGroupMembers()) {
+						EntityPlayer memberPlayer = EntityRadar.getEntityPlayer(p);
+						if(memberPlayer!=null){
+							d3 = memberPlayer.posX;
+							d4 = memberPlayer.posY;
+							d5 = memberPlayer.posZ;
+							d6 = (double)l / ((double)short1 - 1.0D);
+							f = (memberPlayer.getEntityWorld().rand.nextFloat() - 0.5F) * 0.2F;
+							f1 = (memberPlayer.getEntityWorld().rand.nextFloat() - 0.5F) * 0.2F;
+							f2 = (memberPlayer.getEntityWorld().rand.nextFloat() - 0.5F) * 0.2F;
+							d7 = d3 + (memberPlayer.posX - d3) * d6 + (memberPlayer.getEntityWorld().rand .nextDouble() - 0.5D) * (double)memberPlayer.width * 2.0D;
+							d8 = d4 + (memberPlayer.posY - d4) * d6 - memberPlayer.getEntityWorld().rand.nextDouble() * (double)memberPlayer.height;
+							d9 = d5 + (memberPlayer.posZ - d5) * d6 + (memberPlayer.getEntityWorld().rand.nextDouble() - 0.5D) * (double)memberPlayer.width * 2.0D;
+							memberPlayer.world.spawnParticle(particle, d7, d8+lift, d9, (double)f, (double)f1, (double)f2);
+						}
+					}
+				}
 
             }
 		}
@@ -83,6 +104,18 @@ public class PlayerParticles {
 				break;
 			case "lift":
 				lift=setting.value;
+				break;
+			case "group":
+				if(setting.value==0) {
+					showOnGroup = false;
+					hideOnSelf = false;
+				} else if(setting.value==1) {
+					showOnGroup = true;
+					hideOnSelf = false;
+				} else if(setting.value==2) {
+					showOnGroup = true;
+					hideOnSelf = true;
+				}
 				break;
 			default:
 				break;

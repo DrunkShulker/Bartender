@@ -53,6 +53,9 @@ public class Preferences {
 			case "flight":
 				Flight.applyPreferences(panel.getContents());
 				break;
+			case "dupe":
+				Dupe.applyPreferences(panel.getContents());
+				break;
 			case "grief":
 				AutoLight.applyPreferences(panel.getContents());
 				Scaffold.applyPreferences(panel.getContents());
@@ -85,6 +88,9 @@ public class Preferences {
 			break;
 		case "grief":
 			AutoSpawn.clickAction(setting.title);
+			break;
+		case "dupe":
+			Dupe.clickAction(setting.title);
 			break;
 		default:
 			break;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.drunkshulker.bartender.client.gui.GuiConfig;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.module.BaseFinder;
+import com.drunkshulker.bartender.util.AssetLoader;
 import com.drunkshulker.bartender.util.Config;
 import com.drunkshulker.bartender.util.Preferences;
 import com.google.gson.JsonArray;
@@ -15,7 +16,7 @@ import net.minecraft.client.gui.GuiScreen;
 
 public class ClickGuiSetting {
 
-	enum SettingType {
+    enum SettingType {
 			CLICK, 
 			CLICK_COMMAND, 
 			TEXT, 
@@ -54,6 +55,34 @@ public class ClickGuiSetting {
 		return title+"->"+setting.title;
 	}
 
+	public static void resetToDefault(ClickGuiSetting setting, String title) {
+		if(setting.type!=SettingType.TEXT) return;
+		JsonObject defaultConfig = new AssetLoader().loadJson("bartender-gui-default.json");
+
+		JsonArray values = defaultConfig.get("click_gui").getAsJsonArray();
+		if(values.isJsonNull()) return;
+
+		int defaultValue = -1;
+
+		for (int i = 0; i < values.size(); i++) {
+			if(values.get(i).getAsJsonObject().get("name").getAsString().equals(setting.panelTitle)){
+				JsonArray settings = values.get(i).getAsJsonObject().get("contents").getAsJsonArray();
+				for (int j = 0; j < settings.size(); j++) {
+					if(settings.get(j).getAsJsonObject().get("title").getAsString().equals(setting.title) && settings.get(j).getAsJsonObject().get("type").getAsString().equals("text")){
+						defaultValue = settings.get(j).getAsJsonObject().get("value").getAsInt();
+						break;
+					}
+				}
+				break;
+			}
+		}
+
+		if(defaultValue==-1) return;
+		setting.value = defaultValue;
+
+		
+		GuiConfig.save();
+	}
 
 	private static ClickGuiSetting settingFromJson(JsonObject json, String pTitle) {
 		ClickGuiSetting setting = new ClickGuiSetting();

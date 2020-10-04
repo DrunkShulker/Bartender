@@ -109,8 +109,8 @@ public class ChatObserver {
 		}
 
 		if(sender.length()>2&& !Minecraft.getMinecraft().isSingleplayer()) sender = sender.substring(0, sender.length()-2);
-		System.out.println("sender: "+sender);
-		System.out.println("sender: "+sender.replaceAll("[^A-Za-z0-9()$'!?:.,_> \\[\\]]", ""));
+		
+		
 		return sender;
 	}
 	
@@ -165,7 +165,7 @@ public class ChatObserver {
 	    				
 	    				
 	    				String r = botMsgPrefix+" "+senderf+"'s PornHub search: "+ response.substring(response.indexOf("<title>") + 7, response.indexOf("</title>"));
-						r = r.replaceAll("[^A-Za-z0-9()$'!?:.,_> \\[\\]]", "");
+						r = r.replaceAll("[^A-Za-z0-9()$'!|#+*%&^£?:.,_> \\[\\]]", "");
 	    				safeSendPublicChatMessage(r.substring(0, r.length()-13));
 	    			} else {
 	    				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> "+commandPrefix+"sex failed due to pornhub api."));
@@ -208,12 +208,12 @@ public class ChatObserver {
 
 			if(toPlayer!=null){
 				String msg = botMsgPrefix+" "+sender+" just ordered "+amount+ " "+allDrinks[toss].toLowerCase()+" to their friend "+ toPlayer +"!";
-				msg = msg.replaceAll("[^A-Za-z0-9()$'!?:.,_> \\[\\]]", "");
+				msg = msg.replaceAll("[^A-Za-z0-9()$'!|#+*%&^£?:.,_> \\[\\]]", "");
 				msg = msg.replace(" r ", " ");
 				safeSendPublicChatMessage(msg);
 			}else {
 				String msg = botMsgPrefix+" "+sender+" just ordered "+amount+ " "+allDrinks[toss].toLowerCase()+"!";
-				msg = msg.replaceAll("[^A-Za-z0-9()$'!?:.,_> \\[\\]]", "");
+				msg = msg.replaceAll("[^A-Za-z0-9()$'!|#+*%&^£?:.,_> \\[\\]]", "");
 				safeSendPublicChatMessage(msg);
 			}
 			

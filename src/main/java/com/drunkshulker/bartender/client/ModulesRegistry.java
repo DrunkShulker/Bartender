@@ -19,6 +19,7 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new BaseFinder());
         MinecraftForge.EVENT_BUS.register(new Bodyguard());
         MinecraftForge.EVENT_BUS.register(new Flight());
+        MinecraftForge.EVENT_BUS.register(new Dupe());
         MinecraftForge.EVENT_BUS.register(new AutoEat());
         MinecraftForge.EVENT_BUS.register(new ClickOnEntity());
         MinecraftForge.EVENT_BUS.register(new IPCHandler());

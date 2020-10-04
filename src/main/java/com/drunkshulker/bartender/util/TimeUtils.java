@@ -16,7 +16,7 @@ public class TimeUtils {
 	  private TimeUtils() {
 	  }
 
-
+	
 	  public static String millisToLongDHMS(long duration) {
 	    StringBuffer res = new StringBuffer();
 	    long temp = 0;
@@ -55,7 +55,7 @@ public class TimeUtils {
 	    }
 	  }
 
-
+	
 	  public static String millisToShortDHMS(long duration) {
 	    String res = "";
 	    duration /= ONE_SECOND;

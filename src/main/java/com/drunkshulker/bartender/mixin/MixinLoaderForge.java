@@ -13,7 +13,6 @@ import java.util.Map;
 @IFMLLoadingPlugin.MCVersion("1.12.2")
 public class MixinLoaderForge implements IFMLLoadingPlugin {
 
-  
     public static final Logger log = LogManager.getLogger("Bartender");
     private static boolean isObfuscatedEnvironment = false;
 

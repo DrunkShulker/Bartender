@@ -47,7 +47,7 @@ public class ClickGuiPanel extends ClickGui{
 	private Minecraft mc = Minecraft.getMinecraft();
 	
 	
-	public boolean listen(int mouseX, int mouseY, boolean hovered, boolean altPressed) {
+	public boolean listen(int mouseX, int mouseY, boolean hovered, boolean altPressed, boolean shiftPressed) {
 		mc = Minecraft.getMinecraft();
 		if(ClickGui.currentDraggable==this||(ClickGui.drag&&mouseOver(mouseX, mouseY)&&ClickGui.currentDraggable==null)) {
 			
@@ -119,7 +119,11 @@ public class ClickGuiPanel extends ClickGui{
 						ClickGui.middleClick = false;
 						if(altPressed){
 							ClickGui.currentEditingBind = ClickGuiSetting.getBindingCode(setting, getTitle());
-						}else {
+						}
+						else if(shiftPressed){
+							ClickGuiSetting.resetToDefault(setting, getTitle());
+						}
+						else {
 							ClickGuiSetting.handleClick(setting, true);
 						}
 					}

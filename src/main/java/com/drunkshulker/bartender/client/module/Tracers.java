@@ -26,7 +26,7 @@ public class Tracers {
 
 		GL11.glPushMatrix();
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
-/*
+
 	    double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)event.getPartialTicks();
 	    double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)event.getPartialTicks();
 

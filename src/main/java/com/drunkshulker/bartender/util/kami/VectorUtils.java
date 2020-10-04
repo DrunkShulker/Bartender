@@ -24,6 +24,7 @@ public class VectorUtils {
 
 
 
+
     List<BlockPos> getBlockPositionsInArea(Vec3d pos1 ,Vec3d pos2) {
         int minX = (int) Math.min(pos1.x, pos2.x);
         int  maxX = (int) Math.max(pos1.x, pos2.x);
