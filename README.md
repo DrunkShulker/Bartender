@@ -6,12 +6,14 @@ Some of Bartender's features need hacks from other clients in order to work prop
 Watch this [video](https://www.youtube.com/watch?v=X0bfymdt9vI) and read the [wiki](https://github.com/DrunkShulker/Bartender/wiki) to learn more about Bartender's features.
 
 ## Install
-1. It is recommended that you create a fresh instance of Minecraft for the Bartender installation. At least make a copy of your `.minecraft` directory so you have a backup in case anything goes wrong with the installation.
-2. Install Forge for Minecraft 1.12.2.
-3. If you want to use other hack clients with Bartender, install them at this point. Some of Bartender's features need hacks from other clients in order to work properly. See the list of required hacks [here](https://github.com/DrunkShulker/Bartender/wiki/Required-hacks). Impact and Kami BLUE are probably the best way to go, as Bartender was developed and tested with them.
-4. Download the latest release `.jar` of Bartender from [releases](https://github.com/DrunkShulker/Bartender/releases).
-5. Move the release `.jar` into `mods` folder in your Minecraft directory.
-6. Launch Minecraft. The custom Forge loading screen will appear the second time you launch Minecraft.
+### Recommended way:
+Follow the [install tutorial](https://github.com/DrunkShulker/Bartender/wiki/Installation).
+
+### Quick way:
+1. Install Forge for Minecraft 1.12.2.
+2. Download the latest release `.jar` of Bartender from [releases](https://github.com/DrunkShulker/Bartender/releases).
+3. Put the release `.jar` into `mods` folder in your `.minecraft` directory.
+4. Launch Minecraft. The custom Forge loading screen will appear the second time you launch Minecraft.
 
 ## Tutorial
 See the [wiki](https://github.com/DrunkShulker/Bartender/wiki).
