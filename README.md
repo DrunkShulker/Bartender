@@ -5,11 +5,8 @@ Some of Bartender's features need hacks from other clients in order to work prop
 
 Watch this [video](https://www.youtube.com/watch?v=X0bfymdt9vI) and read the [wiki](https://github.com/DrunkShulker/Bartender/wiki) to learn more about Bartender's features.
 
-## Install
-Follow the [install tutorial](https://github.com/DrunkShulker/Bartender/wiki#install).
-
 ## Tutorial
-See the [wiki](https://github.com/DrunkShulker/Bartender/wiki).
+Click [here](https://github.com/DrunkShulker/Bartender/wiki).
 
 ## Credits
 Thanks to the following projects for making Bartender possible:
@@ -20,6 +17,6 @@ Thanks to the following projects for making Bartender possible:
 
 ## Support
 - Before reporting anything, see if your problem is already answered [here](https://github.com/DrunkShulker/Bartender/wiki/Known-issues-and-solutions).
-- Get help on the [Bartender Support](https://discord.gg/z6eQR5z) Discord server.
+- Get help on the [support](https://discord.gg/z6eQR5z) Discord server.
 - Report bugs/crashes/problems in [issues](https://github.com/DrunkShulker/Bartender/issues). Please describe the problem in detail and include the steps to reproduce.
 - Compatibility issues with utility mods other than Impact and Kami BLUE are most likely ignored!
