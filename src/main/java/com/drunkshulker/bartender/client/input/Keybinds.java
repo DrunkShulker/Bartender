@@ -11,8 +11,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class Keybinds
 {
     public static KeyBinding toggleGui, toggleEnemyGui;
-    public static KeyBinding enemyGuiNavigateUp, enemyGuiNavigateDown, enemyGuiMark;
-    public static KeyBinding baseFinderToggle, takeoff, chorus, standHere, endTasks;
+    public static KeyBinding enemyGuiNavigateUp, enemyGuiNavigateDown, enemyGuiMark, takeoffHelper;
 
     public static KeyBinding[] hotkeyCommand = new KeyBinding[9];
     public static final String[] HOTKEY_COMMAND_DEFAULTS = {
@@ -41,23 +40,11 @@ public class Keybinds
         enemyGuiMark = new KeyBinding("Target confirm", Keyboard.KEY_RIGHT, Bartender.NAME);
         ClientRegistry.registerKeyBinding(enemyGuiMark);
 
+        takeoffHelper = new KeyBinding("Easy takeoff", Keyboard.KEY_V, Bartender.NAME);
+        ClientRegistry.registerKeyBinding(takeoffHelper);
+
         toggleEnemyGui = new KeyBinding("Target GUI focus", Keyboard.KEY_LEFT, Bartender.NAME);
         ClientRegistry.registerKeyBinding(toggleEnemyGui);
-
-        baseFinderToggle = new KeyBinding("Basefinder pause", Keyboard.KEY_PAUSE, Bartender.NAME);
-        ClientRegistry.registerKeyBinding(baseFinderToggle);
-
-        takeoff= new KeyBinding("Takeoff command", Keyboard.KEY_PRIOR, Bartender.NAME);
-        ClientRegistry.registerKeyBinding(takeoff);
-
-        chorus = new KeyBinding("Chorus command", Keyboard.KEY_NEXT, Bartender.NAME);
-        ClientRegistry.registerKeyBinding(chorus);
-
-        standHere = new KeyBinding("Stand here command", Keyboard.KEY_NUMPADENTER, Bartender.NAME);
-        ClientRegistry.registerKeyBinding(standHere);
-
-        endTasks = new KeyBinding("End all tasks", Keyboard.KEY_END, Bartender.NAME);
-        ClientRegistry.registerKeyBinding(endTasks);
 
         hotkeyCommand[0] = new KeyBinding("Command 1", Keyboard.KEY_NONE, Bartender.NAME);
         hotkeyCommand[1] = new KeyBinding("Command 2", Keyboard.KEY_NONE, Bartender.NAME);

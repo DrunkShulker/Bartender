@@ -18,8 +18,6 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 
-
-
 public class EntityUtils {
     private static Minecraft mc = Minecraft.getMinecraft();
 
@@ -43,6 +41,7 @@ public class EntityUtils {
         return entity != null && entity.getEntityId() == -100 && Minecraft.getMinecraft().player != entity;
     }
 
+    
     public static Vec3d getInterpolatedAmount(Entity entity, float ticks){
         return new Vec3d(
                 (entity.posX - entity.lastTickPosX) * ticks,
@@ -73,8 +72,7 @@ public class EntityUtils {
         return isNeutralMob(entity) && !isMobAggressive(entity);
     }
 
-  
-
+    
     public static boolean isNeutralMob(Entity entity){
         return entity instanceof EntityPigZombie ||
                 entity instanceof EntityWolf ||
@@ -90,13 +88,11 @@ public class EntityUtils {
     }
 
     
-
     public static boolean isHostileMob(Entity entity) {
         return entity.isCreatureType(EnumCreatureType.MONSTER, false) && !isNeutralMob(entity);
     }
 
     
-
     public static Vec3d getInterpolatedPos(Entity entity, float ticks) {
         return new Vec3d(entity.lastTickPosX, entity.lastTickPosY, entity.lastTickPosZ).add(getInterpolatedAmount(entity, ticks));
     }
@@ -105,13 +101,11 @@ public class EntityUtils {
         return getInterpolatedPos(entity, ticks).subtract(Minecraft.getMinecraft().getRenderManager().renderPosX, Minecraft.getMinecraft().getRenderManager().renderPosY, Minecraft.getMinecraft().getRenderManager().renderPosZ);
     }
 
-
+    
 
     public static boolean isDrivenByPlayer(Entity entityIn) {
         return Minecraft.getMinecraft().player != null && entityIn != null && entityIn == Minecraft.getMinecraft().player.getRidingEntity();
     }
-
-
 
 
     public static double[] calculateLookAt(double px, double  py, double  pz, EntityPlayer me) {
@@ -178,7 +172,6 @@ public class EntityUtils {
         return (float) Math.sqrt(entity.motionX * entity.motionX + entity.motionZ * entity.motionZ);
     }
 
-  
 
 
     public enum EntityPriority {
@@ -188,7 +181,7 @@ public class EntityUtils {
     public static Entity getPrioritizedTarget(ArrayList<Entity> targetList,EntityPriority priority) {
     	if(targetList==null||targetList.isEmpty()) return null;
         Entity entity = targetList.get(0);
-
+      
         switch (priority) {
 		case DISTANCE:
 			float distance = mc.player.getDistance(targetList.get(0));
@@ -241,7 +234,7 @@ public class EntityUtils {
         return entityList;
     }
 
- 
+    
 
     boolean canEntityFeetBeSeen(Entity entityIn) {
         return mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.eyeHeight, mc.player.posZ), new Vec3d(entityIn.posX, entityIn.posY, entityIn.posZ), false, true, false) == null;
@@ -266,9 +259,5 @@ public class EntityUtils {
         mc.player.rotationPitch = rotation[1];
     }
 
-
-
-
-
-
+   
 }

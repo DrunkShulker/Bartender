@@ -2,9 +2,11 @@ package com.drunkshulker.bartender.client.gui.clickgui;
 
 import java.io.IOException;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.input.Keybinds;
 import com.google.gson.JsonObject;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 

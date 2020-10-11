@@ -226,7 +226,7 @@ public class Bodyguard {
 			BaseFinder.lookAt(mc.player.getPositionVector().x,999,mc.player.getPositionVector().z,mc.player,false);
 			event.getMovementInput().moveForward = 1f;
 			
-			if(System.currentTimeMillis()-lastTakeOffSpaceStamp>Flight.takeOffDelay){
+			if(System.currentTimeMillis()-lastTakeOffSpaceStamp> AutoFlight.takeOffDelay){
 				lastTakeOffSpaceStamp = System.currentTimeMillis();
 				if(mc.player.isElytraFlying()) takeOffInProgress = false;
 				event.getMovementInput().jump = true;
@@ -247,7 +247,7 @@ public class Bodyguard {
 				if(!mc.player.isElytraFlying()) {
 					setTask(BodyguardTask.FIND_PROTECTED);
 				} else {
-					Flight.currentFlyTask = Flight.FlyTask.FIND_PROTECTED; return;
+					AutoFlight.currentFlyTask = AutoFlight.FlyTask.FIND_PROTECTED; return;
 				}
 			}
 		}
@@ -520,7 +520,7 @@ public class Bodyguard {
 		
 		switch (toTask){
 			case FLYING:
-				Flight.enabled = true;
+				AutoFlight.enabled = true;
 				endAllTasks(false);
 				break;
 			case RUN_AWAY:
@@ -530,7 +530,9 @@ public class Bodyguard {
 
 		
 		switch (fromTask){
-			case FLYING: Flight.enabled = false;
+			case FLYING:
+				AutoFlight.enabled = false;
+				if(ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
 				break;
 			case GO_TO_STAY:
 				BaritoneAPI.getSettings().enterPortal.value = false;
@@ -571,6 +573,8 @@ public class Bodyguard {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		if(player==null||player.getDisplayNameString().equals(PlayerGroup.mainAccount)) return;
 		
+		if(AutoFlight.useBartenderFlight&&!ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
+
 		if(!takeOffInProgress){
 			takeOffInProgress = true;
 			Timer timer = new Timer();
@@ -581,7 +585,7 @@ public class Bodyguard {
 					takeOffInProgress = false;
 					timer.cancel();
 				}
-			}, Flight.takeOffMaxTime); 
+			}, AutoFlight.takeOffMaxTime); 
 		}
 	}
 
@@ -827,8 +831,8 @@ public class Bodyguard {
 			case "state":
 				enabled = setting.value == 1;
 				if(!enabled&&Minecraft.getMinecraft().player!=null){
-					if(Flight.enabled) {
-						Flight.enabled=false; 
+					if(AutoFlight.enabled) {
+						AutoFlight.enabled=false; 
 					}
 
 					

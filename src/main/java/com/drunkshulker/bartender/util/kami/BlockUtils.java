@@ -156,7 +156,7 @@ private static IBlockState getState(BlockPos pos) {
         }
 
 
-        double getGroundPosY(boolean checkLiquid) {
+        public static double getGroundPosY(boolean checkLiquid) {
         AxisAlignedBB boundingBox = mc.player.boundingBox;
         double yOffset = mc.player.posY - boundingBox.minY;
             int[]xArray = new int[]{(int) Math.floor(boundingBox.minX), (int) Math.floor(boundingBox.maxX)};
@@ -179,7 +179,7 @@ private static IBlockState getState(BlockPos pos) {
         return boundingBox.offset(0.0, yOffset + 0.05, 0.0).minY;
         }
 
-        boolean isLiquid( BlockPos pos){
+        static boolean isLiquid(BlockPos pos){
         return mc.world.getBlockState(pos).getBlock().material.isLiquid();
         }
 

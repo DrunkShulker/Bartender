@@ -462,6 +462,18 @@
 					]
 				},
 				{
+					"title": "use elytra+",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"NO",
+						"YES"
+					],
+					"desc": [
+						"USE BARTENDER'S ELYTRA+"
+					]
+				},
+				{
 					"title": "clockwise",
 					"type": "text",
 					"value": 0,
@@ -512,7 +524,7 @@
 				{
 					"title": "auto takeoff",
 					"type": "text",
-					"value": 0,
+					"value": 1,
 					"values": [
 						"yes",
 						"no"
@@ -520,8 +532,185 @@
 					"desc": [
 						"AUTOMATIC TAKEOFF IF PROTECTED IS ELYTRA FLYING",
 						"THIS ONLY WORKS IF THE HOSTILE LIST IS EMPTY",
-						"ON COMBAT SITUATION, TRIGGER TAKEOFF MANUALLY."
+						"IN COMBAT SITUATION, TRIGGER TAKEOFF MANUALLY."
 					]
+				}
+			]
+		},
+		{
+			"name": "elytra+",
+			"desc": [
+				"LOCK Y LEVEL WHEN ELYTRA FLYING"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "state",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"ON/OFF"
+					]
+				},
+				{
+					"title": "speed",
+					"type": "text",
+					"value": 7,
+					"values": [
+						"0.5",
+						"1.0",
+						"1.5",
+						"2.0",
+						"2.5",
+						"2.6",
+						"2.7",
+						"2.8",
+						"2.85",
+						"2.87",
+						"2.9",
+						"2.95",
+						"3.0",
+						"3.5",
+						"4.0",
+						"4.5",
+						"5.0",
+						"5.5",
+						"6.0",
+						"6.5",
+						"7.0",
+						"8.5",
+						"9.0",
+						"9.5",
+						"10.0"
+					],
+					"desc": [
+						"FLY SPEED"
+					]
+				},
+				{
+					"title": "boost",
+					"type": "text",
+					"value": 7,
+					"values": [
+						"0.5",
+						"1.0",
+						"1.5",
+						"2.0",
+						"2.5",
+						"2.6",
+						"2.7",
+						"2.8",
+						"2.85",
+						"2.87",
+						"2.9",
+						"2.95",
+						"3.0",
+						"3.5",
+						"4.0",
+						"4.5",
+						"5.0",
+						"5.5",
+						"6.0",
+						"6.5",
+						"7.0",
+						"8.5",
+						"9.0",
+						"9.5",
+						"10.0"
+					],
+					"desc": [
+						"FLY SPEED FOR HIGH SPEED TRAVEL"
+					]
+				},
+				{
+					"title": "lock/unlock",
+					"type": "click",
+					"bind": 4,
+					"desc": [
+						"TOGGLE BETWEEN LOCKED AND FREE MODES"
+					],
+					"closeOnClick": true
+				}
+
+			]
+		},
+		{
+			"name": "new chunks",
+			"desc": [
+				"HIGHLIGHT FRESH CHUNKS"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "state",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"ON/OFF"
+					]
+				},
+				{
+					"title": "render",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"NO",
+						"YES"
+					],
+					"desc": [
+						"RENDER ON/OFF"
+					]
+				},
+				{
+					"title": "color",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"RED",
+						"PINK"
+					],
+					"desc": [
+						"SELECT COLOR"
+					]
+				},
+				{
+					"title": "width",
+					"type": "text",
+					"value": 4,
+					"values": [
+						"1",
+						"1.5",
+						"2",
+						"2.5",
+						"3",
+						"3.5",
+						"4",
+						"4.5",
+						"5"
+					],
+					"desc": [
+						"SELECT LINE WIDTH"
+					]
+				},
+				{
+					"title": "clear cache",
+					"type": "click",
+					"desc": [
+						"ERASE MEMORY TO AVOID LAG"
+					],
+					"closeOnClick": true
 				}
 			]
 		},
@@ -623,6 +812,7 @@
 				{
 					"title": "end tasks",
 					"type": "click",
+					"bind": 207,
 					"desc": [
 						"KILL ALL RUNNING TASKS ON ALL ACCOUNTS AND START THE DEFAULTS"
 					],
@@ -631,6 +821,7 @@
 				{
 					"title": "chorus",
 					"type": "click",
+					"bind": 209,
 					"desc": [
 						"COMMAND ALL PLAYERS IN THE GROUP TO EAT A CHORUS FRUIT.",
 						"- AUTO EAT MUST BE ENABLED",
@@ -641,6 +832,7 @@
 				{
 					"title": "takeoff",
 					"type": "click",
+					"bind": 201,
 					"desc": [
 						"MAKE ALL YOUR ALTS TO ATTEMPT TAKEOFF.",
 						"THIS FAILS PRETTY OFTEN SO YOU NEED TO TRY IT MANY TIMES.",
@@ -1666,6 +1858,7 @@
 				{
 					"title": "pause/continue",
 					"type": "click",
+					"bind": 197,
 					"desc": [
 						"PAUSE/CONTINUE HUNT"
 					],

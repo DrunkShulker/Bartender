@@ -337,7 +337,7 @@ public class ChatObserver {
 			return;
 		}
 		else {
-			Minecraft.getMinecraft().player.sendChatMessage(botMsgPrefix+" Party time! Tpa now and your request is automatically accepted! ");
+			Minecraft.getMinecraft().player.sendChatMessage(botMsgPrefix+" Party time! Type /tpa "+Minecraft.getMinecraft().player.getDisplayNameString());
 		}
 	}
 

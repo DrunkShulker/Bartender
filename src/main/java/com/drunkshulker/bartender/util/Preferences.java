@@ -51,13 +51,19 @@ public class Preferences {
 				AutoEat.applyPreferences(panel.getContents());
 				break;
 			case "flight":
-				Flight.applyPreferences(panel.getContents());
+				AutoFlight.applyPreferences(panel.getContents());
 				break;
 			case "dupe":
 				Dupe.applyPreferences(panel.getContents());
 				break;
+			case "elytra+":
+				ElytraFlight.applyPreferences(panel.getContents());
+				break;
+			case "new chunks":
+				NewChunks.applyPreferences(panel.getContents());
+				break;
 			case "grief":
-				AutoLight.applyPreferences(panel.getContents());
+				AutoFire.applyPreferences(panel.getContents());
 				Scaffold.applyPreferences(panel.getContents());
 				break;
 			default:
@@ -79,6 +85,12 @@ public class Preferences {
 			break;
 		case "group":
 			PlayerGroup.clickAction(setting.title);
+			break;
+		case "new chunks":
+			NewChunks.clickAction(setting.title);
+			break;
+		case "elytra+":
+			ElytraFlight.clickAction(setting.title);
 			break;
 		case "chat":
 			ChatObserver.clickAction(setting.title);

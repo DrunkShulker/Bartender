@@ -17,6 +17,7 @@ import net.minecraft.world.chunk.Chunk;
 public class AutoBuild {
 	private static boolean mapartMode=false;
 	public static void buildSchematic(String schematic) {
+		if(ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
 		stop();
 
 		ResourceLocation portalSchematic = new ResourceLocation(Bartender.NAME, "schematics/"+schematic);
@@ -40,6 +41,7 @@ public class AutoBuild {
 	}
 	
 	public static void buildOpenSchematic() {
+		if(ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
 		stop();
 		BaritoneAPI.getProvider().getPrimaryBaritone().getBuilderProcess().buildOpenSchematic();
 	}
@@ -87,6 +89,7 @@ public class AutoBuild {
 
 	private static void clearChunk() {
 		stop();
+		if(ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
 		Chunk chunk = Minecraft.getMinecraft().world.getChunk(Minecraft.getMinecraft().player.getPosition());
 		BaritoneAPI.getProvider().getPrimaryBaritone().getBuilderProcess().clearArea(new BlockPos(chunk.getPos().getXStart(), 0, chunk.getPos().getZStart()), new BlockPos(chunk.getPos().getXEnd(), 256, chunk.getPos().getZEnd()));
 	}

@@ -6,9 +6,11 @@ import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.module.BaseFinder;
 import com.drunkshulker.bartender.client.module.Bodyguard;
+import com.drunkshulker.bartender.client.module.ElytraFlight;
 import com.drunkshulker.bartender.util.Config;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -35,14 +37,19 @@ public class KeyInputHandler
 			}
 		}
 
+		ElytraFlight.easyTakeoff = Keybinds.takeoffHelper.isPressed();
+		ElytraFlight.spacePressed = Keyboard.isKeyDown(Keyboard.KEY_SPACE);
+
 		if(Keybinds.enemyGuiMark.isPressed()) {
 			OverlayGui.targetConfirm();
 			return;
 		}
+
 		if(Keybinds.enemyGuiNavigateDown.isPressed()) {
 			OverlayGui.targetSelect(1);
 			return;
 		}
+
 		if(Keybinds.enemyGuiNavigateUp.isPressed()) {
 			OverlayGui.targetSelect(-1);
 			return;
@@ -53,33 +60,8 @@ public class KeyInputHandler
 			return;
 		}
 
-		if(Keybinds.baseFinderToggle.isPressed()) {
-			BaseFinder.pauseOrContinue();
-			return;
-		}
-
 		if(Keybinds.toggleGui.isPressed()) {
 			mc.displayGuiScreen(new ClickGui());
-			return;
-		}
-
-		if(Keybinds.chorus.isPressed()) {
-			Bodyguard.eatChorus(true);
-			return;
-		}
-
-		if(Keybinds.takeoff.isPressed()) {
-			Bodyguard.takeOff();
-			return;
-		}
-
-		if(Keybinds.standHere.isPressed()) {
-			Bodyguard.sendGoToCommand();
-			return;
-		}
-
-		if(Keybinds.endTasks.isPressed()) {
-			Bodyguard.endAllTasks(true);
 			return;
 		}
 

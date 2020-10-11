@@ -2,8 +2,12 @@ package com.drunkshulker.bartender;
 
 import java.io.File;
 
+import com.drunkshulker.bartender.util.forge.ForgeEventProcessor;
 import io.mappedbus.MappedBusReader;
 import io.mappedbus.MappedBusWriter;
+
+import me.zero.alpine.fork.bus.EventBus;
+import me.zero.alpine.fork.bus.EventManager;
 import org.lwjgl.opengl.Display;
 
 import com.drunkshulker.bartender.client.CommandsRegistry;
@@ -18,7 +22,7 @@ import com.drunkshulker.bartender.proxy.CommonProxy;
 import com.drunkshulker.bartender.util.Config;
 import com.drunkshulker.bartender.util.Preferences;
 import com.drunkshulker.bartender.util.forge.ForgeLoadingScreen;
-import com.drunkshulker.bartender.util.forge.ModsHelper;
+import com.drunkshulker.bartender.util.forge.ForgeModsHelper;
 import com.drunkshulker.bartender.util.kami.InventoryUtils;
 
 import net.minecraft.client.Minecraft;
@@ -36,7 +40,7 @@ public class Bartender
 {
     public static final String MOD_ID = "bartender";
     public static final String NAME = "Bartender";
-    public static final String VERSION = "1.1.9";
+    public static final String VERSION = "1.2.0";
     public static final String ACCEPTED_VERSIONS = "(1.12.2)";
     public static final String CLIENT_PROXY = "com.drunkshulker.bartender.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.drunkshulker.bartender.proxy.CommonProxy";
@@ -51,6 +55,9 @@ public class Bartender
     public static boolean MAPPED_BUS_INITIALIZED;
     public static MappedBusReader IPC_READER;
     public static MappedBusWriter IPC_WRITER;
+
+    
+    public static final EventBus EVENT_BUS = new EventManager();
 
     @Instance
 	public static Bartender instance;
@@ -105,8 +112,8 @@ public class Bartender
     	Preferences.apply();
     	
     	
-    	IMPACT_INSTALLED = ModsHelper.impactInstalled();
-    	KAMI_INSTALLED = ModsHelper.kamiBlueInstalled();
+    	IMPACT_INSTALLED = ForgeModsHelper.impactInstalled();
+    	KAMI_INSTALLED = ForgeModsHelper.kamiBlueInstalled();
     	
     	
     	PlayerFriends.loadImpactFriends();
@@ -121,7 +128,9 @@ public class Bartender
         
         
         MinecraftForge.EVENT_BUS.register(new GuiHandler());
-        
+
+        MinecraftForge.EVENT_BUS.register(new ForgeEventProcessor());
+
         
         CommandsRegistry.registerAll();
 

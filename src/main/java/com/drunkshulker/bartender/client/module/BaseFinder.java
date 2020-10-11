@@ -123,7 +123,7 @@ public class BaseFinder {
 			if(currentTask==FinderTask.PAUSE) {
 				return;
 			}
-			
+
 			if(currentTask==FinderTask.CAPTURE_TARGET) {
 				
 				event.getMovementInput().moveForward = 0f;
@@ -174,11 +174,12 @@ public class BaseFinder {
 			}
 			
 			
-			if(mc.player.posY<flightLevel) {				
+			if(mc.player.posY<flightLevel) {
+				if(ElytraFlight.mode!=ElytraFlight.Mode.CONTROL) ElytraFlight.mode= ElytraFlight.Mode.CONTROL;
 				EntityPlayerSP p = mc.player;
 				lookAt(p.posX, 1000, p.posZ, p, false);
 				event.getMovementInput().moveForward = 1f;
-			}
+			}else if(ElytraFlight.mode!=ElytraFlight.Mode.BOOST) ElytraFlight.mode= ElytraFlight.Mode.BOOST;
 			
 			
 			else {
@@ -477,6 +478,7 @@ public class BaseFinder {
 		for (ClickGuiSetting setting : contents) {
 			switch (setting.title) {
 			case "state":
+				if(enabled&&setting.value==0) ElytraFlight.setMode(ElytraFlight.Mode.CONTROL);
 				enabled = setting.value == 0;
 				break;
 			case "travel":
@@ -542,6 +544,7 @@ public class BaseFinder {
 		currentTask = task;
 		if(task == FinderTask.PAUSE) {
 			writeToLog("pause");
+			if(ElytraFlight.mode!= ElytraFlight.Mode.CONTROL)ElytraFlight.setMode(ElytraFlight.Mode.CONTROL);
 			arrivalEstimate="";
 		}
 		else if(task==FinderTask.CAPTURE_TARGET) {
@@ -613,7 +616,7 @@ public class BaseFinder {
 				setTask(FinderTask.PAUSE);
 			}
 		}else {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder in not enabled!"));
+			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder is not enabled!"));
 		}
 	}
 

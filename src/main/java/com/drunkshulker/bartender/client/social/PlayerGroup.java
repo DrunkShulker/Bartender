@@ -113,12 +113,12 @@ public class PlayerGroup {
 					AutoBuild.prepareTpa();
 					Bodyguard.prepareTpa();
 					
-					Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Accepting /tpahere to: " + member));
+					Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Accepting /tpahere to: " + member));
 					Minecraft.getMinecraft().player.sendChatMessage("/tpaccept");
 					return;
 				}
 			}
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Ignoring /tpahere to: " + message.split("\\s+")[0]));
+			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Ignoring /tpahere to: " + message.split("\\s+")[0]));
 		}
 		
 		

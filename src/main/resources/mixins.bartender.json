@@ -5,6 +5,9 @@
   "refmap": "mixins.bartender.refmap.json",
   "minVersion": "0.6",
   "client": [
-
+    "MixinEntityLivingBase",
+    "MixinNetworkManager",
+    "MixinEntityPlayer",
+    "MixinEntity"
   ]
 }

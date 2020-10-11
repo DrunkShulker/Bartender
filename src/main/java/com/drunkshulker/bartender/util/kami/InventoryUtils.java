@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 public class InventoryUtils {
     private Minecraft mc = Minecraft.getMinecraft();
 
-
+    
     public ArrayList<Integer> getSlots(int min, int max, int itemID) {
         ArrayList<Integer> slots = new ArrayList<>();
         for(int i = min; i <= max; i++) {
@@ -27,7 +27,7 @@ public class InventoryUtils {
         else return null;
     }
 
-  
+    
     public ArrayList<Integer> getSlotsHotbar(int itemId) {
         return getSlots(0, 8, itemId);
     }
@@ -37,7 +37,7 @@ public class InventoryUtils {
         return getSlots(9, 35, itemId);
     }
 
-  
+    
     public ArrayList<Integer> getSlotsFullInv(int min, int max, int itemId) {
     	ArrayList<Integer> slots = new ArrayList<>();
     	for(int i = min; i < max; i++) {
@@ -49,12 +49,12 @@ public class InventoryUtils {
         else return null;
     }
 
-  
+    
     public ArrayList<Integer> getSlotsFullInvHotbar(int itemId){
         return getSlots(36, 44, itemId);
     }
 
-   
+    
     public ArrayList<Integer> getSlotsFullInvNoHotbar(int itemId) {
         return getSlots(9, 35, itemId);
     }
@@ -71,10 +71,10 @@ public class InventoryUtils {
         return currentCount;
     }
 
-    
+   
     public boolean inProgress = false;
 
-   
+    
     public static void swapSlot(int slot) {
         Minecraft.getMinecraft().player.inventory.currentItem = slot;
         
@@ -151,7 +151,7 @@ public class InventoryUtils {
 	    thread.start();
     }
 
-  
+    
     public void moveAllToSlot(int slotFrom, int slotTo, long delayMillis) {
         if (inProgress) return;
         Thread thread = new Thread(){
@@ -180,7 +180,7 @@ public class InventoryUtils {
 	    thread.start();
     }
 
-  
+    
     public void quickMoveSlot(int slotFrom, long delayMillis) {
         if (inProgress) return;
         Thread thread = new Thread(){
@@ -225,7 +225,7 @@ public class InventoryUtils {
     }
     
 
-    
+   
     public void throwAllInSlot(int slot, long delayMillis) {
         if (inProgress) return;
 

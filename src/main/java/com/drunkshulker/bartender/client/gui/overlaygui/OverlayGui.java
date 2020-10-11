@@ -1,15 +1,12 @@
 package com.drunkshulker.bartender.client.gui.overlaygui;
 
-import com.drunkshulker.bartender.client.module.EntityRadar;
+import com.drunkshulker.bartender.client.module.*;
 import org.lwjgl.opengl.GL11;
 
 import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.GuiHandler;
 import com.drunkshulker.bartender.client.gui.clickgui.BeveledBox;
 import com.drunkshulker.bartender.client.input.ChatObserver;
-import com.drunkshulker.bartender.client.module.BaseFinder;
-import com.drunkshulker.bartender.client.module.Bodyguard;
-import com.drunkshulker.bartender.client.module.SafeTotemSwap;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
 
 import net.minecraft.client.Minecraft;
@@ -29,9 +26,9 @@ public class OverlayGui extends Gui
 	static long lastPopupMessage = 0;
 	static String lastTargetedEnemy = "";
 
-    
-    
-    
+	public static final ResourceLocation texture = new ResourceLocation(Bartender.MOD_ID, "textures/gui/overlay.png");
+	static final int textureWidth = 22;
+	static final int textureHeight = 22;
 
 	public static String lastGuiAction = "";
 	public static long lastGuiActionStamp = System.currentTimeMillis();
@@ -171,7 +168,6 @@ public class OverlayGui extends Gui
 			BeveledBox.drawBeveledBox(width/2-(4*ss)-(ss/2), height-ss-1, width/2-(3*ss)-(ss/2), height-1, 2, color, color, 0x44B200FF);
 			
 			
-			
 			if(SafeTotemSwap.totalCount-SafeTotemSwap.totalUselessCount==SafeTotemSwap.totalCount){
 				drawCenteredString(mc.fontRenderer, SafeTotemSwap.totalCount+"", (width/2)-109, height-33, Integer.parseInt("FFFFFF", 16));
 
@@ -180,7 +176,19 @@ public class OverlayGui extends Gui
 				drawCenteredString(mc.fontRenderer, "("+SafeTotemSwap.totalCount+")", (width/2)-109, height-33, Integer.parseInt("FFFFFF", 16));
 			}
 		}
+
 		
+		if(ElytraFlight.enabled){
+			if(ElytraFlight.easyTakeoff){
+				renderCustomTexture((width/2)-147, height-textureHeight, textureWidth*2, 0, textureWidth, textureHeight, texture, 1f);
+			}
+			else if(ElytraFlight.mode== ElytraFlight.Mode.BOOST){
+				renderCustomTexture((width/2)-147, height-textureHeight, 0, 0, textureWidth, textureHeight, texture, 1f);
+			}else {
+				renderCustomTexture((width/2)-147, height-textureHeight, textureWidth, 0, textureWidth, textureHeight, texture, 1f);
+			}
+		}
+
 		
 		if(GuiHandler.txtHpAndFood&&survivalMode) {
 			int food = mc.player.getFoodStats().getFoodLevel();
@@ -192,7 +200,17 @@ public class OverlayGui extends Gui
     }
     
     
- 
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     public static void renderCustomTexture(int x, int y, int u, int v, int width, int height, ResourceLocation resourceLocation, float scale){
       Minecraft mc = Minecraft.getMinecraft();
       
@@ -262,4 +280,7 @@ public class OverlayGui extends Gui
     	if(!GuiHandler.showTargetListing) return false;
     	return true;
 	}
+
+
 }
+
