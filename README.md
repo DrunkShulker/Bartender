@@ -12,6 +12,7 @@ Click [here](https://github.com/DrunkShulker/Bartender/wiki).
 Thanks to the following projects for making Bartender possible:
 - [KAMI Blue](https://github.com/kami-blue/client)
 - [MappedBus](https://github.com/caplogic/Mappedbus)
+- [Salhack](https://github.com/ionar2/salhack)
 - [Baritone](https://github.com/cabaletta/baritone)
 - [Forge](https://files.minecraftforge.net/)
 
