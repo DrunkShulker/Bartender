@@ -26,22 +26,13 @@ import com.google.gson.JsonParser;
 import net.minecraft.util.math.BlockPos;
 
 public class Config {
-	
-	public static final boolean DEBUG_IGNORE_SAVES = false;
+
 	public static final String FILENAME = "bartender-config.json";
 	public static String[] HOTKEY_COMMANDS = new String[9];
 	public static String CHAT_POST_FIX;
 	
 	public static void load()
 	{
-		
-		if(DEBUG_IGNORE_SAVES) {
-			
-			System.out.println("DEBUG: ignoring bartender-config.json");
-			defaults();
-			return;
-		}
-		
 		
 		File f = new File(Bartender.BARTENDER_DIR+"/"+FILENAME);
 		if(f.exists() && !f.isDirectory())
@@ -89,7 +80,6 @@ public class Config {
 
 			
 			
-			
 		}
 		else
 		{
@@ -98,7 +88,7 @@ public class Config {
 			defaults();
 		}
 	}
-	
+
 	public static void save()
 	{
 		
@@ -132,7 +122,7 @@ public class Config {
 
 
 		
-		
+
 		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(jsonObject).replace("\\\"", "");

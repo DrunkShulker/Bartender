@@ -50,6 +50,14 @@ public class Preferences {
 			case "auto eat":
 				AutoEat.applyPreferences(panel.getContents());
 				break;
+			case "utils":
+				Sprint.applyPreferences(panel.getContents());
+				Freecam.applyPreferences(panel.getContents());
+				Velocity.applyPreferences(panel.getContents());
+				AntiOverlay.applyPreferences(panel.getContents());
+				Jesus.applyPreferences(panel.getContents());
+				NoSlow.applyPreferences(panel.getContents());
+				break;
 			case "flight":
 				AutoFlight.applyPreferences(panel.getContents());
 				break;

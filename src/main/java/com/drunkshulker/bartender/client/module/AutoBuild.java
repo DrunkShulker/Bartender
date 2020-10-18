@@ -15,8 +15,12 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.chunk.Chunk;
 
 public class AutoBuild {
+
 	private static boolean mapartMode=false;
+	private static boolean layerMode=false;
+
 	public static void buildSchematic(String schematic) {
+		updateBaritoneSettings();
 		if(ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
 		stop();
 
@@ -41,6 +45,7 @@ public class AutoBuild {
 	}
 	
 	public static void buildOpenSchematic() {
+		updateBaritoneSettings();
 		if(ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
 		stop();
 		BaritoneAPI.getProvider().getPrimaryBaritone().getBuilderProcess().buildOpenSchematic();
@@ -52,8 +57,7 @@ public class AutoBuild {
 	}
 
 	public static void clickAction(String action) {
-		BaritoneAPI.getSettings().mapArtMode.value=mapartMode;
-
+		updateBaritoneSettings();
 		switch (action) {
 		case "stop":
 			stop();
@@ -98,13 +102,20 @@ public class AutoBuild {
 		stop();
 	}
 
+	private static void updateBaritoneSettings(){
+		BaritoneAPI.getSettings().mapArtMode.value=mapartMode;
+		BaritoneAPI.getSettings().buildInLayers.value=layerMode;
+	}
+
 	public static void applyPreferences(ClickGuiSetting[] contents) {
 		for (ClickGuiSetting setting : contents) {
 			switch (setting.title) {
 				case "mapart mode":
 					mapartMode=setting.value == 1;
 					break;
-
+				case "layer mode":
+					layerMode=setting.value == 1;
+					break;
 				default:
 					break;
 			}

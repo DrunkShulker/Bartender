@@ -3,7 +3,7 @@ package com.drunkshulker.bartender.client.module;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.util.salhack.MathUtil;
 import com.drunkshulker.bartender.util.salhack.RenderUtil;
-import com.drunkshulker.bartender.util.salhack.events.RenderEvent;
+import com.drunkshulker.bartender.util.salhack.events.render.RenderEvent;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;

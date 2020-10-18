@@ -544,7 +544,6 @@ public class BaseFinder {
 		currentTask = task;
 		if(task == FinderTask.PAUSE) {
 			writeToLog("pause");
-			if(ElytraFlight.mode!= ElytraFlight.Mode.CONTROL)ElytraFlight.setMode(ElytraFlight.Mode.CONTROL);
 			arrivalEstimate="";
 		}
 		else if(task==FinderTask.CAPTURE_TARGET) {
@@ -622,7 +621,7 @@ public class BaseFinder {
 
 	public static void setCustomGoal(int x, int z) {
 		customTargetGoal = new BlockPos(x,0,z);
-		Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder custom goal set to "+customTargetGoal.toString()));
+		Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder custom goal set to "+customTargetGoal.toString()+". Set 'travel: custom' and 'state: ON' to start you journey."));
 		Config.save();
 	}
 

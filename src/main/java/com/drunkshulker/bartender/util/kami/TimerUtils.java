@@ -2,7 +2,7 @@ package com.drunkshulker.bartender.util.kami;
 
 public class TimerUtils {
         long time = getCurrentTime();
-        
+        //protected set
 
         protected long getCurrentTime() {
         return System.currentTimeMillis();
@@ -27,16 +27,16 @@ public class TimerUtils {
         }
 
 
-        
+        // Implementations
 
 
-    
-    
-    
-                
-    
-    
-    
-    
-    
+    // public static class StopTimer extends TimerUtils {
+    //      private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+    //       StopTimer(TimeUnit timeUnit){
+                //         this.timeUnit=timeUnit;
+    //      }
+    //      long stop() {
+    //          return (getCurrentTime() - time) / timeUnit.multiplier;
+    //       }
+    //   }
 }

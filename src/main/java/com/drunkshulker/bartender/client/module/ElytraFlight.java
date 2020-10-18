@@ -1,16 +1,15 @@
 package com.drunkshulker.bartender.client.module;
 
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
-import com.drunkshulker.bartender.util.kami.BlockUtils;
 import com.drunkshulker.bartender.util.salhack.MathUtil;
 import com.drunkshulker.bartender.util.salhack.Timer;
-import com.drunkshulker.bartender.util.salhack.events.EventNetworkPacketEvent;
-import com.drunkshulker.bartender.util.salhack.events.EventPlayerTravel;
+
+import com.drunkshulker.bartender.util.salhack.events.network.EventNetworkPacketEvent;
+import com.drunkshulker.bartender.util.salhack.events.player.EventPlayerTravel;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.network.play.client.CPacketEntityAction;
@@ -24,8 +23,9 @@ public class ElytraFlight implements Listenable {
     public static float speed = 1.82f;
     public static float boost = 1.82f;
     public static boolean easyTakeoff = false;
-    public final float DownSpeed = 1.82f;
-    public final float GlideSpeed = 1f;
+    public static boolean slowDown = false;
+    
+    
     
     public final boolean Accelerate = true;
     public static boolean spacePressed = false;
@@ -62,8 +62,6 @@ public class ElytraFlight implements Listenable {
         BOOST, Tarzan, Superior, Packet, CONTROL
     }
 
-
-
     @EventHandler
     private Listener<EventPlayerTravel> OnTravel = new Listener<>(event ->
     {
@@ -76,11 +74,10 @@ public class ElytraFlight implements Listenable {
 
         if (!mc.player.isElytraFlying()) {
             if (!mc.player.onGround && easyTakeoff) {
-                if (!InstantFlyTimer.passed(500))
+                if (!InstantFlyTimer.passed(400))
                     return;
 
                 InstantFlyTimer.reset();
-
                 mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, Action.START_FALL_FLYING));
             }
 
@@ -140,10 +137,10 @@ public class ElytraFlight implements Listenable {
             if (l_MotionSq > 1.0) {
                 return;
             } else {
-                double[] dir = MathUtil.directionSpeedNoForward(speed);
+                double[] dir = MathUtil.directionSpeedNoForward(getSpeed());
 
                 mc.player.motionX = dir[0];
-                mc.player.motionY = -(GlideSpeed / 10000f);
+                mc.player.motionY = -(getSpeed() / 10000f);
                 mc.player.motionZ = dir[1];
             }
 
@@ -155,16 +152,16 @@ public class ElytraFlight implements Listenable {
 
         p_Travel.cancel();
 
-        double[] dir = MathUtil.directionSpeed(speed);
+        double[] dir = MathUtil.directionSpeed(getSpeed());
 
         if (mc.player.movementInput.moveStrafe != 0 || mc.player.movementInput.moveForward != 0) {
             mc.player.motionX = dir[0];
-            mc.player.motionY = -(GlideSpeed / 10000f);
+            mc.player.motionY = -(getSpeed() / 10000f);
             mc.player.motionZ = dir[1];
         }
 
         if (mc.player.movementInput.sneak)
-            mc.player.motionY = -DownSpeed;
+            mc.player.motionY = -getSpeed();
 
         mc.player.prevLimbSwingAmount = 0;
         mc.player.limbSwingAmount = 0;
@@ -178,11 +175,11 @@ public class ElytraFlight implements Listenable {
             SendMessage = false;
         }
 
-        float l_Speed = this.speed;
+        float l_Speed = getSpeed();
 
         final double[] dir = MathUtil.directionSpeed(l_Speed);
 
-        mc.player.motionY = -(GlideSpeed / 10000f);
+        mc.player.motionY = -(getSpeed() / 10000f);
 
         if (mc.player.movementInput.moveStrafe != 0 || mc.player.movementInput.moveForward != 0) {
             mc.player.motionX = dir[0];
@@ -193,16 +190,19 @@ public class ElytraFlight implements Listenable {
         }
 
         if (mc.player.movementInput.sneak)
-            mc.player.motionY = -DownSpeed;
+            mc.player.motionY = -getSpeed();
 
         mc.player.prevLimbSwingAmount = 0;
         mc.player.limbSwingAmount = 0;
         mc.player.limbSwing = 0;
     }
 
+    private float getSpeed() {
+        return useSpeed;
+    }
 
     private void HandleControlMode(EventPlayerTravel p_Event) {
-        final double[] dir = MathUtil.directionSpeed(speed);
+        final double[] dir = MathUtil.directionSpeed(getSpeed());
 
         if (mc.player.movementInput.moveStrafe != 0 || mc.player.movementInput.moveForward != 0) {
             mc.player.motionX = dir[0];
@@ -214,10 +214,9 @@ public class ElytraFlight implements Listenable {
             mc.player.motionX = 0;
             mc.player.motionZ = 0;
         }
-        if(mc.player.isSneaking()) mc.player.motionY = -0.9;
-        else if(spacePressed) mc.player.motionY = 0.9;
+        if(mc.player.isSneaking()) mc.player.motionY = -1;
+        else if(spacePressed) mc.player.motionY = 1;
         else mc.player.motionY = (-MathUtil.degToRad(mc.player.rotationPitch)) * mc.player.movementInput.moveForward;
-
 
         mc.player.prevLimbSwingAmount = 0;
         mc.player.limbSwingAmount = 0;
@@ -252,6 +251,7 @@ public class ElytraFlight implements Listenable {
                     break;
                 case "speed":
                     speed = setting.values.get(setting.value).getAsFloat();
+                    setMode(mode);
                     break;
                 case "boost":
                     boost = setting.values.get(setting.value).getAsFloat();

@@ -496,7 +496,10 @@ public final class RenderUtil
         bufferbuilder.pos((double) par2, (double) par1, 0.0D).color(var6, var7, var8, var10).endVertex();
         bufferbuilder.pos((double) par0, (double) par1, 0.0D).color(var6, var7, var8, var10).endVertex();
 
-        
+        /*
+         * tessellator.addVertex((double)par0, (double)par3, 0.0D); tessellator.addVertex((double)par2, (double)par3, 0.0D); tessellator.addVertex((double)par2, (double)par1, 0.0D);
+         * tessellator.addVertex((double)par0, (double)par1, 0.0D);
+         */
         tessellator.draw();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
@@ -505,11 +508,19 @@ public final class RenderUtil
 
     public static void drawSplitString(String p_Name, int p_X, int p_Y, int p_K, int p_Color)
     {
-      
+        /*
+         * final HudModule l_Hud = (HudModule) SalHack.INSTANCE.getModuleManager().find(HudModule.class);
+         *
+         * if (l_Hud != null) { /* if (l_Hud.CustomFont.getValue()) { GL11.glEnable(3042); GL11.glDisable(GL11.GL_DEPTH_TEST); GL11.glEnable(GL11.GL_POINT_SMOOTH);
+         * GL11.glHint(GL11.GL_POINT_SMOOTH_HINT, GL11.GL_NICEST); GL11.glDepthMask(false); SalHack.INSTANCE.customFont.drawSplitString(p_Name, p_X, p_Y, p_K, p_Color);
+         * GL11.glEnable(GL11.GL_DEPTH_TEST); GL11.glDisable(GL11.GL_POINT_SMOOTH); GL11.glDepthMask(true); } else
+         */
+        // Minecraft.getMinecraft().fontRenderer.drawSplitString(p_Name, p_X, p_Y, p_K, p_Color);
+        // .p_Color. }*/
         Minecraft.getMinecraft().fontRenderer.drawSplitString(p_Name, p_X, p_Y, p_K, p_Color);
     }
 
-  
+    /* ##### RECTANGLE METHODS ##### */
     public static void drawBorderedRect(int x, int y, int x1, int y1, int color, float lineWidth, int color1)
     {
         drawRect(x, y, x1, y1, color);

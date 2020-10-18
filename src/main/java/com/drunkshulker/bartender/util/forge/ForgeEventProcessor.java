@@ -1,7 +1,10 @@
 package com.drunkshulker.bartender.util.forge;
 
 import com.drunkshulker.bartender.Bartender;
-import com.drunkshulker.bartender.util.salhack.events.RenderEvent;
+import com.drunkshulker.bartender.util.salhack.events.client.EventClientTick;
+import com.drunkshulker.bartender.util.salhack.events.render.EventRenderGetFOVModifier;
+import com.drunkshulker.bartender.util.salhack.events.render.RenderEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -14,10 +17,13 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-
 public class ForgeEventProcessor
 {
+    
+
     @SubscribeEvent
     public void onRender(RenderWorldLastEvent event)
     {
@@ -44,12 +50,27 @@ public class ForgeEventProcessor
     }
 
     @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event)
+    {
+        if (Minecraft.getMinecraft().player == null)
+            return;
+
+        Bartender.EVENT_BUS.post(new EventClientTick());
+    }
+
+    @SubscribeEvent
     public void onEntitySpawn(EntityJoinWorldEvent event)
     {
         if (event.isCanceled())
             return;
 
         Bartender.EVENT_BUS.post(event);
+    }
+
+    @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
+    public void onKeyInput(InputEvent.KeyInputEvent event)
+    {
+        
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -134,6 +155,17 @@ public class ForgeEventProcessor
     public void onClientChat(ClientChatReceivedEvent event)
     {
         Bartender.EVENT_BUS.post(event);
+    }
+
+    @SubscribeEvent
+    public void getFOVModifier(EntityViewRenderEvent.FOVModifier p_Event)
+    {
+        EventRenderGetFOVModifier l_Event = new EventRenderGetFOVModifier((float) p_Event.getRenderPartialTicks(), true);
+        Bartender.EVENT_BUS.post(l_Event);
+        if (l_Event.isCancelled())
+        {
+            p_Event.setFOV(l_Event.GetFOV());
+        }
     }
 
     @SubscribeEvent

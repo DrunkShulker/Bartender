@@ -119,7 +119,9 @@ public class Aura {
 	}
 
 	public static Entity getTarget() {
-
+	 
+	
+	
 		boolean[] player = new boolean[] {true, false, true};
 		boolean[] mob = new boolean[] {true, attackPassiveMobs, attackPassiveMobs, true};
 		

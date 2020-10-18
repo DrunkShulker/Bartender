@@ -40,9 +40,20 @@ public class PlayerGroup {
 			final String outputText = playerInfoMap.stream()
 					.map(tabOverlay::getPlayerName)
 					.collect(Collectors.joining(", "));
-			
+
 			List<String> items = Arrays.asList(outputText.split("\\s*,\\s*"));
+
+			
 			if(items.contains(username)) return true;
+
+			
+			username = username.replace("Â§r", "");
+			username = username.replace("§r", "");
+			for (String s:items) {
+				if(s==null||s.length()<3) continue;
+				if(s.substring(0, s.length()-2).equals(username)) return true;
+			}
+
 		}
 
 		return false;

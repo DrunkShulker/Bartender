@@ -27,11 +27,17 @@ public class AutoFlight {
 	public static boolean enabled = false;
 	public static int followDistance = 5;
 	public static FlyTask currentFlyTask = FlyTask.HOVER;
-	public static boolean holdLanding = false;
+	public static HoldLanding holdLanding = HoldLanding.OFF;
 	public static boolean hoverOrbitEnabled = false;
 	private static Vec3d followedPosition;
 	public static int takeOffDelay = 400, takeOffMaxTime = 6000;
 	public static boolean hoverOrbitClockwise = false;
+
+	public enum HoldLanding{
+		OFF,
+		RAGE,
+		FREEZE
+	}
 
 	
 	private static final Vec3d[] orbitOrder = new Vec3d[]{
@@ -161,17 +167,26 @@ public class AutoFlight {
 			if(main!=null
 					&&main.isElytraFlying()
 					&&!followed.isElytraFlying()
-					&&holdLanding
+					&&holdLanding!=HoldLanding.OFF
 					&&!Bodyguard.currentFollowTarget.equals(PlayerGroup.mainAccount)){
 				
 				followedPosition=followedPosition.add(0,4,0);
 				float distance = followed.getDistance(player);
+
 				
 				double yLevel = followedPosition.y;
-				if(yLevel<6) yLevel= yLevel=6;
+				if(yLevel<6) {
+					yLevel = 6;
+				}
 				
 				BaseFinder.lookAt(followedPosition.x, yLevel, followedPosition.z+1, player, false);
-				event.getMovementInput().moveForward = 1f;
+				if(holdLanding==HoldLanding.RAGE) {
+					event.getMovementInput().moveForward = 1f;
+				}else if(holdLanding==HoldLanding.FREEZE) {
+					if(distance>4) {
+						event.getMovementInput().moveForward = 1f;
+					}
+				}
 			}
 			
 			else if(!followed.isElytraFlying()) {
@@ -218,7 +233,9 @@ public class AutoFlight {
 		for (ClickGuiSetting setting : contents) {
 			switch (setting.title) {
 			case "hold landing":
-				holdLanding = setting.value == 1;
+				if(setting.value == 0) holdLanding = HoldLanding.OFF;
+				if(setting.value == 1) holdLanding = HoldLanding.RAGE;
+				if(setting.value == 2) holdLanding = HoldLanding.FREEZE;
 				break;
 				case "orbit":
 					hoverOrbitEnabled = setting.value==1;

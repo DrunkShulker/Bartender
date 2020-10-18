@@ -173,12 +173,16 @@
 					]
 				},
 				{
-					"title": "reset layout",
-					"type": "click",
-					"desc": [
-						"RESET CLICKGUI LAYOUT"
+					"title": "forge screen",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
 					],
-					"closeOnClick": false
+					"desc": [
+						"MAKES FORGE LOADING SCREEN BLACK"
+					]
 				}
 			]
 		},
@@ -440,13 +444,14 @@
 					"type": "text",
 					"value": 1,
 					"values": [
-						"no",
-						"yes"
+						"off",
+						"rage",
+						"freeze"
 					],
 					"desc": [
 						"WHEN ATTACKING A GROUND ENEMY FROM AIR,",
 						"GUARD TRIES TO STAY AIRBORNE UNTIL PROTECTED LANDS.",
-						"IF YOUR ELYTRA SPEED IS TOO HIGH, THE GUARD WILL MOST LIKELY LAND ANYWAY"
+						"IF YOUR ELYTRA+ FLY SPEED IS TOO HIGH, THE GUARD WILL MOST LIKELY LAND ANYWAY"
 					]
 				},
 				{
@@ -561,9 +566,13 @@
 				{
 					"title": "speed",
 					"type": "text",
-					"value": 7,
+					"value": 10,
 					"values": [
+						"0.2",
+						"0.4",
 						"0.5",
+						"0.7",
+						"0.9",
 						"1.0",
 						"1.5",
 						"2.0",
@@ -711,6 +720,91 @@
 						"ERASE MEMORY TO AVOID LAG"
 					],
 					"closeOnClick": true
+				}
+			]
+		},
+		{
+			"name": "utils",
+			"desc": [
+				"SOME USEFUL HACKS THAT DON'T NEED THEIR OWN PANEL"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "anti overlay",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"DON'T RENDER OVERLAYS"
+					]
+				},
+				{
+					"title": "no slow",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"DON'T LET SOUL SAND OR COBWEB SLOW YOU DOWN!",
+						"ALSO ALLOWS EATING WITHOUT SLOWING DOWN"
+					]
+				},
+				{
+					"title": "jesus",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"WALK ON WATER"
+					]
+				},
+				{
+					"title": "freecam",
+					"type": "text",
+					"value": 0,
+					"bind": 3,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"MOVE CAMERA FREELY"
+					]
+				},
+				{
+					"title": "sprint",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"AUTOMATIC SPRINT"
+					]
+				},
+				{
+					"title": "velocity",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"VELOCITY & NOPUSH", "PREVENTS KNOCKBACK AND STUFF"
+					]
 				}
 			]
 		},
@@ -1422,7 +1516,6 @@
 					"type": "text",
 					"value": 3,
 					"values": [
-						"1",
 						"2",
 						"3",
 						"4",
@@ -1471,12 +1564,24 @@
 					"type": "text",
 					"value": 0,
 					"values": [
-						"off",
-						"on"
+						"OFF",
+						"ON"
 					],
 					"desc": [
 						"MAPART MODE MAKES BARITONE ONLY CARE",
 						"ABOUT THE TOP BLOCK OF EACH COLUMN"
+					]
+				},
+				{
+					"title": "layer mode",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"BUILD SCHEMATIC LAYER BY LAYER"
 					]
 				},
 				{
@@ -1711,8 +1816,8 @@
 					"type": "text",
 					"value": 1,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"OF/OFF"

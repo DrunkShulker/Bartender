@@ -754,7 +754,6 @@ public class Bodyguard {
 		
 		if((friendly==Friendly.IMPACT_FRIENDS||friendly==Friendly.BOTH)&& PlayerFriends.impactFriends.contains(enemyToAdd)) return;
 		if((friendly==Friendly.FRIENDS_LIST||friendly==Friendly.BOTH)&& PlayerFriends.friends.contains(enemyToAdd)) return;
-		if(PlayerGroup.DEFAULT_MEMBERS.contains(enemyToAdd)) return;
 		if(PlayerGroup.members.contains(enemyToAdd)) return;
 
 		if(!currentEnemies.contains(enemyToAdd)) {

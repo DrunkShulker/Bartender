@@ -8,6 +8,7 @@ import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.gui.overlaygui.PauseOverlayGui;
 
 import com.drunkshulker.bartender.client.module.Dupe;
+import com.drunkshulker.bartender.util.forge.ForgeLoadingScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -157,6 +158,10 @@ public class GuiHandler {
 				showDimmed = setting.value==0;
 			case "bind info":
 				showBindInfo = setting.value==0;
+				break;
+			case "forge screen":
+				ForgeLoadingScreen.modify(setting.value==1);
+				break;
 			case "watermark":
 				String val = setting.values.get(setting.value).getAsString();
 				if(val.equals("show")) {

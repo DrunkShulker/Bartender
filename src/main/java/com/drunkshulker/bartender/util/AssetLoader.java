@@ -7,11 +7,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 import com.drunkshulker.bartender.Bartender;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.apache.commons.io.FileUtils;
 
 public class AssetLoader {
 	public File extractSchematic(String filename) throws IOException {
@@ -30,7 +36,19 @@ public class AssetLoader {
 			return null;
 		}
 	}
-	
+
+	public static boolean copyFileAndOverwrite(File from, File to){
+		try{
+			Path from1 = from.toPath();
+			Path to1 = to.toPath();
+			Files.copy(from1, to1, StandardCopyOption.REPLACE_EXISTING);
+			return true;
+		}catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	
     private static void copyInputStreamToFile(InputStream inputStream, File file)
 		throws IOException {

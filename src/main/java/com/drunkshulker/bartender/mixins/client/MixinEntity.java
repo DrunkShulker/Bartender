@@ -9,6 +9,7 @@ import net.minecraft.entity.MoverType;
 @Mixin(Entity.class)
 public abstract class MixinEntity
 {
+
     @Shadow public abstract boolean equals(Object p_equals_1_);
 
     @Shadow

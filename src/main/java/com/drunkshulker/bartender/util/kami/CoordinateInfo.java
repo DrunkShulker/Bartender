@@ -32,7 +32,7 @@ public class CoordinateInfo {
         try {
             return CoordUtil.readCoords(CoordUtil.coordsLogFilename).get(CoordUtil.readCoords(CoordUtil.coordsLogFilename).size() - 1).id + 1;
         } catch (ArrayIndexOutOfBoundsException ignored) {
-            return 0; 
+            return 0; // if you haven't saved coords before, this will throw, because the size() is 0
         }
     }
 

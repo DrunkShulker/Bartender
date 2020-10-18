@@ -10,14 +10,12 @@ import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGui;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiPanel;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
-import com.drunkshulker.bartender.client.input.Keybinds;
 import com.drunkshulker.bartender.util.AssetLoader;
 import com.drunkshulker.bartender.util.Config;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.drunkshulker.bartender.util.Preferences;
+import com.google.gson.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.text.TextComponentString;
 
 public class GuiConfig {
 	
@@ -64,14 +62,7 @@ public class GuiConfig {
 		guiBinds.clear();
 
 		File f = new File(Bartender.BARTENDER_DIR+"/"+FILENAME);
-		
-		if(Config.DEBUG_IGNORE_SAVES) {
-			
-			System.out.println("DEBUG: ignoring bartender-gui.json");
-			defaults();
-			return;
-		}
-		else if(f.exists() && !f.isDirectory())
+		if(f.exists() && !f.isDirectory())
 		{ 
 		    
 			final String json = Config.readFile(f.getAbsolutePath()).replace("\\\"", "");
@@ -82,6 +73,7 @@ public class GuiConfig {
 			if(!configVersion.equals(Bartender.VERSION)) {
 				
 				System.out.println("GuiConfig file was from an older version, using default GUI config!");
+				prepareImport(f);
 				defaults();
 				
 			}
@@ -97,6 +89,15 @@ public class GuiConfig {
 		
 		
 		ClickGui.panels = GuiConfig.getPanels();
+	}
+
+	private static void prepareImport(File f) {
+		
+		
+		File target = new File(Bartender.MINECRAFT_DIR+"/bartender-gui-backup.json");
+		if(AssetLoader.copyFileAndOverwrite(f, target)){
+			Bartender.OFFER_IMPORTS = true;
+		}
 	}
 
 	public static ClickGuiPanel[] getPanels() {	
@@ -130,7 +131,6 @@ public class GuiConfig {
 			{
 				if(elem.getAsJsonObject().get("name").getAsString().equals(panelName)) {
 					temp.add(elem.getAsJsonObject());
-
 				}
 			}
 		});
@@ -183,5 +183,73 @@ public class GuiConfig {
 		});
 		if(temp.isEmpty())return null;
 		else return temp.get(0);
+	}
+
+	public static void importSettings() {
+		if(Minecraft.getMinecraft().player==null) return;
+
+		File f = new File(Bartender.MINECRAFT_DIR+"/bartender-gui-backup.json");
+		int totalImports = 0;
+		if(f.exists()&&!f.isDirectory()){
+			try {
+				
+				
+				final String oldConfigString = Config.readFile(f.getAbsolutePath()).replace("\\\"", "");
+				JsonArray oldConfig = new JsonParser().parse(oldConfigString).getAsJsonObject().get("click_gui").getAsJsonArray();
+
+				for (JsonElement e: oldConfig) {
+					JsonObject panelObj = e.getAsJsonObject();
+					
+					String panelName = panelObj.get("name").getAsString();
+					if(panelName==null||getPanelByName(panelName)==null) continue;
+					
+					for (JsonElement setting:panelObj.get("contents").getAsJsonArray()) {
+						JsonObject settingObj = setting.getAsJsonObject();
+						String settingName = settingObj.get("title").getAsString();
+
+						if(settingObj.get("type").getAsString().equals("text")) {
+							
+							JsonObject currentSetting = getSettingByName(getPanelByName(panelName).get("contents").getAsJsonArray(), settingName);
+							if(currentSetting!=null){
+								
+								if(currentSetting.get("values").getAsJsonArray().size()==settingObj.get("values").getAsJsonArray().size()){
+									
+									int oldValue = settingObj.get("value").getAsInt();
+									for (ClickGuiPanel p:ClickGui.panels) {
+										if(p.getTitle().equals(panelName)){
+											for (ClickGuiSetting cs: p.getContents()) {
+												if(cs.title.equals(settingName)){
+													cs.value = oldValue;
+													totalImports++;
+												}else continue;
+											}
+										}else continue;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				GuiConfig.save();
+				GuiConfig.load();
+				Preferences.apply();
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Imported "+totalImports+" settings."));
+				File deleteTarget = new File(Bartender.MINECRAFT_DIR+"/bartender-gui-backup.json");
+				if(deleteTarget.exists()){
+					if(!deleteTarget.delete()){
+						System.out.println("backup delete failed");
+					}
+				}
+
+			}catch (Exception e){
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Failed to import gui settings"));
+				e.printStackTrace();
+			}
+
+		} else {
+			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Failed to import gui settings, backup not found"));
+		}
+		Bartender.OFFER_IMPORTS = false;
 	}
 }

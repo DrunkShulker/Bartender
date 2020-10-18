@@ -18,14 +18,11 @@ public class MixinLoaderForge implements IFMLLoadingPlugin {
     private static boolean isObfuscatedEnvironment = false;
 
     public MixinLoaderForge() {
-        
 
         MixinBootstrap.init();
 
         Mixins.addConfigurations("mixins.bartender.json", "mixins.baritone.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
-
-        
 
         log.info(MixinEnvironment.getDefaultEnvironment().getObfuscationContext());
     }

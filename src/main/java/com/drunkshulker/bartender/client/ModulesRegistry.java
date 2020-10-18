@@ -11,8 +11,8 @@ import net.minecraftforge.common.MinecraftForge;
 public class ModulesRegistry {
 	
 	public static void registerAll(){	
-		MinecraftForge.EVENT_BUS.register(new Update());
-		MinecraftForge.EVENT_BUS.register(new SafeTotemSwap());
+        MinecraftForge.EVENT_BUS.register(new Update());
+        MinecraftForge.EVENT_BUS.register(new SafeTotemSwap());
         MinecraftForge.EVENT_BUS.register(new Search());
         MinecraftForge.EVENT_BUS.register(new Aura());
         MinecraftForge.EVENT_BUS.register(new PlayerParticles());
@@ -27,10 +27,16 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new Scaffold());
         MinecraftForge.EVENT_BUS.register(new AutoSpawn());
 
-        
+
         Bartender.EVENT_BUS.subscribe(new ElytraFlight());
         Bartender.EVENT_BUS.subscribe(new NewChunks());
         Bartender.EVENT_BUS.subscribe(new Tracers());
+        Bartender.EVENT_BUS.subscribe(new Sprint());
+        Bartender.EVENT_BUS.subscribe(new AntiOverlay());
+        Bartender.EVENT_BUS.subscribe(new Freecam());
+        Bartender.EVENT_BUS.subscribe(new Velocity());
+        Bartender.EVENT_BUS.subscribe(new Jesus());
+        Bartender.EVENT_BUS.subscribe(new NoSlow());
 	}
 
 }

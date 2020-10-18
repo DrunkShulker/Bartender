@@ -40,7 +40,7 @@ public class Bartender
 {
     public static final String MOD_ID = "bartender";
     public static final String NAME = "Bartender";
-    public static final String VERSION = "1.2.0";
+    public static final String VERSION = "1.2.1";
     public static final String ACCEPTED_VERSIONS = "(1.12.2)";
     public static final String CLIENT_PROXY = "com.drunkshulker.bartender.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.drunkshulker.bartender.proxy.CommonProxy";
@@ -49,7 +49,7 @@ public class Bartender
 
     public static String MINECRAFT_DIR, BARTENDER_DIR;
     public static boolean IMPACT_INSTALLED, KAMI_INSTALLED;
-    public static boolean UPDATES_CHECKED = false;
+    public static boolean UPDATES_CHECKED = false, OFFER_IMPORTS = false;
 
     
     public static boolean MAPPED_BUS_INITIALIZED;
@@ -76,7 +76,14 @@ public class Bartender
                     System.out.println("tmp create failed");
                 }
             }
-
+            
+            File deleteTarget = new File(Bartender.MINECRAFT_DIR+"/bartender-gui-backup.json");
+            if(deleteTarget.exists()){
+                if(!deleteTarget.delete()){
+                    System.out.println("backup delete failed");
+                }
+            }
+  
             final String ipcPath = "/tmp/ipc";
             
             File f= new File(ipcPath);
@@ -106,7 +113,6 @@ public class Bartender
     	BARTENDER_DIR = Bartender.MINECRAFT_DIR+"/Bartender";
     	
     	
-    	ForgeLoadingScreen.modify();
     	Config.load();
     	GuiConfig.load();
     	Preferences.apply();

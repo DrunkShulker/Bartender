@@ -5,9 +5,10 @@ import java.util.List;
 
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.util.salhack.RenderUtil;
-import com.drunkshulker.bartender.util.salhack.events.EventNetworkPacketEvent;
-import com.drunkshulker.bartender.util.salhack.events.RenderEvent;
 
+
+import com.drunkshulker.bartender.util.salhack.events.network.EventNetworkPacketEvent;
+import com.drunkshulker.bartender.util.salhack.events.render.RenderEvent;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
