@@ -38,6 +38,7 @@ public class GuiHandler {
 	public static boolean ingameWaterMark = true;
 	public static boolean showTooltips = true;
 	public static boolean txtHpAndFood = false;
+	public static boolean showPotionIcons = false;
 	public static boolean showTargetListing = true;
 	public static boolean showBindInfo = true;
 	long lastDupeClickStamp = System.currentTimeMillis();
@@ -68,7 +69,12 @@ public class GuiHandler {
 			if(!showAP)
 			event.setCanceled(true);
 		}
-		
+
+		if (event.getType() == ElementType.POTION_ICONS) {
+			if(!showPotionIcons)
+				event.setCanceled(true);
+		}
+
 		else if (event.getType() == RenderGameOverlayEvent.ElementType.HEALTH) {
 			if(mc.player.getHealth()==20&&!showHP)
 			event.setCanceled(true);
@@ -150,6 +156,9 @@ public class GuiHandler {
 				break;
 			case "tooltips":
 				showTooltips = setting.value==0;
+				break;
+			case "potion icons":
+				showPotionIcons = setting.value==1;
 				break;
 			case "numbers":
 				txtHpAndFood = setting.value==1;

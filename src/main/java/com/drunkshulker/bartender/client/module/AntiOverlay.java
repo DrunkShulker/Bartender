@@ -2,6 +2,8 @@ package com.drunkshulker.bartender.client.module;
 
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 
+import com.drunkshulker.bartender.util.salhack.events.render.EventRenderBossHealth;
+import com.drunkshulker.bartender.util.salhack.events.render.EventRenderUpdateLightmap;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
@@ -72,13 +74,18 @@ public class AntiOverlay implements Listenable {
     });
 
 
-
     public static void applyPreferences(ClickGuiSetting[] contents) {
         for (ClickGuiSetting setting : contents) {
             if(setting.title.equals("anti overlay")) enabled = setting.value==1;
         }
     }
 
+    @EventHandler
+    private Listener<EventRenderBossHealth> OnRenderBossHealth = new Listener<>(p_Event ->
+    {
+        if (enabled)
+            p_Event.cancel();
+    });
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {

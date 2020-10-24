@@ -28,6 +28,16 @@ public final class RenderUtil
     private static final FloatBuffer MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
     private static final FloatBuffer PROJECTION = GLAllocation.createDirectFloatBuffer(16);
 
+    public static void updateModelViewProjectionMatrix()
+    {
+        glGetFloat(GL_MODELVIEW_MATRIX, MODELVIEW);
+        glGetFloat(GL_PROJECTION_MATRIX, PROJECTION);
+        glGetInteger(GL_VIEWPORT, VIEWPORT);
+        final ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
+        GLUProjection.getInstance().updateMatrices(VIEWPORT, MODELVIEW, PROJECTION, (float) res.getScaledWidth() / (float) Minecraft.getMinecraft().displayWidth,
+                (float) res.getScaledHeight() / (float) Minecraft.getMinecraft().displayHeight);
+    }
+
     public static void DrawPolygon(double x, double y, int radius, int sides, int color)
     {
         GL11.glEnable(GL11.GL_BLEND);
@@ -496,10 +506,7 @@ public final class RenderUtil
         bufferbuilder.pos((double) par2, (double) par1, 0.0D).color(var6, var7, var8, var10).endVertex();
         bufferbuilder.pos((double) par0, (double) par1, 0.0D).color(var6, var7, var8, var10).endVertex();
 
-        /*
-         * tessellator.addVertex((double)par0, (double)par3, 0.0D); tessellator.addVertex((double)par2, (double)par3, 0.0D); tessellator.addVertex((double)par2, (double)par1, 0.0D);
-         * tessellator.addVertex((double)par0, (double)par1, 0.0D);
-         */
+  
         tessellator.draw();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
@@ -508,19 +515,12 @@ public final class RenderUtil
 
     public static void drawSplitString(String p_Name, int p_X, int p_Y, int p_K, int p_Color)
     {
-        /*
-         * final HudModule l_Hud = (HudModule) SalHack.INSTANCE.getModuleManager().find(HudModule.class);
-         *
-         * if (l_Hud != null) { /* if (l_Hud.CustomFont.getValue()) { GL11.glEnable(3042); GL11.glDisable(GL11.GL_DEPTH_TEST); GL11.glEnable(GL11.GL_POINT_SMOOTH);
-         * GL11.glHint(GL11.GL_POINT_SMOOTH_HINT, GL11.GL_NICEST); GL11.glDepthMask(false); SalHack.INSTANCE.customFont.drawSplitString(p_Name, p_X, p_Y, p_K, p_Color);
-         * GL11.glEnable(GL11.GL_DEPTH_TEST); GL11.glDisable(GL11.GL_POINT_SMOOTH); GL11.glDepthMask(true); } else
-         */
-        // Minecraft.getMinecraft().fontRenderer.drawSplitString(p_Name, p_X, p_Y, p_K, p_Color);
-        // .p_Color. }*/
+  
+        
         Minecraft.getMinecraft().fontRenderer.drawSplitString(p_Name, p_X, p_Y, p_K, p_Color);
     }
 
-    /* ##### RECTANGLE METHODS ##### */
+
     public static void drawBorderedRect(int x, int y, int x1, int y1, int color, float lineWidth, int color1)
     {
         drawRect(x, y, x1, y1, color);
@@ -570,7 +570,7 @@ public final class RenderUtil
         drawRect(newX, y, newX1, newY, color);
         drawRect(newX, newY1, newX1, y1, color);
 
-        // Draw curves
+        
         drawQuarterCircle((int) newX, (int) newY, radius, 0, color, p_CustomAlpha);
         drawQuarterCircle((int) newX1, (int) newY, radius, 1, color, p_CustomAlpha);
         drawQuarterCircle((int) newX, (int) newY1, radius, 2, color, p_CustomAlpha);
@@ -578,7 +578,7 @@ public final class RenderUtil
         enableDefaults();
     }
 
-    /* ##### 2D LINE METHODS ##### */
+
     public static void drawLine2D(int x, int y, int x1, int y1, int color, float lineWidth)
     {
         setupOverlayRendering();
@@ -594,7 +594,7 @@ public final class RenderUtil
         enableDefaults();
     }
 
-    /* ##### CIRCLE METHODS ##### */
+
     public static void drawBorderedCircle(int x, int y, int radius, int color, float lineWidth, int color1)
     {
         drawCircle(x, y, radius, color);
@@ -632,11 +632,11 @@ public final class RenderUtil
         enableDefaults();
     }
 
-    // Modes:
-    // 0 = Top Left
-    // 1 = Top Right
-    // 2 = Bottom Left
-    // 3 = Bottom Right
+    
+    
+    
+    
+    
     public static void drawQuarterCircle(int x, int y, int radius, int mode, int color, int p_CustomAlpha)
     {
         disableDefaults();
@@ -678,7 +678,7 @@ public final class RenderUtil
         enableDefaults();
     }
 
-    /* ##### UTILITY METHODS ##### */
+
     public static double getAlphaFromHex(int color)
     {
         return ((double) ((color >> 24 & 0xff) / 255F));
@@ -715,18 +715,18 @@ public final class RenderUtil
 
     public static void setupGradient()
     {
-        GL11.glDisable(3553 /* GL_TEXTURE_2D */);
-        GL11.glEnable(3042 /* GL_BLEND */);
-        GL11.glDisable(3008 /* GL_ALPHA_TEST */);
-        GL11.glShadeModel(7425 /* GL_SMOOTH */);
+);
+);
+);
+);
     }
 
     public static void unsetupGradient()
     {
-        GL11.glShadeModel(7424 /* GL_FLAT */);
-        GL11.glDisable(3042 /* GL_BLEND */);
-        GL11.glEnable(3008 /* GL_ALPHA_TEST */);
-        GL11.glEnable(3553 /* GL_TEXTURE_2D */);
+);
+);
+);
+);
     }
 
     public static void setupOverlayRendering()
@@ -773,7 +773,7 @@ public final class RenderUtil
     {
         Tessellator ts = Tessellator.getInstance();
         BufferBuilder vb = ts.getBuffer();
-        vb.begin(7, DefaultVertexFormats.POSITION_TEX);// Starts X.
+        vb.begin(7, DefaultVertexFormats.POSITION_TEX);
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
@@ -792,8 +792,8 @@ public final class RenderUtil
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
-        ts.draw();// Ends X.
-        vb.begin(7, DefaultVertexFormats.POSITION_TEX);// Starts Y.
+        ts.draw();
+        vb.begin(7, DefaultVertexFormats.POSITION_TEX);
         vb.pos(axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
@@ -812,8 +812,8 @@ public final class RenderUtil
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
-        ts.draw();// Ends Y.
-        vb.begin(7, DefaultVertexFormats.POSITION_TEX);// Starts Z.
+        ts.draw();
+        vb.begin(7, DefaultVertexFormats.POSITION_TEX);
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
@@ -832,14 +832,14 @@ public final class RenderUtil
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ).color(red, green, blue, alpha).endVertex();
-        ts.draw();// Ends Z.
+        ts.draw();
     }
 
     public static void drawColorBox(AxisAlignedBB axisalignedbb, Color c)
     {
         Tessellator ts = Tessellator.getInstance();
         BufferBuilder vb = ts.getBuffer();
-        vb.begin(7, DefaultVertexFormats.POSITION_TEX);// Starts X.
+        vb.begin(7, DefaultVertexFormats.POSITION_TEX);
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
@@ -858,8 +858,8 @@ public final class RenderUtil
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
-        ts.draw();// Ends X.
-        vb.begin(7, DefaultVertexFormats.POSITION_TEX);// Starts Y.
+        ts.draw();
+        vb.begin(7, DefaultVertexFormats.POSITION_TEX);
         vb.pos(axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
@@ -878,8 +878,8 @@ public final class RenderUtil
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
-        ts.draw();// Ends Y.
-        vb.begin(7, DefaultVertexFormats.POSITION_TEX);// Starts Z.
+        ts.draw();
+        vb.begin(7, DefaultVertexFormats.POSITION_TEX);
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
@@ -898,7 +898,7 @@ public final class RenderUtil
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
         vb.pos(axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
-        ts.draw();// Ends Z.
+        ts.draw();
     }
 
 

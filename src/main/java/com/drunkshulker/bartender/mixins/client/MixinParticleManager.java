@@ -25,8 +25,5 @@ public class MixinParticleManager
         Bartender.EVENT_BUS.post(l_Event);
         if (l_Event.isCancelled())l_Event.cancel();
 
-        if(AntiOverlay.enabled&&AntiOverlay.totems&&p_Type==EnumParticleTypes.TOTEM){
-            l_Event.cancel();
-        }
     }*/
 }

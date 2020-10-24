@@ -37,6 +37,9 @@ public class ModulesRegistry {
         Bartender.EVENT_BUS.subscribe(new Velocity());
         Bartender.EVENT_BUS.subscribe(new Jesus());
         Bartender.EVENT_BUS.subscribe(new NoSlow());
+        Bartender.EVENT_BUS.subscribe(new AutoTool());
+        Bartender.EVENT_BUS.subscribe(new AntiHunger());
+        Bartender.EVENT_BUS.subscribe(new HideArmor());
 	}
 
 }

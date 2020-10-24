@@ -25,7 +25,7 @@ public final class Velocity implements Listenable
     public static boolean enabled = false;
     public final int horizontal_vel = 0;
     public final int vertical_vel = 0;
-    public final boolean explosions = true;
+    public final boolean explosions = false;
     public final boolean bobbers = true;
     public final boolean NoPush = true;
     Minecraft mc = Minecraft.getMinecraft();

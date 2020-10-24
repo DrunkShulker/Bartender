@@ -45,11 +45,16 @@ public class Freecam implements Listenable {
     private static Vec3d position;
     private static float yaw;
     private static float pitch;
+    private static int lastThirdPersonView = 0;
 
     public static void onEnable() {
 
         if (mc.world == null)
             return;
+
+        lastThirdPersonView = mc.gameSettings.thirdPersonView;
+        mc.gameSettings.thirdPersonView = 0;
+        mc.gameSettings.saveOptions();
 
         if (Mode == Modes.Normal) {
             riding = null;
@@ -85,6 +90,10 @@ public class Freecam implements Listenable {
     }
 
     public static void onDisable() {
+
+        mc.gameSettings.thirdPersonView = lastThirdPersonView;
+        mc.gameSettings.saveOptions();
+
         if (mc.world != null && Mode == Modes.Normal) {
             if (riding != null) {
                 mc.player.startRiding(riding, true);

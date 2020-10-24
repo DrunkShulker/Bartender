@@ -34,6 +34,18 @@
 					]
 				},
 				{
+					"title": "potion icons",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"off",
+						"on"
+					],
+					"desc": [
+						"TOGGLE ACTIVE POTION EFFECT ICONS"
+					]
+				},
+				{
 					"title": "theme",
 					"type": "text",
 					"value": 0,
@@ -745,6 +757,30 @@
 					]
 				},
 				{
+					"title": "hide armor",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"DON'T RENDER ARMOR ON PLAYER ENTITY"
+					]
+				},
+				{
+					"title": "auto tool",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"AUTO EQUIP BEST TOOL FOR A JOB"
+					]
+				},
+				{
 					"title": "no slow",
 					"type": "text",
 					"value": 1,
@@ -755,6 +791,18 @@
 					"desc": [
 						"DON'T LET SOUL SAND OR COBWEB SLOW YOU DOWN!",
 						"ALSO ALLOWS EATING WITHOUT SLOWING DOWN"
+					]
+				},
+				{
+					"title": "anti hunger",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"WALK MORE, EAT LESS"
 					]
 				},
 				{

@@ -13,7 +13,7 @@ public class EventRenderGetEntitiesINAABBexcluding extends MinecraftEvent
 
     public EventRenderGetEntitiesINAABBexcluding(WorldClient worldClient, Entity entityIn, AxisAlignedBB boundingBox, Predicate predicate)
     {
-
+        
     }
 
 }

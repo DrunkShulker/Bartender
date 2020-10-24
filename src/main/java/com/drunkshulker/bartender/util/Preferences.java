@@ -57,6 +57,9 @@ public class Preferences {
 				AntiOverlay.applyPreferences(panel.getContents());
 				Jesus.applyPreferences(panel.getContents());
 				NoSlow.applyPreferences(panel.getContents());
+				AutoTool.applyPreferences(panel.getContents());
+				AntiHunger.applyPreferences(panel.getContents());
+				HideArmor.applyPreferences(panel.getContents());
 				break;
 			case "flight":
 				AutoFlight.applyPreferences(panel.getContents());
