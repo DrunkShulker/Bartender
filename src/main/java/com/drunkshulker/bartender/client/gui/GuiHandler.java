@@ -41,6 +41,9 @@ public class GuiHandler {
 	public static boolean showPotionIcons = false;
 	public static boolean showTargetListing = true;
 	public static boolean showBindInfo = true;
+	public static boolean showInventory = true;
+	public static boolean showCoords = true;
+	public static boolean showPotions = true;
 	long lastDupeClickStamp = System.currentTimeMillis();
 	final long dupeClickIntervalMillis = 800;
 
@@ -151,6 +154,9 @@ public class GuiHandler {
 			case "draw player":
 				showPlayer = setting.value==0;
 				break;
+			case "inventory":
+				showInventory = setting.value==1;
+				break;
 			case "safe totem":
 				showSafetotem = setting.value==1;
 				break;
@@ -159,6 +165,12 @@ public class GuiHandler {
 				break;
 			case "potion icons":
 				showPotionIcons = setting.value==1;
+				break;
+			case "potions":
+				showPotions = setting.value==1;
+				break;
+			case "coords":
+				showCoords = setting.value==1;
 				break;
 			case "numbers":
 				txtHpAndFood = setting.value==1;

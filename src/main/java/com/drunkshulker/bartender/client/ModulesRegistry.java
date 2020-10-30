@@ -6,6 +6,7 @@ import com.drunkshulker.bartender.client.ipc.IPCHandler;
 import com.drunkshulker.bartender.client.module.*;
 import com.drunkshulker.bartender.util.Update;
 
+import com.drunkshulker.bartender.util.kami.TpsCalculator;
 import net.minecraftforge.common.MinecraftForge;
 
 public class ModulesRegistry {
@@ -26,8 +27,6 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new AutoFire());
         MinecraftForge.EVENT_BUS.register(new Scaffold());
         MinecraftForge.EVENT_BUS.register(new AutoSpawn());
-
-
         Bartender.EVENT_BUS.subscribe(new ElytraFlight());
         Bartender.EVENT_BUS.subscribe(new NewChunks());
         Bartender.EVENT_BUS.subscribe(new Tracers());
@@ -40,6 +39,9 @@ public class ModulesRegistry {
         Bartender.EVENT_BUS.subscribe(new AutoTool());
         Bartender.EVENT_BUS.subscribe(new AntiHunger());
         Bartender.EVENT_BUS.subscribe(new HideArmor());
+        Bartender.EVENT_BUS.subscribe(new FullBright());
+        Bartender.EVENT_BUS.subscribe(new PeekPreview());
+        Bartender.EVENT_BUS.subscribe(new TpsCalculator());
 	}
 
 }

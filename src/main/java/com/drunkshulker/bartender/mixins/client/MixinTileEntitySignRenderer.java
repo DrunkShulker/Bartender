@@ -21,7 +21,7 @@ public class MixinTileEntitySignRenderer
         
         if (l_Event.isCancelled())
         {
-           // destroyStage = 0;
+           
             p_Info.cancel();
         }
     }

@@ -34,6 +34,30 @@
 					]
 				},
 				{
+					"title": "coords",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"off",
+						"on"
+					],
+					"desc": [
+						"SHOW COORDS HUD"
+					]
+				},
+				{
+					"title": "potions",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"off",
+						"on"
+					],
+					"desc": [
+						"SHOW POTION EFFECTS HUD"
+					]
+				},
+				{
 					"title": "potion icons",
 					"type": "text",
 					"value": 0,
@@ -155,6 +179,18 @@
 					],
 					"desc": [
 						"TOGGLE CLICKGUI TOOLTIPS"
+					]
+				},
+				{
+					"title": "inventory",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"SHOW INVENTORY OVERLAY"
 					]
 				},
 				{
@@ -757,6 +793,30 @@
 					]
 				},
 				{
+					"title": "full bright",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"LIGHT HELPS YOU SEE BETTER"
+					]
+				},
+				{
+					"title": "peek preview",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"HOVER INVENTORY SHULKERS AND MAPS FOR PREVIEW"
+					]
+				},
+				{
 					"title": "hide armor",
 					"type": "text",
 					"value": 1,
@@ -1181,13 +1241,14 @@
 				{
 					"title": "auto weapon",
 					"type": "text",
-					"value": 1,
+					"value": 2,
 					"values": [
-						"NO",
-						"YES"
+						"OFF",
+						"ON",
+						"32K"
 					],
 					"desc": [
-						"AUTO EQUIP BEST WEAPON WHEN ATTACKING"
+						"AUTO EQUIP BEST WEAPON WHEN ATTACKING", "ON = BEST SWORD / TOOL", "32K = ITEM WITH HIGH SHARPNESS"
 					]
 				},
 				{

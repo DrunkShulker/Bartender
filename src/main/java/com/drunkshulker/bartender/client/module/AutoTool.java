@@ -1,6 +1,5 @@
 package com.drunkshulker.bartender.client.module;
 
-
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.util.salhack.Timer;
 import com.drunkshulker.bartender.util.salhack.events.network.EventNetworkPacketEvent;
@@ -22,11 +21,9 @@ import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
-import java.nio.charset.MalformedInputException;
-
 public final class AutoTool implements Listenable {
 
-    public final boolean silent = true;
+    public final boolean silent = false;
     public final boolean GoBack = true;
 
     private boolean send;

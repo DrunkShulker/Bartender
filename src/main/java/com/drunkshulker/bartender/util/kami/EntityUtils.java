@@ -29,7 +29,7 @@ public class EntityUtils {
     }
 
 
-    public static boolean isPassiveMob(Entity e) { // TODO: usages of this
+    public static boolean isPassiveMob(Entity e) { 
         return e instanceof EntityAnimal || e instanceof EntityAgeable || e instanceof EntityTameable || e instanceof EntityAmbientCreature || e instanceof EntitySquid;
     }
 
@@ -53,7 +53,7 @@ public class EntityUtils {
 
     public static boolean isMobAggressive(Entity entity) {
         if (entity instanceof EntityPigZombie) {
-            // arms raised = aggressive, angry = either game or we have set the anger cooldown
+            
             if (((EntityZombie) entity).isArmsRaised() || ((EntityPigZombie) entity).isAngry()) {
                 return true;
             }
@@ -144,7 +144,7 @@ public class EntityUtils {
         double pitch = Math.asin(diry);
         double yaw = Math.atan2(dirz, dirx);
 
-        // to degree
+        
         pitch = Math.toDegrees(pitch);
         yaw = Math.toDegrees(yaw) + 90.0;
         return new double[]{yaw, pitch};
@@ -198,16 +198,7 @@ public class EntityUtils {
     }
 
 
-    /*public static String getNameFromUUID(String uuid) {
-        try {
-            String jsonUrl = IOUtils.toString(new URL("https://api.mojang.com/user/profiles/" + uuid.replace("-", "") + "/names"));
-            JsonParser parser = new JsonParser();
-            return parser.parse(jsonUrl).asJsonArray[parser.parse(jsonUrl).asJsonArray.size() - 1].asJsonObject["name"].toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
+
 
 
     public enum EntityPriority {
@@ -217,30 +208,7 @@ public class EntityUtils {
     public static Entity getPrioritizedTarget(ArrayList<Entity> targetList, EntityPriority priority) {
         if (targetList == null || targetList.isEmpty()) return null;
         Entity entity = targetList.get(0);
-        /*
-        when (priority) {
-            EntityPriority.DISTANCE -> {
-                var distance = mc.player.getDistance(targetList[0]);
-                for (i in targetList.indices) {
-                    val currentDistance = mc.player.getDistance(targetList[i]);
-                    if (currentDistance < distance) {
-                        distance = currentDistance;
-                        entity = targetList[i];
-                    }
-                }
-            }
-            EntityPriority.HEALTH -> {
-                var health = (targetList[0] as EntityLivingBase).health;
-                for (i : targetList.indices) {
-                    val currentHealth = (targetList[i] as EntityLivingBase).health;
-                    if (currentHealth < health) {
-                        health = currentHealth;
-                        entity = targetList[i];
-                    }
-                }
-            }
-        }
-        */
+
         switch (priority) {
             case DISTANCE:
                 float distance = mc.player.getDistance(targetList.get(0));
@@ -272,44 +240,32 @@ public class EntityUtils {
         if (mc.world == null || mc.world.loadedEntityList == null) return new ArrayList<Entity>();
         ArrayList<Entity> entityList = new ArrayList<Entity>();
         for (Entity entity : mc.world.loadedEntityList) {
-            /* Entity type check */
+
             if (!isLiving(entity)) continue;
             if (entity == mc.player) continue;
             if (entity instanceof EntityPlayer) {
                 if (!player[0]) continue;
                 if (PlayerGroup.members.contains((((EntityPlayer) entity).getDisplayNameString())))
-                    continue; // Dont include playerGroup
+                    continue; 
                 if (PlayerFriends.friends.contains((((EntityPlayer) entity).getDisplayNameString())))
-                    continue; // Dont include friends
+                    continue; 
                 if (PlayerFriends.impactFriends.contains((((EntityPlayer) entity).getDisplayNameString())))
-                    continue; // Dont include Impact friends
+                    continue; 
                 if (!player[2] && ((EntityLivingBase) entity).isPlayerSleeping()) continue;
             } else if (!mobTypeSettings(entity, mobs[0], mobs[1], mobs[2], mobs[3])) continue;
 
-            if (mc.player.isRiding() && entity == mc.player.getRidingEntity()) continue; // Riding entity check
-            if (mc.player.getDistance(entity) > range) continue; // Distance check
-            if (((EntityLivingBase) entity).getHealth() <= 0) continue; // HP check
+            if (mc.player.isRiding() && entity == mc.player.getRidingEntity()) continue; 
+            if (mc.player.getDistance(entity) > range) continue; 
+            if (((EntityLivingBase) entity).getHealth() <= 0) continue; 
             if (!ignoreWalls && !mc.player.canEntityBeSeen(entity) && !canEntityFeetBeSeen(entity))
-                continue;  // If walls is on & you can't see the feet or head of the target, skip. 2 raytraces needed
+                continue;  
             if (!invisible && entity.isInvisible()) continue;
             entityList.add(entity);
         }
         return entityList;
     }
 
-    static /*Vec3d canEntityHitboxBeSeen(Entity entity) {
-        val playerPos = mc.player.positionVector.add(0.0, mc.player.eyeHeight, 0.0);
-        val box = entity.boundingBox;
-        val xArray = arrayOf(box.minX, box.maxX);
-        val yArray = arrayOf(box.minY, box.maxY);
-        val zArray = arrayOf(box.minZ, box.maxZ);
 
-        for (x in xArray) for (y in yArray) for (z in zArray) {
-            val vertex = Vec3d(x, y, z);
-            if (mc.world.rayTraceBlocks(vertex, playerPos, false, true, false) == null) return vertex;
-        }
-        return null;
-    }*/
 
     boolean canEntityFeetBeSeen(Entity entityIn) {
         return mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.eyeHeight, mc.player.posZ), new Vec3d(entityIn.posX, entityIn.posY, entityIn.posZ), false, true, false) == null;
@@ -334,31 +290,9 @@ public class EntityUtils {
         mc.player.rotationPitch = rotation[1];
     }
 
-    /*ArrayList<Entity> getDroppedItems(int itemId, float range) {
-    	ArrayList<Entity> entityList = new ArrayList<Entity>();
-        for (Entity currentEntity : mc.world.loadedEntityList) {
-            if (currentEntity.getDistance(mc.player) > range) continue; // Entities within specified  blocks radius 
-            if (!(currentEntity instanceof EntityItem)) continue; // Entites that are dropped item 
-            if (Item.getIdFromItem(currentEntity.item.getItem()) != itemId) continue; // Dropped items that are has give item id 
-            entityList.add(currentEntity);
-        }
-        if (!entityList.isEmpty()) return entityList; else return null;
-    }*/
 
-    /*BlockPos getDroppedItem(int itemId, float range) {
-        val entityList = getDroppedItems(itemId, range);
-        if (entityList != null) {
-            for (dist in 1..ceil(range).toInt()) for (currentEntity in entityList) {
-                if (currentEntity.getDistance(mc.player) > dist) continue;
-                return currentEntity.position;
-            }
-        }
-        return null;
-    }*/
 
-    /*fun getRidingEntity(): Entity? {
-        return mc.player?.let {
-            mc.player.ridingEntity
-        }
-    }*/
+
+
+
 }

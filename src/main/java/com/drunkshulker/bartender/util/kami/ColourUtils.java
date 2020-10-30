@@ -3,19 +3,10 @@ package com.drunkshulker.bartender.util.kami;
 import java.awt.*;
 import java.util.ArrayList;
 
-/**
- * Java Code to get a colour name from rgb/hex value/awt colour
- * <p>
- * The part of looking up a colour name from the rgb values is edited from
- * https://gist.github.com/nightlark/6482130#file-gistfile1-java (that has some errors) by Ryan Mast (nightlark)
- *
- * @author Xiaoxiao Li
- */
+
 public class ColourUtils {
 
-    /**
-     * Initialize the colour list that we have.
-     */
+
     private ArrayList<ColorName> initColorList() {
         ArrayList<ColorName> colorList = new ArrayList<ColorName>();
         colorList.add(new ColorName("AliceBlue", 0xF0, 0xF8, 0xFF));
@@ -161,23 +152,12 @@ public class ColourUtils {
         return colorList;
     }
 
-    /**
-     * SubClass of ColorUtils. In order to lookup colour name
-     *
-     * @author Xiaoxiao Li
-     */
+
     public static int toRGBA(double r, double g, double b, double a) {
         return toRGBA((float) r, (float) g, (float) b, (float) a);
     }
 
-    /**
-     * Get the closest colour name from our list
-     *
-     * @param r
-     * @param g
-     * @param b
-     * @return
-     */
+
     public String getColorNameFromRgb(int r, int g, int b) {
         ArrayList<ColorName> colorList = initColorList();
         ColorName closestMatch = null;
@@ -198,12 +178,7 @@ public class ColourUtils {
         }
     }
 
-    /**
-     * Convert hexColor to rgb, then call getColorNameFromRgb(r, g, b)
-     *
-     * @param hexColor
-     * @return
-     */
+
     public String getColorNameFromHex(int hexColor) {
         int r = (hexColor & 0xFF0000) >> 16;
         int g = (hexColor & 0xFF00) >> 8;
@@ -297,8 +272,8 @@ public class ColourUtils {
     }
 
     public static final int changeAlpha(int origColor, int userInputedAlpha) {
-        origColor = origColor & 0x00ffffff; // drop the previous alpha value
-        return (userInputedAlpha << 24) | origColor; // add the one the user inputted
+        origColor = origColor & 0x00ffffff; 
+        return (userInputedAlpha << 24) | origColor; 
     }
 
 }

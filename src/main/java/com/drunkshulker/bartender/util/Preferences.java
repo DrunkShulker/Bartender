@@ -60,6 +60,8 @@ public class Preferences {
 				AutoTool.applyPreferences(panel.getContents());
 				AntiHunger.applyPreferences(panel.getContents());
 				HideArmor.applyPreferences(panel.getContents());
+				FullBright.applyPreferences(panel.getContents());
+				PeekPreview.applyPreferences(panel.getContents());
 				break;
 			case "flight":
 				AutoFlight.applyPreferences(panel.getContents());

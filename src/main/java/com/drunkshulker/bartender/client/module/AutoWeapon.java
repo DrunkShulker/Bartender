@@ -13,27 +13,41 @@ public class AutoWeapon {
     static void equipBestWeapon() {
         int bestSlot = -1;
         double maxDamage = 0.0;
-        for (int i = 0; i<=8;i++) {
-            ItemStack stack = Minecraft.getMinecraft().player.inventory.getStackInSlot(i);
-            if (stack.isEmpty) continue;
 
-            if (stack.getItem() instanceof ItemSword) {
-                double damage = ((ItemSword)stack.getItem()).getAttackDamage() +
-                        EnchantmentHelper.getEnchantmentLevel(Enchantments.SHARPNESS, stack);
+        if(Aura.autoWeaponBySharpness){
+            for (int i = 0; i<=8;i++) {
+                ItemStack stack = Minecraft.getMinecraft().player.inventory.getStackInSlot(i);
+                if (stack.isEmpty) continue;
+
+                double damage = EnchantmentHelper.getEnchantmentLevel(Enchantments.SHARPNESS, stack);
                 if (damage > maxDamage) {
                     maxDamage = damage;
                     bestSlot = i;
                 }
             }
-            else if (stack.getItem() instanceof ItemTool) {
-                double damage = ((ItemTool)stack.getItem()).attackDamage +
-                        EnchantmentHelper.getEnchantmentLevel(Enchantments.SHARPNESS, stack);
-                if (damage > maxDamage) {
-                    maxDamage = damage;
-                    bestSlot = i;
-                }
-            }
+        } else {
+            for (int i = 0; i<=8;i++) {
+                ItemStack stack = Minecraft.getMinecraft().player.inventory.getStackInSlot(i);
+                if (stack.isEmpty) continue;
 
+                if (stack.getItem() instanceof ItemSword) {
+                    double damage = ((ItemSword)stack.getItem()).getAttackDamage() +
+                            EnchantmentHelper.getEnchantmentLevel(Enchantments.SHARPNESS, stack);
+                    if (damage > maxDamage) {
+                        maxDamage = damage;
+                        bestSlot = i;
+                    }
+                }
+                else if (stack.getItem() instanceof ItemTool) {
+                    double damage = ((ItemTool)stack.getItem()).attackDamage +
+                            EnchantmentHelper.getEnchantmentLevel(Enchantments.SHARPNESS, stack);
+                    if (damage > maxDamage) {
+                        maxDamage = damage;
+                        bestSlot = i;
+                    }
+                }
+
+            }
         }
         if (bestSlot != -1) {
             equip(bestSlot);

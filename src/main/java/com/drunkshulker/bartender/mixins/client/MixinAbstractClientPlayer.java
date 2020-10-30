@@ -28,7 +28,7 @@ public abstract class MixinAbstractClientPlayer extends MixinEntityPlayer
 
         if (l_Event.isCancelled())
         {
-            // p_Callback.cancel();
+            
             callbackInfo.setReturnValue(l_Event.GetResourceLocation());
         }
     }

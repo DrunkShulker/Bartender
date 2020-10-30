@@ -16,6 +16,7 @@ public class MixinBlockSoulSand {
 
     @Inject(method = "onEntityCollision", at = @At("HEAD"), cancellable = true)
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn, CallbackInfo info) {
+        
         if (NoSlow.enabled && NoSlow.soulSand) info.cancel();
     }
 

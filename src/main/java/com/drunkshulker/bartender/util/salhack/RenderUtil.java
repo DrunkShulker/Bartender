@@ -1,5 +1,7 @@
 package com.drunkshulker.bartender.util.salhack;
 
+import com.drunkshulker.bartender.Bartender;
+import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -23,10 +25,15 @@ import static org.lwjgl.opengl.GL11.*;
 
 public final class RenderUtil
 {
-
     private static final IntBuffer VIEWPORT = GLAllocation.createDirectIntBuffer(16);
     private static final FloatBuffer MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
     private static final FloatBuffer PROJECTION = GLAllocation.createDirectFloatBuffer(16);
+
+    public static void drawStringWithShadow(String p_Name, float p_X, float p_Y, int p_Color)
+    {
+        Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(p_Name, p_X, p_Y, p_Color);
+    }
+
 
     public static void updateModelViewProjectionMatrix()
     {
@@ -506,7 +513,7 @@ public final class RenderUtil
         bufferbuilder.pos((double) par2, (double) par1, 0.0D).color(var6, var7, var8, var10).endVertex();
         bufferbuilder.pos((double) par0, (double) par1, 0.0D).color(var6, var7, var8, var10).endVertex();
 
-  
+    
         tessellator.draw();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
@@ -515,7 +522,8 @@ public final class RenderUtil
 
     public static void drawSplitString(String p_Name, int p_X, int p_Y, int p_K, int p_Color)
     {
-  
+    
+        
         
         Minecraft.getMinecraft().fontRenderer.drawSplitString(p_Name, p_X, p_Y, p_K, p_Color);
     }

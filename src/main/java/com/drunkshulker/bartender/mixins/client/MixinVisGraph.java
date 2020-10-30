@@ -16,7 +16,7 @@ public class MixinVisGraph
     @Inject(method = "setOpaqueCube", at = @At("HEAD"), cancellable = true)
     public void setOpaqueCube(BlockPos pos, CallbackInfo info)
     {
-        EventSetOpaqueCube l_Event = new EventSetOpaqueCube(); ///< pos is unused
+        EventSetOpaqueCube l_Event = new EventSetOpaqueCube(); 
         Bartender.EVENT_BUS.post(l_Event);
         if (l_Event.isCancelled())
             info.cancel();

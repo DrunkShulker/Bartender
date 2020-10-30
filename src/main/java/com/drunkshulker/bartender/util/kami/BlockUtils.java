@@ -53,11 +53,11 @@ public class BlockUtils {
 
 
     public static BlockPos[] surroundOffset = new BlockPos[]{
-            new BlockPos(0, -1, 0),  // down
-            new BlockPos(0, 0, -1),  // north
-            new BlockPos(1, 0, 0),  // east
-            new BlockPos(0, 0, 1),  // south
-            new BlockPos(-1, 0, 0) // west
+            new BlockPos(0, -1, 0),  
+            new BlockPos(0, 0, -1),  
+            new BlockPos(1, 0, 0),  
+            new BlockPos(0, 0, 1),  
+            new BlockPos(-1, 0, 0) 
 };
 
 private static Minecraft mc = Minecraft.getMinecraft();
@@ -68,18 +68,18 @@ private static Minecraft mc = Minecraft.getMinecraft();
         BlockPos neighbor = pos.offset(side);
         EnumFacing side2 = side.getOpposite();
 
-        // check if neighbor can be right clicked
+        
         if (!canBeClicked(neighbor)) {
         continue;
         }
         Vec3d hitVec = new Vec3d(neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(side2.getDirectionVec()).scale(0.5));
 
-        // check if hitVec is within range (4.25 blocks)
+        
         if (eyesPos.squareDistanceTo(hitVec) > 18.0625) {
         continue;
         }
 
-        // place block
+        
         faceVectorPacketInstant(hitVec);
         processRightClickBlock(neighbor, side2, hitVec);
         mc.player.swingArm(EnumHand.MAIN_HAND);
@@ -125,9 +125,9 @@ private static IBlockState getState(BlockPos pos) {
         }
 
         public static boolean checkForNeighbours(BlockPos blockPos) {
-        // check if we don't have a block adjacent to blockpos
+        
         if (!hasNeighbour(blockPos)) {
-        // find air adjacent to blockpos that does have a block adjacent to it, let's fill this first as to form a bridge between the player and the original blockpos. necessary if the player is going diagonal.
+        
         for (EnumFacing side : EnumFacing.values()) {
         BlockPos neighbour = blockPos.offset(side);
         if (hasNeighbour(neighbour)) {
@@ -171,7 +171,7 @@ private static IBlockState getState(BlockPos pos) {
                 }
             }
 
-        //for (x in 0..1) for (z in 0..1) { }
+        
         }
         yOffset -= 0.05;
         if (mc.player.posY + yOffset < 0.0f) return -999.0;
@@ -193,7 +193,7 @@ private static IBlockState getState(BlockPos pos) {
             int[] xArray = new int[]{(int) Math.floor(bBox.minX), (int) Math.floor(bBox.maxX)};
             int[] yArray = new int[]{(int) Math.floor(bBox.minY), (int) Math.floor(bBox.maxY)};
         int[] zArray = new int[]{(int) Math.floor(bBox.minZ), (int) Math.floor(bBox.maxZ)};
-        //for (x in 0..1) for (y in 0..1) for (z in 0..1) {}
+        
 
             for (int x = 0; x <= 1; x++) {
                 for (int y = 0; y <= 1; y++) {

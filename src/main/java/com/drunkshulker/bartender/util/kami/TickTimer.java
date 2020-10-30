@@ -8,7 +8,7 @@ public class TickTimer extends TimerUtils {
 
     public boolean tick(long delay) {
         if (getCurrentTime() - time > delay * timeUnit.multiplier) {
-            //if (resetIfTick) time = getCurrentTime();
+            
             return true;
         } else {
             return false;

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.MovementInputFromOptions;
 
-@Mixin(value = MovementInputFromOptions.class, priority = 10000) ///< wwe has 9999, we should be atleast 1 above
+@Mixin(value = MovementInputFromOptions.class, priority = 10000) 
 public abstract class MixinMovementInputFromOptions extends MovementInput
 {
     @Inject(method = "updatePlayerMoveState", at = @At("RETURN"))

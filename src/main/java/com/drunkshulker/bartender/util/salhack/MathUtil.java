@@ -67,7 +67,7 @@ public final class MathUtil
             }
             side = 0;
 
-            // forward = clamp(forward, 0, 1);
+            
             if (forward > 0)
             {
                 forward = 1;
@@ -110,7 +110,7 @@ public final class MathUtil
             }
             side = 0;
 
-            // forward = clamp(forward, 0, 1);
+            
             if (forward > 0)
             {
                 forward = 1;
@@ -181,12 +181,12 @@ public final class MathUtil
         return val;
     }
 
-    // linearly maps value from the range (a..b) to (c..d)
+    
     public static double map(double value, double a, double b, double c, double d)
     {
-        // first map value from (a..b) to (0..1)
+        
         value = (value - a) / (b - a);
-        // then map it from (0..1) to (c..d) and return it
+        
         return c + value * (d - c);
     }
 
@@ -227,7 +227,7 @@ public final class MathUtil
     public static double calculateAngle(double x1, double y1, double x2, double y2)
     {
         double angle = Math.toDegrees(Math.atan2(x2 - x1, y2 - y1));
-        // Keep angle between 0 and 360
+        
         angle = angle + Math.ceil( -angle / 360 ) * 360;
 
         return angle;

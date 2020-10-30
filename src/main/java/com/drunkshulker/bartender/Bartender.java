@@ -2,6 +2,7 @@ package com.drunkshulker.bartender;
 
 import java.io.File;
 
+import baritone.api.BaritoneAPI;
 import com.drunkshulker.bartender.util.forge.ForgeEventProcessor;
 import io.mappedbus.MappedBusReader;
 import io.mappedbus.MappedBusWriter;
@@ -40,7 +41,7 @@ public class Bartender
 {
     public static final String MOD_ID = "bartender";
     public static final String NAME = "Bartender";
-    public static final String VERSION = "1.2.2";
+    public static final String VERSION = "1.2.4";
     public static final String ACCEPTED_VERSIONS = "(1.12.2)";
     public static final String CLIENT_PROXY = "com.drunkshulker.bartender.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.drunkshulker.bartender.proxy.CommonProxy";
@@ -83,7 +84,13 @@ public class Bartender
                     System.out.println("backup delete failed");
                 }
             }
-  
+            
+            File baritoneFolder = new File(Bartender.MINECRAFT_DIR+"/baritone");
+            if(baritoneFolder.exists() && baritoneFolder.isDirectory()){
+                if(!baritoneFolder.delete()){
+                    System.out.println("baritone cache clear failed");
+                }
+            }
             final String ipcPath = "/tmp/ipc";
             
             File f= new File(ipcPath);
@@ -142,6 +149,7 @@ public class Bartender
 
         
         ModulesRegistry.registerAll();
+
     }
 
     @EventHandler

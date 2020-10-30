@@ -60,10 +60,6 @@ public class BaseFinder {
 	public static int totalHits = 0;
 	public static BlockPos customTargetGoal = new BlockPos(0,0,0);
 
-	private static BlockPos lastSpeedMeasurePos = null;
-	private static long lastSpeedMeasureStamp = 0;
-	final static int SPEED_MEASURE_INTERVAL_MILLIS = 1000;
-	private static String arrivalEstimate=" ARRIVAL";
 	private static long lastPointReachedStamp = System.currentTimeMillis();
 	private static long lastTravelTargetSetStamp = System.currentTimeMillis();
 
@@ -104,14 +100,12 @@ public class BaseFinder {
 	public void playerTick(InputUpdateEvent event)
 	{
 		if(!enabled) defaultState();
-		if (enabled)
-		{
+		if (enabled) {
 			Minecraft mc = Minecraft.getMinecraft();
 			
 			
 			if(mc.player==null) return;
-			
-			
+
 			
 			ArrayList<String> ps = EntityRadar.nearbyPlayersNoGroup();
 			if(disconnectOnMeetPlayer&&(!ps.isEmpty())) {
@@ -140,7 +134,6 @@ public class BaseFinder {
 					
 					saveScreenshot(new File(Bartender.MINECRAFT_DIR+"/Bartender/base-finder-logs"), filename, 1920, 1080, Minecraft.getMinecraft().getFramebuffer());
 				}
-				
 
 				
 				if(pauseOnFind&&currentTask!=FinderTask.PAUSE) {
@@ -186,7 +179,6 @@ public class BaseFinder {
 				if(currentTask==FinderTask.EXPLORE) {
 					lookAt(travelTarget.getX(), 0, travelTarget.getZ(), mc.player, true);
 					event.getMovementInput().moveForward = 1f;
-					measureSpeed();
 					checkExploreTravelTargetReached();
 				}
 				else if(currentTask==FinderTask.GOTO_TARGET) {
@@ -210,28 +202,6 @@ public class BaseFinder {
 
 			}
 			
-		}
-	}
-
-	private void measureSpeed() {
-		BlockPos pp = Minecraft.getMinecraft().player.getPosition();
-		if(lastSpeedMeasurePos==null||lastSpeedMeasureStamp==0) {
-			lastSpeedMeasurePos = pp;
-			lastSpeedMeasureStamp = System.currentTimeMillis();
-		}
-		else if(System.currentTimeMillis()-lastSpeedMeasureStamp>=SPEED_MEASURE_INTERVAL_MILLIS) {
-			
-			BlockPos currentSpeedMeasurePos = pp;
-			int distanceMoved = distance2D(currentSpeedMeasurePos, lastSpeedMeasurePos);
-			int distanceToGo = distance2D(currentSpeedMeasurePos, travelTarget);
-			
-			if(distanceToGo==0||distanceMoved==0) return; 
-			int divided = distanceToGo/distanceMoved;
-			long timeToGo = divided*SPEED_MEASURE_INTERVAL_MILLIS;
-			arrivalEstimate = TimeUtils.millisToShortDHMS(timeToGo);
-			
-			lastSpeedMeasureStamp = System.currentTimeMillis();
-			lastSpeedMeasurePos = currentSpeedMeasurePos;
 		}
 	}
 
@@ -544,10 +514,8 @@ public class BaseFinder {
 		currentTask = task;
 		if(task == FinderTask.PAUSE) {
 			writeToLog("pause");
-			arrivalEstimate="";
 		}
 		else if(task==FinderTask.CAPTURE_TARGET) {
-			arrivalEstimate = "";
 		}
 		else if(task==FinderTask.EXPLORE){
 			totalHits = 0;
@@ -594,7 +562,7 @@ public class BaseFinder {
 
 	public static String getStatusString() {
 		if(currentTask==FinderTask.PAUSE) return totalHits + " | "+currentTask.toString();
-		else return totalHits + " | "+currentTask.toString() + " | " + arrivalEstimate;
+		else return totalHits + " | "+currentTask.toString();
 	}
 
 	public static void clickAction(String action) {

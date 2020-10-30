@@ -38,18 +38,18 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer
     @Redirect(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;closeScreen()V"))
     public void closeScreen(EntityPlayerSP entityPlayerSP)
     {
-        // if (ModuleManager.isModuleEnabled("PortalChat"))
-        // return;
+        
+        
     }
 
     @Redirect(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V"))
     public void closeScreen(Minecraft minecraft, GuiScreen screen)
     {
-        // if (ModuleManager.isModuleEnabled("PortalChat"))
-        // return;
+        
+        
     }
 
-    //  public void move(MoverType type, double x, double y, double z)
+    
     @Inject(method = "move", at = @At("HEAD"), cancellable = true)
     public void move(MoverType type, double x, double y, double z, CallbackInfo p_Info)
     {
@@ -134,15 +134,5 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer
         }
     }
 
-    /*@Inject(method = "displayGUIChest", at = @At("HEAD"), cancellable = true)
-    public void displayGUIChest(IInventory inventory, CallbackInfo ci)
-    {
-        /// @todo move to events
-        String id = inventory instanceof IInteractionObject ? ((IInteractionObject) inventory).getGuiID() : "minecraft:container";
-        if (id.equals("minecraft:chest"))
-        {
-            Wrapper.GetMC().displayGuiScreen(new SalGuiChest(Wrapper.GetPlayer().inventory, inventory));
-            ci.cancel();
-        }
-    }*/
+
 }

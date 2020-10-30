@@ -41,6 +41,7 @@ public class Aura {
 	static Random random = new Random();
 	private static boolean forceOff = false;
 	private static boolean useAutoWeapon = false;
+	public static boolean autoWeaponBySharpness = false;
 
 	@SubscribeEvent
 	public void playerTick(TickEvent.PlayerTickEvent event){
@@ -182,7 +183,8 @@ public class Aura {
 				attackPassiveMobs = setting.value == 0;
 				break;
 			case "auto weapon":
-				useAutoWeapon = setting.value == 1;
+				useAutoWeapon = setting.value != 0;
+				autoWeaponBySharpness = setting.value == 2;
 				break;
 			case "D ticks":
 				tickDelay = Integer.parseInt(setting.values.get(setting.value).getAsString());

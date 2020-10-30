@@ -84,7 +84,7 @@ public class Dupe {
         Minecraft mc = Minecraft.getMinecraft();
         mc.player.sendMessage(new TextComponentString(msg));
         currentWaitPhase = WaitPhase.NONE;
-        mc.player.getRecipeBook().setGuiOpen(false);
+        
         mc.displayGuiScreen(null);
     }
 

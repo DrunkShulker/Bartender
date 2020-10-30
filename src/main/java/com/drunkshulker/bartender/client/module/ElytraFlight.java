@@ -43,6 +43,10 @@ public class ElytraFlight implements Listenable {
     
     static Minecraft mc = Minecraft.getMinecraft();
 
+    public ElytraFlight(){
+        setMode(mode);
+    }
+
     public static float useSpeed = speed;
 
     public static void setMode(Mode newMode) {
@@ -251,7 +255,7 @@ public class ElytraFlight implements Listenable {
                     break;
                 case "speed":
                     speed = setting.values.get(setting.value).getAsFloat();
-                    setMode(mode);
+                    
                     break;
                 case "boost":
                     boost = setting.values.get(setting.value).getAsFloat();
