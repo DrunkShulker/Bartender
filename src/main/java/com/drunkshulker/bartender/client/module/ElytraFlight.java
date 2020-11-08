@@ -1,7 +1,10 @@
 package com.drunkshulker.bartender.client.module;
 
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
+import com.drunkshulker.bartender.util.kami.BlockUtils;
+import com.drunkshulker.bartender.util.kami.EntityUtils;
 import com.drunkshulker.bartender.util.salhack.MathUtil;
+import com.drunkshulker.bartender.util.salhack.PlayerUtil;
 import com.drunkshulker.bartender.util.salhack.Timer;
 
 import com.drunkshulker.bartender.util.salhack.events.network.EventNetworkPacketEvent;
@@ -15,6 +18,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketEntityAction.Action;
 import net.minecraft.network.play.client.CPacketPlayer;
+
+import static com.drunkshulker.bartender.util.kami.BlockUtils.getGroundPosY;
 
 
 public class ElytraFlight implements Listenable {
@@ -34,7 +39,7 @@ public class ElytraFlight implements Listenable {
     public final boolean CancelInWater = false;
     
     public final boolean PitchSpoof = false;
-
+    private static boolean wasInLiquid = false;
     private Timer PacketTimer = new Timer();
     private Timer AccelerationTimer = new Timer();
     private Timer AccelerationResetTimer = new Timer();
@@ -43,7 +48,7 @@ public class ElytraFlight implements Listenable {
     
     static Minecraft mc = Minecraft.getMinecraft();
 
-    public ElytraFlight(){
+    public ElytraFlight() {
         setMode(mode);
     }
 
@@ -66,6 +71,8 @@ public class ElytraFlight implements Listenable {
         BOOST, Tarzan, Superior, Packet, CONTROL
     }
 
+    boolean spamPacket = false;
+
     @EventHandler
     private Listener<EventPlayerTravel> OnTravel = new Listener<>(event ->
     {
@@ -75,18 +82,20 @@ public class ElytraFlight implements Listenable {
         
         if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() != Items.ELYTRA)
             return;
-
-        if (!mc.player.isElytraFlying()) {
-            if (!mc.player.onGround && easyTakeoff) {
-                if (!InstantFlyTimer.passed(400))
-                    return;
-
+        if (!mc.player.isElytraFlying() && mc.player.isSneaking()&&(EntityUtils.isInWater(mc.player)||EntityUtils.isAboveWater(mc.player))) return;
+        if (!mc.player.isElytraFlying() && !mc.player.isSneaking()) {
+            if (spamPacket) {
+                if (!InstantFlyTimer.passed(300)) return;
                 InstantFlyTimer.reset();
+                spamPacket = false;
+                mc.player.jump();
                 mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, Action.START_FALL_FLYING));
+            } else if (!mc.player.onGround && easyTakeoff) {
+                spamPacket = true;
+                takeoff(event);
             }
-
             return;
-        }
+        } else reset(false);
 
         switch (mode) {
             case BOOST:
@@ -172,6 +181,57 @@ public class ElytraFlight implements Listenable {
         mc.player.limbSwing = 0;
     }
 
+    
+    static void takeoff(EventPlayerTravel event) {
+        boolean highPingOptimize = false, easyTakeOff = true, timerControl = true;
+        float minTakeoffHeight = 0.5f;
+        float timerSpeed;
+        double hoverTarget = -1.0;
+
+        if (highPingOptimize) timerSpeed = 400.0f;
+        else timerSpeed = 200.0f;
+        double height;
+        if (highPingOptimize) height = 0.0f;
+        else height = minTakeoffHeight;
+        boolean closeToGround = mc.player.posY <= getGroundPosY(false) + height && !wasInLiquid && !mc.integratedServerIsRunning;
+        if (!easyTakeOff || mc.player.onGround) {
+            if (mc.player.posY - getGroundPosY(false) > 4.0f) holdPlayer(event);
+            reset(mc.player.onGround);
+            return;
+        }
+        if (mc.player.motionY < 0 && !highPingOptimize || mc.player.motionY < -0.02) {
+            if (closeToGround) {
+                mc.timer.tickLength = 25.0f;
+                return;
+            }
+            if (!highPingOptimize && !wasInLiquid && !mc.integratedServerIsRunning) {
+                event.cancel();
+                mc.player.setVelocity(0.0, -0.02, 0.0);
+            }
+            if (timerControl && !mc.integratedServerIsRunning) mc.timer.tickLength = timerSpeed * 2.0f;
+            mc.getConnection().sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.START_FALL_FLYING));
+            hoverTarget = mc.player.posY + 0.2;
+        } else if (highPingOptimize && !closeToGround) {
+            mc.timer.tickLength = timerSpeed;
+        }
+    }
+
+    private static void reset(boolean cancelFlying) {
+        wasInLiquid = false;
+        if (mc.player != null) {
+            mc.timer.tickLength = 50.0f;
+            mc.player.capabilities.setFlySpeed(0.05f);
+            if (cancelFlying) mc.player.capabilities.isFlying = false;
+        }
+    }
+
+    
+    private static void holdPlayer(EventPlayerTravel event) {
+        event.cancel();
+        mc.timer.tickLength = 50.0f;
+        mc.player.setVelocity(0.0, -0.01, 0.0);
+    }
+
     public void Accelerate() {
         if (AccelerationResetTimer.passed(vAccelerationTimer)) {
             AccelerationResetTimer.reset();
@@ -218,8 +278,8 @@ public class ElytraFlight implements Listenable {
             mc.player.motionX = 0;
             mc.player.motionZ = 0;
         }
-        if(mc.player.isSneaking()) mc.player.motionY = -1;
-        else if(spacePressed) mc.player.motionY = 1;
+        if (mc.player.isSneaking()) mc.player.motionY = -1;
+        else if (spacePressed) mc.player.motionY = 1;
         else mc.player.motionY = (-MathUtil.degToRad(mc.player.rotationPitch)) * mc.player.movementInput.moveForward;
 
         mc.player.prevLimbSwingAmount = 0;

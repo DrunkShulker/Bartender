@@ -344,7 +344,7 @@ public class Bodyguard {
 	public static void eatChorus(boolean spreadMessage) {
 		EntityPlayerSP player =  Minecraft.getMinecraft().player;
 		if (player==null) return;
-		if(!AutoEat.enabled) player.sendMessage(new TextComponentString("<Bartender> Cannot eat chorus! Auto eat is not enabled."));
+		if(!AutoEat.enabled) Bartender.msg("Cannot eat chorus! Auto eat is not enabled.");
 		AutoEat.chorus();
 		if(spreadMessage){
 			IPCHandler.push(IPCHandler.CHORUS,player.getDisplayNameString(), player.getPosition().x,player.getPosition().y, player.getPosition().z);
@@ -399,7 +399,7 @@ public class Bodyguard {
 				.add(new BlockPos(player.rand.nextInt(randomOffeet )*((player.rand.nextFloat()>0.5)?1:-1),0,player.rand.nextInt(randomOffeet )*((player.rand.nextFloat()>0.5)?1:-1))))); 
 
 		if(groundLevel==null){
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Cannot calculate ground level. Cancelled."));
+			Bartender.msg("Cannot calculate ground level. Cancelled.");
 			return;
 		}
 		BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(new GoalGetToBlock(groundLevel));
@@ -498,7 +498,7 @@ public class Bodyguard {
 	}
 
 
-
+	
 
 	public static void localDimensionChanged() {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
@@ -692,7 +692,6 @@ public class Bodyguard {
 	}
 
 	private static void clearEnemyList() {
-		
 		currentEnemies.clear();
 		inRangeEnemies.clear();
 	}

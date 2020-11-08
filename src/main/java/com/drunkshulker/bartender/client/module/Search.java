@@ -62,7 +62,7 @@ public class Search {
 		return targetsLists[dim+1];
 	}
 
-
+	
 
     public void onPlayerChangedDimension() {
         if(Minecraft.getMinecraft().player==null) return;

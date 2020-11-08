@@ -72,10 +72,10 @@ public class SafeTotemSwap {
 				
 				if(Minecraft.getMinecraft().player.getHealth()==20) {
 					
-					Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Prevented safe totem NDB on full HP!"));
+					Bartender.msg("Prevented safe totem NDB on full HP!");
 				}else {
 					
-					Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> ND behavior!"));
+					Bartender.msg("ND behavior!");
 					if(nearDeathBehavior==NearDeathBehavior.DISCONNECT) {
 						BaseFinder.logOut("safe totem near death");
 					}else if(nearDeathBehavior==NearDeathBehavior.SLASH_KILL) {
@@ -134,7 +134,7 @@ public class SafeTotemSwap {
 		
 		if(bringToHotbar==-1) {
 			runningLowOnStacks = true;
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Running low on tots!"));
+			Bartender.msg("Running low on tots!");
 			int slotWithMostTots = -1;
 			int uselessStackCout = 0;
 			for (Integer slot : slotsWithTots) {
@@ -154,7 +154,7 @@ public class SafeTotemSwap {
 		else runningLowOnStacks = false;
 		
 		if(bringToHotbar==-1) {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Bring to hotbar not found!"));
+			Bartender.msg("Bring to hotbar not found!");
 			return;
 		}
 		
@@ -162,7 +162,6 @@ public class SafeTotemSwap {
 	}
 
 	public static void swap() {
-		
 		equipItem(FIRST_HOTBAR_SLOT);
 		KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindSwapHands.getKeyCode());
 	}

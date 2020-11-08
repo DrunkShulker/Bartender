@@ -23,6 +23,9 @@ public class Preferences {
 			case "gui":
 				GuiHandler.applyPreferences(panel.getContents());
 				break;
+			case "HUD":
+				GuiHandler.applyPreferences(panel.getContents());
+				break;
 			case "click command":
 				
 				break;

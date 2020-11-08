@@ -74,7 +74,7 @@ public class InventoryUtils {
         return currentCount;
     }
 
-
+    
     public static boolean inProgress = false;
 
     public static void swapSlot(int slot) {
@@ -254,5 +254,5 @@ public class InventoryUtils {
 	    };
 	    thread.start();
     }
-
+    
 }

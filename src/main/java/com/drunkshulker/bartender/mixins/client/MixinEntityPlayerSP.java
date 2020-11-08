@@ -134,5 +134,5 @@ public abstract class MixinEntityPlayerSP extends MixinAbstractClientPlayer
         }
     }
 
-
+    
 }

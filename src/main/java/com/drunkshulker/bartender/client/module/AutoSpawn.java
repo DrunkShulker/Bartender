@@ -68,7 +68,6 @@ public class AutoSpawn{
     }
 
     static void onDisable() {
-        
         enabled = false;
         placeTarget = null;
         rotationPlaceableX = false;
@@ -92,10 +91,12 @@ public class AutoSpawn{
 
             if (!checkBlocksInHotbar()) {
                 if (!party) {
-                    if (debug) Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Missing blocks to perform spawn"));
+                    if (debug) {
+                        Bartender.msg("Missing blocks to perform spawn");
+                    }
                     onDisable();
                 }
-                Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Missing blocks to perform spawn"));
+                Bartender.msg("Missing blocks to perform spawn");
                 return;
             }
             ArrayList<BlockPos> blockPosList = VectorUtils.getBlockPosInSphere(mc.player.getPositionVector(), placeRange);
@@ -104,7 +105,7 @@ public class AutoSpawn{
             for (BlockPos pos : blockPosList) {
                 placeTarget = pos;
                 if(placeTarget==null) {
-                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Place target invalid!"));
+                    Bartender.msg("Place target invalid!");
                     return;
                 }
                 if (testStructure()) {
@@ -115,7 +116,7 @@ public class AutoSpawn{
 
             if (noPositionInArea) {
                 if (useMode == UseMode.SINGLE) {
-                    if (debug) Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Invalid position for spawn"));
+                    if (debug) Bartender.msg("Invalid position for spawn");
                     onDisable();
                     return;
                 }

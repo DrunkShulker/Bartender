@@ -71,6 +71,18 @@ public class OverlayGui extends Gui {
             }
         }
 
+
+        
+        if (ElytraFlight.enabled) {
+            if (ElytraFlight.easyTakeoff) {
+                renderCustomTexture((width / 2) - 147, height - textureHeight, textureWidth * 2, 0, textureWidth, textureHeight, texture, 1f);
+            } else if (ElytraFlight.mode == ElytraFlight.Mode.BOOST) {
+                renderCustomTexture((width / 2) - 147, height - textureHeight, 0, 0, textureWidth, textureHeight, texture, 1f);
+            } else {
+                renderCustomTexture((width / 2) - 147, height - textureHeight, textureWidth, 0, textureWidth, textureHeight, texture, 1f);
+            }
+        }
+
         
         if (GuiHandler.showCoords) {
             String[] coords = CoordUtil.getCurrentCoordsDesc();
@@ -103,7 +115,7 @@ public class OverlayGui extends Gui {
 
         
         if (Bodyguard.enabled && BaseFinder.enabled) {
-            drawCenteredString(mc.fontRenderer, "ERROR: YOU CANNOT HAVE BASEFINDER AND BODYGUARD ENABLED AT THE SAME TIME", width / 2, (height / 2) - 25, Integer.parseInt("FF0000", 16));
+            drawCenteredString(mc.fontRenderer, "YOU CANNOT HAVE BASEFINDER AND BODYGUARD ENABLED AT THE SAME TIME", width / 2, (height / 2) - 25, Integer.parseInt("FF0000", 16));
         } else if (ChatObserver.partyTPA)
             drawCenteredString(mc.fontRenderer, "Party TPA enabled", width / 2, 25, Integer.parseInt("FF0000", 16));
         else if (Bodyguard.enabled) {
@@ -234,16 +246,6 @@ public class OverlayGui extends Gui {
             }
         }
 
-        
-        if (ElytraFlight.enabled) {
-            if (ElytraFlight.easyTakeoff) {
-                renderCustomTexture((width / 2) - 147, height - textureHeight, textureWidth * 2, 0, textureWidth, textureHeight, texture, 1f);
-            } else if (ElytraFlight.mode == ElytraFlight.Mode.BOOST) {
-                renderCustomTexture((width / 2) - 147, height - textureHeight, 0, 0, textureWidth, textureHeight, texture, 1f);
-            } else {
-                renderCustomTexture((width / 2) - 147, height - textureHeight, textureWidth, 0, textureWidth, textureHeight, texture, 1f);
-            }
-        }
 
         
         if (GuiHandler.txtHpAndFood && survivalMode) {
@@ -336,7 +338,5 @@ public class OverlayGui extends Gui {
         if (!GuiHandler.showTargetListing) return false;
         return true;
     }
-
-
 }
 

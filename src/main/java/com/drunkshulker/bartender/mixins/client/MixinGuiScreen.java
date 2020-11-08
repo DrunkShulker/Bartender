@@ -32,7 +32,7 @@ public class MixinGuiScreen {
     FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
     private static final ResourceLocation RES_MAP_BACKGROUND = new ResourceLocation("textures/map/map_background.png");
 
-
+    
 
     @Inject(method = "renderToolTip", at = @At("HEAD"), cancellable = true)
     public void renderToolTip(ItemStack stack, int x, int y, CallbackInfo info) {

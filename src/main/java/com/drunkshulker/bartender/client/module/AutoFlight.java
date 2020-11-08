@@ -1,5 +1,6 @@
 package com.drunkshulker.bartender.client.module;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
 
@@ -85,7 +86,7 @@ public class AutoFlight {
 				if(Bodyguard.protectedDimension!=player.dimension){
 					
 					setTask(FlyTask.HOVER);
-					player.sendMessage(new TextComponentString("<Bartender> Main acc's last location reached but no main acc is seen."));
+					Bartender.msg("Main acc's last location reached but no main acc is seen.");
 				}
 				else if(!PlayerGroup.isPlayerOnline(PlayerGroup.mainAccount)){
 					
@@ -117,7 +118,7 @@ public class AutoFlight {
 			else{
 				
 				Bodyguard.eatChorus(false);
-				player.sendMessage(new TextComponentString("<Bartender> Main dimension was nether or did not match. Landing for tp."));
+				Bartender.msg("Main dimension was nether or did not match. Landing for tp.");
 			}
 
 			return;

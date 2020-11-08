@@ -36,7 +36,7 @@ public class AutoBuild {
 		}
 
 		if(schematicFile==null) {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> Failed to extract schematic"));
+			Bartender.msg("Failed to extract schematic");
 			return;
 		}
 

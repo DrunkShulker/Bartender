@@ -184,7 +184,7 @@ public class BaseFinder {
 				else if(currentTask==FinderTask.GOTO_TARGET) {
 					EntityPlayerSP p = Minecraft.getMinecraft().player;
 					if(tempTarget==null) {
-						Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder tempTarget is null!"));
+						Bartender.msg("BaseFinder tempTarget is null!");
 						setTask(FinderTask.EXPLORE);
 						return;
 					} else {
@@ -194,7 +194,7 @@ public class BaseFinder {
 						
 						if(distance2D(p.getPosition(), tempTarget)<TARGET_TRIGGER_RADIUS) {
 							
-							Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder reached temp target."));
+							Bartender.msg("BaseFinder reached temp target.");
 							setTask(FinderTask.CAPTURE_TARGET);
 						}
 					}			
@@ -244,7 +244,7 @@ public class BaseFinder {
 				if(distance2D(p.getPosition(), orbitOrigin)<TARGET_TRIGGER_RADIUS) {
 					if(visitedOtherQuadron) {
 						
-						Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> "+"orbit complete. next orbit is "+orbitDensity+" up | player pos: " + p.getPosition().toString()));
+						Bartender.msg(""+"orbit complete. next orbit is "+orbitDensity+" up | player pos: " + p.getPosition().toString());
 
 						writeToLog("orbit complete. next orbit is "+orbitDensity+" up | player pos: " + p.getPosition().toString());
 						visitedOtherQuadron = false;
@@ -253,18 +253,18 @@ public class BaseFinder {
 						else if(currentQuadron==Quadron.X_ZMIN)orbitOrigin= orbitOrigin.add(new Vec3i(orbitDensity,0,-orbitDensity));
 						else if(currentQuadron==Quadron.XMIN_Z)orbitOrigin= orbitOrigin.add(new Vec3i(-orbitDensity,0,orbitDensity));
 						else if(currentQuadron==Quadron.XMIN_ZMIN)orbitOrigin= orbitOrigin.add(new Vec3i(-orbitDensity,0,-orbitDensity));
-						else Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> should never happen"));
+						else Bartender.msg("should never happen");
 
 						travelTarget = orbitOrigin;
 					}else {
 						
-						Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> arrived to new orbit origin at " + p.getPosition().toString()));
+						Bartender.msg("arrived to new orbit origin at " + p.getPosition().toString());
 						setTravelTarget();
 					}
 				}
 				else if(visitedOtherQuadron){
 					
-					Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> orbit point reached at " + p.getPosition().toString()));
+					Bartender.msg("orbit point reached at " + p.getPosition().toString());
 					
 					setTravelTarget();
 				}
@@ -362,12 +362,12 @@ public class BaseFinder {
 			default:
 				x = orbitOrigin.getX();
 				z = orbitOrigin.getZ();
-				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Error on getting the next orbit origin!"));
+				Bartender.msg("Error on getting the next orbit origin!");
 				break;
 			}
 			
 			travelTarget = new BlockPos(x,0,z);
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> New travelTarget is "+travelTarget.toString()));
+			Bartender.msg("New travelTarget is "+travelTarget.toString());
 		} 
 		
 		else {		
@@ -397,7 +397,7 @@ public class BaseFinder {
 					travelTarget = playerPos.add(new Vec3i(WORLD_BORDER,0,WORLD_BORDER));
 					break;
 				default:
-					Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder failed to get current facing direction."));
+					Bartender.msg("BaseFinder failed to get current facing direction.");
 					break;
 			}
 		}
@@ -510,7 +510,6 @@ public class BaseFinder {
 	}
 
 	public static void setTask(FinderTask task) {
-		
 		currentTask = task;
 		if(task == FinderTask.PAUSE) {
 			writeToLog("pause");
@@ -576,26 +575,26 @@ public class BaseFinder {
 	public static void pauseOrContinue() {
 		if(enabled){
 			if(currentTask==FinderTask.PAUSE){
-				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder continues exploration!"));
+				Bartender.msg("BaseFinder continues exploration!");
 				setTask(FinderTask.EXPLORE);
 			}
 			else{
 				setTask(FinderTask.PAUSE);
 			}
 		}else {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder is not enabled!"));
+			Bartender.msg("BaseFinder is not enabled!");
 		}
 	}
 
 	public static void setCustomGoal(int x, int z) {
 		customTargetGoal = new BlockPos(x,0,z);
-		Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder custom goal set to "+customTargetGoal.toString()+". Set 'travel: custom' and 'state: ON' to start you journey."));
+		Bartender.msg("BaseFinder custom goal set to "+customTargetGoal.toString()+". Set 'travel: custom' and 'state: ON' to start you journey.");
 		Config.save();
 	}
 
 	public static void prepareTpa() {
 		if(enabled) {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> BaseFinder pausing for group TPA"));
+			Bartender.msg("BaseFinder pausing for group TPA");
 			setTask(FinderTask.PAUSE);
 		}
 	}

@@ -3,7 +3,96 @@
 		{
 			"name": "gui",
 			"desc": [
-				"BARTENDER GUI PREFERENCES"
+				"GUI PREFERENCES"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "theme",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"drunk",
+						"faraday",
+						"infinitum",
+						"desert_bunny",
+						"bait"
+					],
+					"desc": [
+						"GUI COLOR THEMES"
+					]
+				},
+
+				{
+					"title": "keybinds",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"visible",
+						"hidden"
+					],
+					"desc": [
+						"TOGGLE BARTENDER KEYBINDS IN PAUSE MENU"
+					]
+				},
+
+				{
+					"title": "draw player",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"visible",
+						"hidden"
+					],
+					"desc": [
+						"TOGGLE CLICKGUI PLAYER ENTITY"
+					]
+				},
+				{
+					"title": "dimmed",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"yes",
+						"no"
+					],
+					"desc": [
+						"TOGGLE CLICKGUI BACKGROUND COLOR"
+					]
+				},
+				{
+					"title": "tooltips",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"yes",
+						"no"
+					],
+					"desc": [
+						"TOGGLE CLICKGUI TOOLTIPS"
+					]
+				},
+
+				{
+					"title": "forge screen",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"MAKES FORGE LOADING SCREEN BLACK"
+					]
+				}
+			]
+		},
+		{
+			"name": "HUD",
+			"desc": [
+				"CHOOSE THE HUD ELEMENTS YOU WANT TO SEE"
 			],
 			"x": 0,
 			"y": 0,
@@ -70,21 +159,6 @@
 					]
 				},
 				{
-					"title": "theme",
-					"type": "text",
-					"value": 0,
-					"values": [
-						"drunk",
-						"faraday",
-						"infinitum",
-						"desert_bunny",
-						"bait"
-					],
-					"desc": [
-						"GUI COLOR THEMES"
-					]
-				},
-				{
 					"title": "target list",
 					"type": "text",
 					"value": 1,
@@ -122,18 +196,6 @@
 					]
 				},
 				{
-					"title": "keybinds",
-					"type": "text",
-					"value": 1,
-					"values": [
-						"visible",
-						"hidden"
-					],
-					"desc": [
-						"TOGGLE BARTENDER KEYBINDS IN PAUSE MENU"
-					]
-				},
-				{
 					"title": "group",
 					"type": "text",
 					"value": 0,
@@ -146,39 +208,18 @@
 					]
 				},
 				{
-					"title": "draw player",
+					"title": "watermark",
 					"type": "text",
 					"value": 0,
 					"values": [
-						"visible",
-						"hidden"
+						"show",
+						"hide",
+						"menu",
+						"ingame"
 					],
 					"desc": [
-						"TOGGLE CLICKGUI PLAYER ENTITY"
-					]
-				},
-				{
-					"title": "dimmed",
-					"type": "text",
-					"value": 0,
-					"values": [
-						"yes",
-						"no"
-					],
-					"desc": [
-						"TOGGLE CLICKGUI BACKGROUND COLOR"
-					]
-				},
-				{
-					"title": "tooltips",
-					"type": "text",
-					"value": 0,
-					"values": [
-						"yes",
-						"no"
-					],
-					"desc": [
-						"TOGGLE CLICKGUI TOOLTIPS"
+						"CHOOSE WHERE YOU WANT TO DISPLAY",
+						"THE BARTENDER WATERMARK OR HIDE IT COMPLETELY"
 					]
 				},
 				{
@@ -203,33 +244,6 @@
 					],
 					"desc": [
 						"SHOW BIND SETTING WHEN PRESSED"
-					]
-				},
-				{
-					"title": "watermark",
-					"type": "text",
-					"value": 0,
-					"values": [
-						"show",
-						"hide",
-						"menu",
-						"ingame"
-					],
-					"desc": [
-						"CHOOSE WHERE YOU WANT TO DISPLAY",
-						"THE BARTENDER WATERMARK OR HIDE IT COMPLETELY"
-					]
-				},
-				{
-					"title": "forge screen",
-					"type": "text",
-					"value": 1,
-					"values": [
-						"OFF",
-						"ON"
-					],
-					"desc": [
-						"MAKES FORGE LOADING SCREEN BLACK"
 					]
 				}
 			]
@@ -866,18 +880,6 @@
 					]
 				},
 				{
-					"title": "jesus",
-					"type": "text",
-					"value": 1,
-					"values": [
-						"OFF",
-						"ON"
-					],
-					"desc": [
-						"WALK ON WATER"
-					]
-				},
-				{
 					"title": "freecam",
 					"type": "text",
 					"value": 0,
@@ -1312,7 +1314,8 @@
 					"values": [
 						"none",
 						"ticks",
-						"millis"
+						"millis",
+						"packet"
 					],
 					"desc": [
 						"SELECT DELAY TYPE"
@@ -1321,7 +1324,7 @@
 				{
 					"title": "D millis",
 					"type": "text",
-					"value": 7,
+					"value": 10,
 					"values": [
 						"20",
 						"30",
@@ -1412,6 +1415,20 @@
 					],
 					"desc": [
 						"DELAY TICKS"
+					]
+				},
+				{
+					"title": "iterations",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"1",
+						"2",
+						"3",
+						"4"
+					],
+					"desc": [
+						"HOW MANY HITS FOR EACH ATTACK"
 					]
 				}
 			]

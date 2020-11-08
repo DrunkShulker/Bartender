@@ -38,7 +38,7 @@ public class AutoEat {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         ArrayList<Integer> slots = Bartender.INVENTORY_UTILS.getSlotsHotbar(Item.getIdFromItem(Items.CHORUS_FRUIT));
         if(slots==null||slots.isEmpty()){
-            player.sendMessage(new TextComponentString("<Bartender> Cannot eat chorus because you don't have any in your hotbar!"));
+            Bartender.msg("Cannot eat chorus because you don't have any in your hotbar!");
             eatChorus=false;
             return;
         }
@@ -46,7 +46,7 @@ public class AutoEat {
         chorusSlot = slots.get(0);
         chorusCountBeforeEat = player.inventory.getStackInSlot(chorusSlot).getCount();
         if(chorusCountBeforeEat<=0){
-            player.sendMessage(new TextComponentString("<Bartender> Unexpected error while trying to eat chorus."));
+            Bartender.msg("Unexpected error while trying to eat chorus.");
             eatChorus=false;
             return;
         }
@@ -101,7 +101,7 @@ public class AutoEat {
         if (!SafeTotemSwap.enabled &&isValid(mc.player.getHeldItemOffhand(), stats.getFoodLevel())) {
             mc.player.setActiveHand(EnumHand.OFF_HAND);
 
-
+            
 
             eating = true;
             BaritoneAPI.getSettings().allowInventory.value = true;
@@ -109,7 +109,7 @@ public class AutoEat {
             KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
             mc.playerController.processRightClick(mc.player, mc.world, EnumHand.OFF_HAND);
         } else {
-
+            
             if(eatChorus){
                 if(Minecraft.getMinecraft().player.inventory.getStackInSlot(chorusSlot).isEmpty
                         ||Minecraft.getMinecraft().player.inventory.getStackInSlot(chorusSlot).getItem()!=Items.CHORUS_FRUIT
@@ -121,7 +121,7 @@ public class AutoEat {
                 lastSlot = mc.player.inventory.currentItem;
                 mc.player.inventory.currentItem = chorusSlot;
 
-
+                 
 
                 eating = true;
                 KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
@@ -134,7 +134,7 @@ public class AutoEat {
                         lastSlot = mc.player.inventory.currentItem;
                         mc.player.inventory.currentItem = i;
 
-
+                         
 
                         eating = true;
                         KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
@@ -149,7 +149,7 @@ public class AutoEat {
                          lastSlot = mc.player.inventory.currentItem;
                          mc.player.inventory.currentItem = i;
 
-
+                         
 
                          eating = true;
                          KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
@@ -167,7 +167,7 @@ public class AutoEat {
         return (item == Items.GOLDEN_APPLE)&&item.hasEffect(stackInSlot);
     }
 
-
+    
 
 	public static void applyPreferences(ClickGuiSetting[] contents) {
 		for (ClickGuiSetting setting : contents) {

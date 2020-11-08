@@ -20,17 +20,13 @@ public class EventPlayerDamageBlock extends MinecraftEvent
         return BlockPos;
     }
 
-    /**
-     * @return the direction
-     */
+    
     public EnumFacing getDirection()
     {
         return Direction;
     }
 
-    /**
-     * @param direction the direction to set
-     */
+    
     public void setDirection(EnumFacing direction)
     {
         Direction = direction;

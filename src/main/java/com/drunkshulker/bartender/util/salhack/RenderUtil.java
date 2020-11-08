@@ -513,7 +513,7 @@ public final class RenderUtil
         bufferbuilder.pos((double) par2, (double) par1, 0.0D).color(var6, var7, var8, var10).endVertex();
         bufferbuilder.pos((double) par0, (double) par1, 0.0D).color(var6, var7, var8, var10).endVertex();
 
-    
+        
         tessellator.draw();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
@@ -522,13 +522,13 @@ public final class RenderUtil
 
     public static void drawSplitString(String p_Name, int p_X, int p_Y, int p_K, int p_Color)
     {
-    
+        
         
         
         Minecraft.getMinecraft().fontRenderer.drawSplitString(p_Name, p_X, p_Y, p_K, p_Color);
     }
 
-
+    
     public static void drawBorderedRect(int x, int y, int x1, int y1, int color, float lineWidth, int color1)
     {
         drawRect(x, y, x1, y1, color);
@@ -586,7 +586,7 @@ public final class RenderUtil
         enableDefaults();
     }
 
-
+    
     public static void drawLine2D(int x, int y, int x1, int y1, int color, float lineWidth)
     {
         setupOverlayRendering();
@@ -602,7 +602,7 @@ public final class RenderUtil
         enableDefaults();
     }
 
-
+    
     public static void drawBorderedCircle(int x, int y, int radius, int color, float lineWidth, int color1)
     {
         drawCircle(x, y, radius, color);
@@ -686,7 +686,7 @@ public final class RenderUtil
         enableDefaults();
     }
 
-
+    
     public static double getAlphaFromHex(int color)
     {
         return ((double) ((color >> 24 & 0xff) / 255F));
@@ -723,18 +723,18 @@ public final class RenderUtil
 
     public static void setupGradient()
     {
-);
-);
-);
-);
+        GL11.glDisable(3553 );
+        GL11.glEnable(3042 );
+        GL11.glDisable(3008 );
+        GL11.glShadeModel(7425 );
     }
 
     public static void unsetupGradient()
     {
-);
-);
-);
-);
+        GL11.glShadeModel(7424 );
+        GL11.glDisable(3042 );
+        GL11.glEnable(3008 );
+        GL11.glEnable(3553 );
     }
 
     public static void setupOverlayRendering()

@@ -2,13 +2,14 @@ package com.drunkshulker.bartender;
 
 import java.io.File;
 
-import baritone.api.BaritoneAPI;
 import com.drunkshulker.bartender.util.forge.ForgeEventProcessor;
+import com.drunkshulker.bartender.util.salhack.TickRateManager;
 import io.mappedbus.MappedBusReader;
 import io.mappedbus.MappedBusWriter;
 
 import me.zero.alpine.fork.bus.EventBus;
 import me.zero.alpine.fork.bus.EventManager;
+import net.minecraft.util.text.TextComponentString;
 import org.lwjgl.opengl.Display;
 
 import com.drunkshulker.bartender.client.CommandsRegistry;
@@ -22,7 +23,6 @@ import com.drunkshulker.bartender.client.social.PlayerFriends;
 import com.drunkshulker.bartender.proxy.CommonProxy;
 import com.drunkshulker.bartender.util.Config;
 import com.drunkshulker.bartender.util.Preferences;
-import com.drunkshulker.bartender.util.forge.ForgeLoadingScreen;
 import com.drunkshulker.bartender.util.forge.ForgeModsHelper;
 import com.drunkshulker.bartender.util.kami.InventoryUtils;
 
@@ -41,13 +41,13 @@ public class Bartender
 {
     public static final String MOD_ID = "bartender";
     public static final String NAME = "Bartender";
-    public static final String VERSION = "1.2.4";
+    public static final String VERSION = "1.2.5";
     public static final String ACCEPTED_VERSIONS = "(1.12.2)";
     public static final String CLIENT_PROXY = "com.drunkshulker.bartender.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.drunkshulker.bartender.proxy.CommonProxy";
     
     public static final InventoryUtils INVENTORY_UTILS = new InventoryUtils();
-
+    public static final Minecraft MC = Minecraft.getMinecraft();
     public static String MINECRAFT_DIR, BARTENDER_DIR;
     public static boolean IMPACT_INSTALLED, KAMI_INSTALLED;
     public static boolean UPDATES_CHECKED = false, OFFER_IMPORTS = false;
@@ -59,6 +59,7 @@ public class Bartender
 
     
     public static final EventBus EVENT_BUS = new EventManager();
+    private static TickRateManager TICK_RATE_MANAGER = new TickRateManager();
 
     @Instance
 	public static Bartender instance;
@@ -167,9 +168,23 @@ public class Bartender
     	String title = Bartender.NAME;
     	if(IMPACT_INSTALLED) title = "Impact + "+title;
     	if(KAMI_INSTALLED)title = "KAMI Blue + "+title;
-    	if(Minecraft.getMinecraft().getSession()!=null)
-    		if(Minecraft.getMinecraft().getSession().getUsername()!=null)
+    	if(MC.getSession()!=null)
+    		if(MC.getSession().getUsername()!=null)
     			title = title + " | Logged as "+Minecraft.getMinecraft().getSession().getUsername();
         Display.setTitle(title);
 	}
+
+	public static void msg(String text){
+        if(MC.player == null){
+            System.out.println(text);
+        }
+        else {
+            MC.player.sendMessage(new TextComponentString("<"+NAME+"> " + text));
+        }
+    }
+
+    public static TickRateManager GetTickRateManager()
+    {
+        return TICK_RATE_MANAGER;
+    }
 }

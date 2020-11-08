@@ -198,7 +198,7 @@ public class EntityUtils {
     }
 
 
-
+    
 
 
     public enum EntityPriority {
@@ -208,7 +208,7 @@ public class EntityUtils {
     public static Entity getPrioritizedTarget(ArrayList<Entity> targetList, EntityPriority priority) {
         if (targetList == null || targetList.isEmpty()) return null;
         Entity entity = targetList.get(0);
-
+        
         switch (priority) {
             case DISTANCE:
                 float distance = mc.player.getDistance(targetList.get(0));
@@ -240,7 +240,7 @@ public class EntityUtils {
         if (mc.world == null || mc.world.loadedEntityList == null) return new ArrayList<Entity>();
         ArrayList<Entity> entityList = new ArrayList<Entity>();
         for (Entity entity : mc.world.loadedEntityList) {
-
+            
             if (!isLiving(entity)) continue;
             if (entity == mc.player) continue;
             if (entity instanceof EntityPlayer) {
@@ -265,7 +265,7 @@ public class EntityUtils {
         return entityList;
     }
 
-
+    static 
 
     boolean canEntityFeetBeSeen(Entity entityIn) {
         return mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.eyeHeight, mc.player.posZ), new Vec3d(entityIn.posX, entityIn.posY, entityIn.posZ), false, true, false) == null;
@@ -290,9 +290,9 @@ public class EntityUtils {
         mc.player.rotationPitch = rotation[1];
     }
 
+    
 
+    
 
-
-
-
+    
 }
