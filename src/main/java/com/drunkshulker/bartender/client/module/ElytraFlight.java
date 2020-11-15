@@ -78,7 +78,7 @@ public class ElytraFlight implements Listenable {
     {
         if (!enabled) return;
         if (mc.player == null) return;
-
+        if(mc.player.onGround&&mc.player.isSneaking()&&!mc.player.isElytraFlying()) return;
         
         if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() != Items.ELYTRA)
             return;
@@ -88,7 +88,7 @@ public class ElytraFlight implements Listenable {
                 if (!InstantFlyTimer.passed(300)) return;
                 InstantFlyTimer.reset();
                 spamPacket = false;
-                mc.player.jump();
+                
                 mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, Action.START_FALL_FLYING));
             } else if (!mc.player.onGround && easyTakeoff) {
                 spamPacket = true;
@@ -292,9 +292,11 @@ public class ElytraFlight implements Listenable {
     private Listener<EventNetworkPacketEvent> PacketEvent = new Listener<>(p_Event ->
     {
         if (!enabled) return;
+
         if (p_Event.getPacket() instanceof CPacketPlayer && PitchSpoof) {
-            if (!mc.player.isElytraFlying())
-                return;
+
+            if(!mc.player.isElytraFlying())return;
+            if(!mc.player.onGround&&mc.player.isSneaking()&&!mc.player.isElytraFlying()) return;
 
             if (p_Event.getPacket() instanceof CPacketPlayer.PositionRotation && PitchSpoof) {
                 CPacketPlayer.PositionRotation rotation = (CPacketPlayer.PositionRotation) p_Event.getPacket();
@@ -315,10 +317,11 @@ public class ElytraFlight implements Listenable {
                     break;
                 case "speed":
                     speed = setting.values.get(setting.value).getAsFloat();
-                    
+                    setMode(mode);
                     break;
                 case "boost":
                     boost = setting.values.get(setting.value).getAsFloat();
+                    setMode(mode);
                     break;
                 default:
                     break;

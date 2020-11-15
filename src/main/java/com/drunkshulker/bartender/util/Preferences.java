@@ -32,6 +32,9 @@ public class Preferences {
 			case "chat":
 				ChatObserver.applyPreferences(panel.getContents());
 				break;
+			case "tracers":
+				Tracers.applyPreferences(panel.getContents());
+				break;
 			case "auto build":
 				AutoBuild.applyPreferences(panel.getContents());
 				break;
@@ -65,9 +68,10 @@ public class Preferences {
 				HideArmor.applyPreferences(panel.getContents());
 				FullBright.applyPreferences(panel.getContents());
 				PeekPreview.applyPreferences(panel.getContents());
+				Nametags.applyPreferences(panel.getContents());
 				break;
 			case "flight":
-				AutoFlight.applyPreferences(panel.getContents());
+				FlightBot.applyPreferences(panel.getContents());
 				break;
 			case "dupe":
 				Dupe.applyPreferences(panel.getContents());

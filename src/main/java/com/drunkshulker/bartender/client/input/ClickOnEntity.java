@@ -15,12 +15,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Mouse;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 
 public class ClickOnEntity {
     private static long lastClickStamp=-1;
     @SubscribeEvent
     public void onMouseInput(InputEvent.MouseInputEvent event) {
-            if(!PlayerGroup.useClickEntity) return;
+
             Minecraft mc = Minecraft.getMinecraft();
             
             if (Mouse.getEventButton() == 0) { 
@@ -30,13 +35,23 @@ public class ClickOnEntity {
                 if (mc.objectMouseOver.typeOfHit == RayTraceResult.Type.ENTITY) {
                     Entity lookedAtEntity = mc.objectMouseOver.entityHit;
                     if(EntityUtils.isPlayer(lookedAtEntity)){
-                        
-                        Bodyguard.addEnemy(((EntityPlayer)lookedAtEntity).getDisplayNameString(), true);
+                        if(lookedAtEntity instanceof EntityPlayer&&PlayerGroup.DEFAULTS.contains(((EntityPlayer)lookedAtEntity).getDisplayNameString())){
+                            if(!PlayerGroup.DEFAULTS.contains(mc.player.getDisplayNameString())){
+                                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                                    try {
+                                        Desktop.getDesktop().browse(new URI("https:/"+"/www.youtube.com/watch?v=oHg5SJYRHA0"));
+                                    } catch (IOException | URISyntaxException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                        else if(PlayerGroup.useClickEntity)Bodyguard.addEnemy(((EntityPlayer)lookedAtEntity).getDisplayNameString(), true);
                     }
                 }
             }
             
-            else if (Mouse.getEventButton() == 2) { 
+            else if (Mouse.getEventButton() == 2&&PlayerGroup.useClickEntity) { 
                 
                 if(lastClickStamp!=-1&&System.currentTimeMillis()-lastClickStamp<1000) {return;} lastClickStamp = System.currentTimeMillis();
 

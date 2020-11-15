@@ -19,22 +19,22 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new PlayerParticles());
         MinecraftForge.EVENT_BUS.register(new BaseFinder());
         MinecraftForge.EVENT_BUS.register(new Bodyguard());
-        MinecraftForge.EVENT_BUS.register(new AutoFlight());
+        MinecraftForge.EVENT_BUS.register(new FlightBot());
         MinecraftForge.EVENT_BUS.register(new Dupe());
         MinecraftForge.EVENT_BUS.register(new AutoEat());
         MinecraftForge.EVENT_BUS.register(new ClickOnEntity());
         MinecraftForge.EVENT_BUS.register(new IPCHandler());
         MinecraftForge.EVENT_BUS.register(new AutoFire());
         MinecraftForge.EVENT_BUS.register(new AutoSpawn());
+        Bartender.EVENT_BUS.subscribe(new Nametags());
+        MinecraftForge.EVENT_BUS.register(new Scaffold());
         Bartender.EVENT_BUS.subscribe(new ElytraFlight());
         Bartender.EVENT_BUS.subscribe(new NewChunks());
         Bartender.EVENT_BUS.subscribe(new Tracers());
-        Bartender.EVENT_BUS.subscribe(new Scaffold());
         Bartender.EVENT_BUS.subscribe(new Sprint());
         Bartender.EVENT_BUS.subscribe(new AntiOverlay());
         Bartender.EVENT_BUS.subscribe(new Freecam());
         Bartender.EVENT_BUS.subscribe(new Velocity());
-        
         Bartender.EVENT_BUS.subscribe(new NoSlow());
         Bartender.EVENT_BUS.subscribe(new AutoTool());
         Bartender.EVENT_BUS.subscribe(new AntiHunger());

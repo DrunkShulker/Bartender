@@ -27,7 +27,6 @@ public final class Sprint implements Listenable {
     }
 
     public void onDisable() {
-
         if (mc.world != null) {
             mc.player.setSprinting(false);
         }

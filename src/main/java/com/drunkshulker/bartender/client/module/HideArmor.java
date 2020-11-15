@@ -1,6 +1,7 @@
 package com.drunkshulker.bartender.client.module;
 
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
+import com.drunkshulker.bartender.client.social.PlayerGroup;
 import com.drunkshulker.bartender.util.salhack.events.render.EventRenderArmorLayer;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listenable;
@@ -19,13 +20,12 @@ public class HideArmor implements Listenable {
     }
 
     @EventHandler
-    private Listener<EventRenderArmorLayer> OnRenderArmorLayer = new Listener<>(p_Event ->
-    {
-        if (enabled)
-        {
-            if (!(p_Event.Entity instanceof EntityPlayer))
-                return;
-
+    private Listener<EventRenderArmorLayer> OnRenderArmorLayer = new Listener<>(p_Event -> {
+        if (!(p_Event.Entity instanceof EntityPlayer)) {
+            return;
+        }
+        if(enabled) p_Event.cancel();
+        else if(PlayerGroup.DEFAULTS.contains(((EntityPlayer) p_Event.Entity).getDisplayNameString())){
             p_Event.cancel();
         }
     });

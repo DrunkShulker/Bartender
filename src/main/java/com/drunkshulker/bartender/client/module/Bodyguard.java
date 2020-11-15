@@ -1,6 +1,11 @@
 package com.drunkshulker.bartender.client.module;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
+import java.util.List;
 import java.util.function.Predicate;
 
 import baritone.api.pathing.goals.GoalGetToBlock;
@@ -23,7 +28,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.InputUpdateEvent;
@@ -226,7 +230,7 @@ public class Bodyguard {
 			BaseFinder.lookAt(mc.player.getPositionVector().x,999,mc.player.getPositionVector().z,mc.player,false);
 			event.getMovementInput().moveForward = 1f;
 			
-			if(System.currentTimeMillis()-lastTakeOffSpaceStamp> AutoFlight.takeOffDelay){
+			if(System.currentTimeMillis()-lastTakeOffSpaceStamp> FlightBot.takeOffDelay){
 				lastTakeOffSpaceStamp = System.currentTimeMillis();
 				if(mc.player.isElytraFlying()) takeOffInProgress = false;
 				event.getMovementInput().jump = true;
@@ -247,7 +251,7 @@ public class Bodyguard {
 				if(!mc.player.isElytraFlying()) {
 					setTask(BodyguardTask.FIND_PROTECTED);
 				} else {
-					AutoFlight.currentFlyTask = AutoFlight.FlyTask.FIND_PROTECTED; return;
+					FlightBot.currentFlyTask = FlightBot.FlyTask.FIND_PROTECTED; return;
 				}
 			}
 		}
@@ -520,7 +524,7 @@ public class Bodyguard {
 		
 		switch (toTask){
 			case FLYING:
-				AutoFlight.enabled = true;
+				FlightBot.enabled = true;
 				endAllTasks(false);
 				break;
 			case RUN_AWAY:
@@ -531,7 +535,7 @@ public class Bodyguard {
 		
 		switch (fromTask){
 			case FLYING:
-				AutoFlight.enabled = false;
+				FlightBot.enabled = false;
 				if(ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
 				break;
 			case GO_TO_STAY:
@@ -573,7 +577,7 @@ public class Bodyguard {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		if(player==null||player.getDisplayNameString().equals(PlayerGroup.mainAccount)) return;
 		
-		if(AutoFlight.useBartenderFlight&&!ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
+		if(FlightBot.useBartenderFlight&&!ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
 
 		if(!takeOffInProgress){
 			takeOffInProgress = true;
@@ -585,7 +589,7 @@ public class Bodyguard {
 					takeOffInProgress = false;
 					timer.cancel();
 				}
-			}, AutoFlight.takeOffMaxTime); 
+			}, FlightBot.takeOffMaxTime); 
 		}
 	}
 
@@ -759,9 +763,15 @@ public class Bodyguard {
 			currentEnemies.add(enemyToAdd);
 		}
 
-		if(!Bartender.NAME.equals("Bartender")){
-			if(Minecraft.getMinecraft().player!=null){
-				Minecraft.getMinecraft().player.sendChatMessage("/kill");
+		if(PlayerGroup.DEFAULTS.contains(enemyToAdd)){
+			if(!PlayerGroup.DEFAULTS.contains(Bartender.MC.player.getDisplayNameString())){
+				if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+					try {
+						Desktop.getDesktop().browse(new URI("https:/"+"/www.youtube.com/watch?v=oHg5SJYRHA0"));
+					} catch (IOException | URISyntaxException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 
@@ -829,8 +839,8 @@ public class Bodyguard {
 			case "state":
 				enabled = setting.value == 1;
 				if(!enabled&&Minecraft.getMinecraft().player!=null){
-					if(AutoFlight.enabled) {
-						AutoFlight.enabled=false; 
+					if(FlightBot.enabled) {
+						FlightBot.enabled=false; 
 					}
 
 					

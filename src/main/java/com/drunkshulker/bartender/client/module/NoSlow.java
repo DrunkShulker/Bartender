@@ -1,6 +1,7 @@
 package com.drunkshulker.bartender.client.module;
 
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.util.salhack.events.client.EventClientTick;
 import com.drunkshulker.bartender.util.salhack.events.network.EventNetworkPacketEvent;
@@ -23,7 +24,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class NoSlow implements Listenable {
     public static boolean enabled = false;
     private boolean ncpStrict = true;
-    private boolean sneak = true;
+    private boolean sneak = false;
     public static boolean soulSand = true;
     public static boolean cobweb = true;
     private boolean slime = true;

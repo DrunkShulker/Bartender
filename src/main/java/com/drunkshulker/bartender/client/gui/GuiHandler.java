@@ -1,5 +1,6 @@
 package com.drunkshulker.bartender.client.gui;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGui;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.client.gui.clickgui.theme.*;
@@ -9,10 +10,12 @@ import com.drunkshulker.bartender.client.gui.overlaygui.PauseOverlayGui;
 
 import com.drunkshulker.bartender.client.module.Dupe;
 import com.drunkshulker.bartender.util.forge.ForgeLoadingScreen;
+import com.drunkshulker.bartender.util.salhack.events.render.EventRenderGameOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.gui.recipebook.GuiButtonRecipeTab;
@@ -61,6 +64,7 @@ public class GuiHandler {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (event.getType() != ElementType.EXPERIENCE) return;
 		new OverlayGui(mc);
+		Bartender.EVENT_BUS.post(new EventRenderGameOverlay(event.getPartialTicks(), event.getResolution()));
 	}
 	
 	@SubscribeEvent
@@ -82,6 +86,7 @@ public class GuiHandler {
 			if(mc.player.getHealth()==20&&!showHP)
 			event.setCanceled(true);
 		}
+
 
     }
 	

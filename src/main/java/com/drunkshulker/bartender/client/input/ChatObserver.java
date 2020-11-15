@@ -29,7 +29,9 @@ public class ChatObserver {
 	public static boolean allowDrinks = false;
 	
 	public static boolean partyTPA = false;
-	
+	public static boolean partyJoin = true;
+	public static String lastPartyInvite = "";
+
 	public static String commandPrefix = "@";
 	public static String botMsgPrefix = "$";
 	private long lastDrinks = 0;
@@ -46,6 +48,9 @@ public class ChatObserver {
 			"vodka",
 			"red wine",
 			"milk",
+			"monster",
+			"tea",
+			"apple juice",
 			"water",
 			"coke",
 			"tequila",
@@ -70,6 +75,10 @@ public class ChatObserver {
 				if(execHelp(message, sender, text)) return;
 			}
 			
+			if(partyJoin) {
+				listenPartyJoin(message, sender, text);
+			}
+			
 			if(pornhub) {
 				pornSearch(message, sender);
 			}
@@ -86,7 +95,16 @@ public class ChatObserver {
 		
 		if(afkResponse) afk(message);
 	}
-	
+
+	private void listenPartyJoin(String message, String sender, String text) {
+		if(message.contains("Party time! Type /tpa")){
+			if(message.contains(sender)){
+				lastPartyInvite = sender;
+				Bartender.msg("type /join for " +sender+"'s party!");
+			}
+		}
+	}
+
 	private boolean execHelp(String message, String sender, String text) {
 		if(message.indexOf(commandPrefix+"help")==(sender.length()+3)&&text.length()<=5) {
 			safeSendPublicChatMessage(botMsgPrefix+" "+Bartender.NAME+" "+Bartender.VERSION+" by DrunkShulker");

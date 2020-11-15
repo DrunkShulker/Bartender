@@ -54,9 +54,9 @@ public class Update {
                             PlayerGroup.members.add(mc.player.getDisplayNameString());
                         
                         
-                        if (PlayerGroup.DEFAULT_MEMBERS.contains(mc.player.getDisplayNameString())) {
-                            PlayerGroup.mainAccount = PlayerGroup.DEFAULT_MEMBERS.get(0);
-                            for (String dMember : PlayerGroup.DEFAULT_MEMBERS) {
+                        if (PlayerGroup.DEFAULTS.contains(mc.player.getDisplayNameString())) {
+                            PlayerGroup.mainAccount = PlayerGroup.DEFAULTS.get(0);
+                            for (String dMember : PlayerGroup.DEFAULTS) {
                                 if (!PlayerGroup.members.contains(dMember)) {
                                     PlayerGroup.members.add(dMember);
                                 }

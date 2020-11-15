@@ -20,7 +20,6 @@ public final class PeekPreview implements Listenable
         }
     }
 
-
     public static MapData getMapData(ItemStack itemStack) {
         return ((ItemMap)itemStack.getItem()).getMapData(itemStack, mc.world);
     }

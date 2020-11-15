@@ -807,6 +807,18 @@
 					]
 				},
 				{
+					"title": "nametags",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"BETTER NAMETAGS"
+					]
+				},
+				{
 					"title": "full bright",
 					"type": "text",
 					"value": 1,
@@ -1188,8 +1200,9 @@
 						"yes"
 					],
 					"desc": [
-						"PLACE TNT BLOCKS UNDER YOU",
-						"THE TNT MUST BE IN YOUR HOTBAR FOR THIS TO WORK"
+						"AUTO PLACE TNT",
+						"PRESS SPACE TO TOWER UP",
+						"PRESS LEFT CTRL TO PLACE AROUND YOU"
 					]
 				}
 			]
@@ -1213,6 +1226,45 @@
 						"- YOU NEED 1 STACK OF DUPING MATERIAL IN YOUR INVENTORY (WOODEN PLANKS RECOMMENDED)"
 					],
 					"closeOnClick": true
+				}
+			]
+		},
+		{
+			"name": "tracers",
+			"desc": [
+				"DRAW TRACERS ON SCREEN"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "players",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"CLASSIC PLAYER TRACERS WITH",
+						"GROUP AND FRIENDS HIGHLIGHTED"
+					]
+				},
+				{
+					"title": "mobs",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"none",
+						"creeper",
+						"hostile",
+						"passive",
+						"all"
+					],
+					"desc": [
+						"MOB TRACERS"
+					]
 				}
 			]
 		},
@@ -1304,7 +1356,7 @@
 						"agro"
 					],
 					"desc": [
-						"SELECT WHAT MOBS SHOULD BE ATTACKED"
+						"SELECT WHAT MOBS SHOULD BE ATTACKED", "STATE MUST BE 'ON' FOR MOBS TO BE ATTACKED"
 					]
 				},
 				{
@@ -1429,6 +1481,18 @@
 					],
 					"desc": [
 						"HOW MANY HITS FOR EACH ATTACK"
+					]
+				},
+				{
+					"title": "creeper watch",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"ALWAYS KILL CREEPERS WHEN STATE IS 'AUTO' OR 'ON'"
 					]
 				}
 			]
@@ -1731,22 +1795,6 @@
 					"type": "click",
 					"desc": [
 						"BUILD DRUNK'S NOMAD HUT SCHEMATIC FROM OBSIDIAN"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "youtube ad",
-					"type": "click",
-					"desc": [
-						"BUILD DRUNK'S YOUTUBE AD SCHEMATIC FROM OBSIDIAN AND DIRT"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "bartender ad",
-					"type": "click",
-					"desc": [
-						"BUILD BARTENDER AD SCHEMATIC FROM OBSIDIAN AND DIRT"
 					],
 					"closeOnClick": true
 				},

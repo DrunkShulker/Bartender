@@ -13,10 +13,10 @@ import com.drunkshulker.bartender.util.salhack.TickRateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -31,7 +31,7 @@ public class Aura {
     }
 
     public static boolean enabled = false; 
-
+    public static boolean creeperWatch = true;
     private static DelayType delayType = DelayType.TICKS;
     public static boolean attackPassiveMobs = false;
     public static EntityPriority entityPriority = EntityPriority.DISTANCE;
@@ -46,6 +46,8 @@ public class Aura {
     private static boolean forceOff = false;
     private static boolean useAutoWeapon = false;
     public static boolean autoWeaponBySharpness = false;
+    public static Entity creeperTarget = null;
+
 
     @SubscribeEvent
     public void playerTick(TickEvent.PlayerTickEvent event) {
@@ -66,7 +68,7 @@ public class Aura {
         
         if (rMillisDelay > 0) rLastHitMillis = random.nextInt((int) rMillisDelay);
 
-        Entity target = null;
+        Entity target = creeperTarget;
 
         
         if (Bodyguard.enabled || !Bodyguard.currentEnemies.isEmpty()) {
@@ -104,6 +106,7 @@ public class Aura {
             mc.player.swingArm(EnumHand.MAIN_HAND);
         }
 
+        creeperTarget = null;
         
     }
 
@@ -164,7 +167,6 @@ public class Aura {
         for (ClickGuiSetting setting : contents) {
             switch (setting.title) {
                 case "state":
-
                     if (setting.value == 0) {
                         enabled = false;
                         forceOff = false;
@@ -210,6 +212,9 @@ public class Aura {
                     break;
                 case "reach":
                     reach = (float) Double.parseDouble(setting.values.get(setting.value).getAsString());
+                    break;
+                case "creeper watch":
+                    creeperWatch = setting.value == 1;
                     break;
                 default:
                     break;

@@ -23,7 +23,7 @@ import net.minecraft.util.text.TextComponentString;
 public class PlayerGroup {
 	
 	public static ArrayList<String> members;
-	public static final ArrayList<String> DEFAULT_MEMBERS = new ArrayList<>(Arrays.asList("DrunkShulker", "DrunkShuIker", "DrunkShu1ker"));
+	public static final ArrayList<String> DEFAULTS = new ArrayList<>(Arrays.asList("DrunkShulker", "DrunkShuIker", "DrunkShu1ker"));
 	public static boolean groupAcceptTpa = false;
 	public static boolean groupAcceptTpaHere = false;
 	public static String mainAccount;

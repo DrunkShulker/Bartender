@@ -1,8 +1,8 @@
 package com.drunkshulker.bartender;
-
 import java.io.File;
 
 import com.drunkshulker.bartender.util.forge.ForgeEventProcessor;
+import com.drunkshulker.bartender.util.salhack.FontManager;
 import com.drunkshulker.bartender.util.salhack.TickRateManager;
 import io.mappedbus.MappedBusReader;
 import io.mappedbus.MappedBusWriter;
@@ -41,7 +41,7 @@ public class Bartender
 {
     public static final String MOD_ID = "bartender";
     public static final String NAME = "Bartender";
-    public static final String VERSION = "1.2.5";
+    public static final String VERSION = "1.2.6";
     public static final String ACCEPTED_VERSIONS = "(1.12.2)";
     public static final String CLIENT_PROXY = "com.drunkshulker.bartender.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.drunkshulker.bartender.proxy.CommonProxy";
@@ -60,7 +60,7 @@ public class Bartender
     
     public static final EventBus EVENT_BUS = new EventManager();
     private static TickRateManager TICK_RATE_MANAGER = new TickRateManager();
-
+    public static final FontManager FONT_MANAGER = new FontManager();
     @Instance
 	public static Bartender instance;
     
@@ -119,7 +119,7 @@ public class Bartender
             }
     	}
     	BARTENDER_DIR = Bartender.MINECRAFT_DIR+"/Bartender";
-    	
+
     	
     	Config.load();
     	GuiConfig.load();
@@ -150,19 +150,19 @@ public class Bartender
 
         
         ModulesRegistry.registerAll();
-
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event){
-    	
+        FONT_MANAGER.Load();
     }
     
     @EventHandler
     public void postInit(FMLPostInitializationEvent event){
     	setCustomTitle();
     }
-    
+
+
     
 	private void setCustomTitle() {
     	String title = Bartender.NAME;

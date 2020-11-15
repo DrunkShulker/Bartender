@@ -7,6 +7,7 @@ import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.module.BaseFinder;
 import com.drunkshulker.bartender.client.module.Bodyguard;
 import com.drunkshulker.bartender.client.module.ElytraFlight;
+import com.drunkshulker.bartender.client.module.Scaffold;
 import com.drunkshulker.bartender.util.Config;
 
 import net.minecraft.client.Minecraft;
@@ -39,6 +40,7 @@ public class KeyInputHandler
 
 		ElytraFlight.easyTakeoff = Keybinds.takeoffHelper.isPressed();
 		ElytraFlight.spacePressed = Keyboard.isKeyDown(Keyboard.KEY_SPACE);
+		Scaffold.controlPressed = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL);
 
 		if(Keybinds.enemyGuiMark.isPressed()) {
 			OverlayGui.targetConfirm();

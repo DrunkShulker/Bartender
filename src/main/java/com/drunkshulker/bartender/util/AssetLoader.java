@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.nio.file.Path;
@@ -72,7 +73,7 @@ public class AssetLoader {
 		StringBuilder builder = new StringBuilder();
 		try {
 			reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getClassLoader()
-					.getResourceAsStream("assets/json/" + filename)), "UTF-8"));
+					.getResourceAsStream("assets/json/" + filename)), StandardCharsets.UTF_8));
 		
 			
 		    String line;

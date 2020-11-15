@@ -3,27 +3,31 @@ package com.drunkshulker.bartender.client.module;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.social.PlayerFriends;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class EntityRadar {
 	
 	public static ArrayList<String> nearbyPlayers(){	
 		ArrayList<String> a = new ArrayList<String>();
-		if(Minecraft.getMinecraft().player==null) return a;
-		if(Minecraft.getMinecraft().world==null) return a;
-		for (Entity e : Minecraft.getMinecraft().world.loadedEntityList) {
+		if(Bartender.MC.player==null) return a;
+		if(Bartender.MC.world==null) return a;
+		for (Entity e : Bartender.MC.world.loadedEntityList) {
             if (e == null || e.isDead) continue;
             
             if(e instanceof EntityPlayer) {
-            	if(((EntityPlayer) e).getDisplayNameString().equals(Minecraft.getMinecraft().player.getDisplayNameString())) continue;
+            	if(((EntityPlayer) e).getDisplayNameString().equals(Bartender.MC.player.getDisplayNameString())) continue;
                 a.add(((EntityPlayer) e).getDisplayNameString());
-            }
+            } else if(Aura.creeperWatch&&e instanceof EntityCreeper&&e.getDistance(Bartender.MC.player)<6){
+            	Aura.creeperTarget = e;
+			}
         }
 		Collections.sort(a);
 		return a;
@@ -31,9 +35,9 @@ public class EntityRadar {
 
 	public static ArrayList<Entity> nearbyCrystals(){
 		ArrayList<Entity> a = new ArrayList<>();
-		if(Minecraft.getMinecraft().player==null) return a;
-		if(Minecraft.getMinecraft().world==null) return a;
-		for (Entity e : Minecraft.getMinecraft().world.loadedEntityList) {
+		if(Bartender.MC.player==null) return a;
+		if(Bartender.MC.world==null) return a;
+		for (Entity e : Bartender.MC.world.loadedEntityList) {
 			if (e == null) continue;
 			if(e instanceof EntityEnderCrystal) {
 				a.add(e);
@@ -86,9 +90,9 @@ public class EntityRadar {
 
 	public static ArrayList<Entity> nearbyMobs(){
 		ArrayList<Entity> a = new ArrayList<>();
-		if(Minecraft.getMinecraft().player==null) return a;
-		if(Minecraft.getMinecraft().world==null) return a;
-		for (Entity e : Minecraft.getMinecraft().world.loadedEntityList) {
+		if(Bartender.MC.player==null) return a;
+		if(Bartender.MC.world==null) return a;
+		for (Entity e : Bartender.MC.world.loadedEntityList) {
             if(e == null || e.isDead) continue;     
             a.add(e);
         }
@@ -98,11 +102,11 @@ public class EntityRadar {
 
 	public static EntityPlayer getEntityPlayer(String name) {
 		if(name==null) return null;
-		for (Entity e : Minecraft.getMinecraft().world.loadedEntityList) {
+		for (Entity e : Bartender.MC.world.loadedEntityList) {
             if (e == null || e.isDead) continue;
             
             if(e instanceof EntityPlayer) {
-            	if(((EntityPlayer) e).getDisplayNameString().equals(Minecraft.getMinecraft().player.getDisplayNameString())) continue;
+            	if(((EntityPlayer) e).getDisplayNameString().equals(Bartender.MC.player.getDisplayNameString())) continue;
             	if(((EntityPlayer) e).getDisplayNameString().equals(name)) return ((EntityPlayer) e);
             }
         }

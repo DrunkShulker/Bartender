@@ -2,12 +2,18 @@ package com.drunkshulker.bartender.client.gui.overlaygui;
 
 import com.drunkshulker.bartender.client.module.*;
 import com.drunkshulker.bartender.util.kami.*;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
 
 import com.drunkshulker.bartender.Bartender;
@@ -25,6 +31,7 @@ import net.minecraft.world.GameType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class OverlayGui extends Gui {
     public static int groupListBottom = 4 + 48;
@@ -35,6 +42,7 @@ public class OverlayGui extends Gui {
     static String lastTargetedEnemy = "";
 
     public static final ResourceLocation texture = new ResourceLocation(Bartender.MOD_ID, "textures/gui/overlay.png");
+    public static final ResourceLocation faceTexture = new ResourceLocation(Bartender.MOD_ID, "textures/gui/default_face.png");
     static final int textureWidth = 22;
     static final int textureHeight = 22;
 
@@ -191,10 +199,10 @@ public class OverlayGui extends Gui {
             if (targetGuiActive) {
                 for (int i = 0; i < availableTargets.size(); i++) {
                     String prefix = "  ", postFix = "";
-                    int extraPixel = 1;
+                    int extraPixel = 2;
                     if (i == currentSelectedTargetIndex) {
                         prefix = "> ";
-                        extraPixel = 0;
+                        extraPixel = 1;
                     }
 
                     if (EntityRadar.getEntityPlayer(availableTargets.get(i)) == null) {
@@ -215,12 +223,15 @@ public class OverlayGui extends Gui {
                 }
                 for (int i = 0; i < combined.size(); i++) {
                     String postFix = "";
-                    if (EntityRadar.getEntityPlayer(combined.get(i)) == null) {
+                    EntityPlayer ranged = EntityRadar.getEntityPlayer(combined.get(i));
+                    if (ranged == null) {
                         postFix = " ?";
                     }
-
+                    else{
+                        renderFaceTexture(4, groupListBottom + 27 + (i * 10), ((EntityOtherPlayerMP)ranged).getLocationSkin());
+                    }
                     drawString(mc.fontRenderer, "  " + combined.get(i) + postFix,
-                            5, groupListBottom + 27 + (i * 10),
+                            6, groupListBottom + 27 + (i * 10),
                             Integer.parseInt((Bodyguard.currentEnemies.contains(combined.get(i))) ? "FF0000" : "AAAAAA", 16));
                 }
 
@@ -275,14 +286,32 @@ public class OverlayGui extends Gui {
         
 
         GL11.glPushMatrix();
-        
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glColor4f(1, 1, 1, 1);
         GL11.glScalef(scale, scale, scale);
 
-        if (resourceLocation != null)
+        if (resourceLocation != null) {
             mc.getTextureManager().bindTexture(resourceLocation);
+        }
 
         mc.ingameGUI.drawTexturedModalRect(x, y, u, v, width, height);
 
+        GL11.glPopMatrix();
+    }
+
+    public static void renderFaceTexture(int x, int y,  ResourceLocation resourceLocation) {
+        if(resourceLocation==null) return;
+        Minecraft mc = Minecraft.getMinecraft();
+        
+        
+        GL11.glPushMatrix();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glColor4f(1, 1, 1, 1);
+        mc.getTextureManager().bindTexture(resourceLocation);
+        
+        
+        
+        drawModalRectWithCustomSizedTexture(x, y, 8, 8, 8, 8, 64, 64);
         GL11.glPopMatrix();
     }
 
