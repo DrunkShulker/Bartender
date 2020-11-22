@@ -125,10 +125,21 @@ public class ClickGui extends GuiScreen{
 
 	@Override
 	public void initGui() {
-		if(GuiConfig.usingDefaultConfig) resetLayout();
+		if(GuiConfig.usingDefaultConfig) {
+			resetLayout();
+		} else if(allAtZero()){
+			resetLayout();
+		}
 		super.initGui();
 	}
-	
+
+	private boolean allAtZero() {
+		for (ClickGuiPanel p:ClickGui.panels) {
+			if(p.x!=0||p.y!=0) return false;
+		}
+		return true;
+	}
+
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		super.actionPerformed(button);

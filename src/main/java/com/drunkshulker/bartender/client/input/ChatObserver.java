@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,6 +20,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import scala.actors.threadpool.Arrays;
 
 public class ChatObserver {
 	
@@ -27,7 +29,7 @@ public class ChatObserver {
 	public static boolean chatFix = false;
 	public static boolean afkResponse = false;
 	public static boolean allowDrinks = false;
-	
+	public static boolean pride = false;
 	public static boolean partyTPA = false;
 	public static boolean partyJoin = true;
 	public static String lastPartyInvite = "";
@@ -35,8 +37,8 @@ public class ChatObserver {
 	public static String commandPrefix = "@";
 	public static String botMsgPrefix = "$";
 	private long lastDrinks = 0;
-	
-	final String pornUrl = "https:/"+""+"/www.pornhub.com/random";
+
+	final String pornUrl = "https:/"+"/www.pornhub.com/random";
 	private long lastPornhubSearch = 0;
 	public static boolean pornhub = false;
 	Timer timer;
@@ -48,11 +50,12 @@ public class ChatObserver {
 			"vodka",
 			"red wine",
 			"milk",
-			"monster",
+			"monster energy",
 			"tea",
 			"apple juice",
 			"water",
 			"coke",
+			"potion of poison",
 			"tequila",
 			"red bull"
 	};
@@ -256,6 +259,9 @@ public class ChatObserver {
 	}
 
 	public boolean messageIsCommand(String msg) {
+
+		if(pride&&msg.charAt(0)=='%'&&msg.charAt(1)=='%') return false;
+
 		final char[] cs = {
 				'/', ',', '.', '-', ';', '?', '*', '^', '&', '%', '#', '$', '!', commandPrefix.charAt(0), '>', '|', '+'
 		};
@@ -272,10 +278,30 @@ public class ChatObserver {
 			if(event.getMessage().charAt(0)=='!') {
 				if(!PlayerGroup.isPlayerOnline("moooomoooo")) {
 					event.setCanceled(true);
-					Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> moooomoooo is offline. Command canceled."));
+					Bartender.msg("moooomoooo is offline. Command canceled.");
 					return;
 				}
 			}
+		}
+
+		
+		if(partyTPA&&event.getMessage().equals("/back")){
+			Bartender.msg("Party TPA turned off because you typed /back");
+			ClickGuiSetting.handleClick(ClickGuiSetting.fromString("chat->party tpa"),false);
+		}
+
+		
+		if(pride&&!messageIsCommand(event.getMessage())){
+			String[] pridePattern = new String[]{"%%","$$","<<",">","--"};
+			String[] msg = event.getMessage().split("");
+			String newMsg = "";
+			for (int i = 0, y = 0; i < msg.length; i++) {
+				newMsg += pridePattern[y] + msg[i];
+
+				if(y>=pridePattern.length-1) y = -1;
+				y++;
+			}
+			event.setMessage(newMsg);
 		}
 
 		
@@ -305,6 +331,9 @@ public class ChatObserver {
 			}
 			else if(setting.title.equals("drinks")) {
 				allowDrinks = setting.value == 0;
+			}
+			else if(setting.title.equals("pride")) {
+				pride = setting.value == 0;
 			}
 			else if(setting.title.equals("party tpa")) {
 				partyTPA = setting.value == 0;

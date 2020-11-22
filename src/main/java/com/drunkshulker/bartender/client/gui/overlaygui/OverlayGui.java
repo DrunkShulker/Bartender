@@ -1,19 +1,19 @@
 package com.drunkshulker.bartender.client.gui.overlaygui;
 
 import com.drunkshulker.bartender.client.module.*;
+import com.drunkshulker.bartender.util.Config;
 import com.drunkshulker.bartender.util.kami.*;
-import com.mojang.authlib.GameProfile;
-import net.minecraft.client.entity.AbstractClientPlayer;
+import com.google.gson.*;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
 
 import com.drunkshulker.bartender.Bartender;
@@ -28,10 +28,8 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GameType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.io.File;
+import java.util.*;
 
 public class OverlayGui extends Gui {
     public static int groupListBottom = 4 + 48;
@@ -41,13 +39,115 @@ public class OverlayGui extends Gui {
     static long lastPopupMessage = 0;
     static String lastTargetedEnemy = "";
 
+    static JsonObject transforms = new JsonObject();
+    static int[] anchorWatermark = new int[]{0, 0};
+    static int[] anchorGroup = new int[]{0, 0};
+    static int[] anchorPlayers = new int[]{0, 0};
+    static int[] anchorInventory = new int[]{0, 0};
+    static int[] anchorCoords = new int[]{0, 0};
+    static int[] anchorPotions = new int[]{0, 0};
+    static int[] anchorStatus = new int[]{0, 0};
+    static int[] anchorTarget = new int[]{0, 0};
+    static int[] anchorNumbers = new int[]{0, 0};
+    static int[] anchorActions = new int[]{0, 0};
+
     public static final ResourceLocation texture = new ResourceLocation(Bartender.MOD_ID, "textures/gui/overlay.png");
-    public static final ResourceLocation faceTexture = new ResourceLocation(Bartender.MOD_ID, "textures/gui/default_face.png");
     static final int textureWidth = 22;
     static final int textureHeight = 22;
 
     public static String lastGuiAction = "";
     public static long lastGuiActionStamp = System.currentTimeMillis();
+
+    public static void saveLayout() {
+        try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(transforms);
+            Config.writeFile(Bartender.BARTENDER_DIR + "/bartender-hud.json", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to save bartender hud config");
+        }
+        updateTransforms();
+    }
+
+    public static void loadLayout() {
+        try {
+            String path = Bartender.BARTENDER_DIR + "/bartender-hud.json";
+            if (new File(path).exists()) {
+                String config = Config.readFile(path);
+                transforms = new JsonParser().parse(config).getAsJsonObject();
+            } else {
+                System.out.println("No bartender hud config found");
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to load bartender hud config");
+        }
+        updateTransforms();
+    }
+
+    public static void updateTransforms() {
+        String n = "watermark";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorWatermark = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorWatermark = new int[]{0, 0};
+        n = "group";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorGroup = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorGroup = new int[]{0, 0};
+        n = "players";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorPlayers = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorPlayers = new int[]{0, 0};
+        n = "inventory";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorInventory = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorInventory = new int[]{0, 0};
+        n = "coords";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorCoords = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorCoords = new int[]{0, 0};
+        n = "potions";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorPotions = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorPotions = new int[]{0, 0};
+        n = "status";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorStatus = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorStatus = new int[]{0, 0};
+        n = "target";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorTarget = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorTarget = new int[]{0, 0};
+        n = "numbers";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorNumbers = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorNumbers = new int[]{0, 0};
+        n = "actions";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorActions = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorActions = new int[]{0, 0};
+    }
+
+    public static void resetLayout() {
+        transforms = new JsonObject();
+        saveLayout();
+    }
+
+    public static void moveTarget(String target, int valueX, int valueY) {
+        int prevX = 0, prevY = 0;
+        if (transforms.get(target) != null && !transforms.get(target).isJsonNull()) {
+            prevX = transforms.get(target).getAsJsonArray().get(0).getAsInt();
+            prevY = transforms.get(target).getAsJsonArray().get(1).getAsInt();
+        }
+        JsonArray newValue = new JsonArray();
+        newValue.add(prevX + valueX);
+        newValue.add(prevY + valueY);
+        transforms.add(target, newValue);
+
+        saveLayout();
+    }
 
     public OverlayGui(Minecraft mc) {
         ScaledResolution scaled = new ScaledResolution(mc);
@@ -56,15 +156,15 @@ public class OverlayGui extends Gui {
 
         
         if (mc.currentScreen == null && GuiHandler.showBindInfo && System.currentTimeMillis() - lastGuiActionStamp < 1700)
-            drawCenteredString(mc.fontRenderer, lastGuiAction, width / 2, (height / 2) + 36, Integer.parseInt("FFFFFF", 16));
+            drawCenteredString(mc.fontRenderer, lastGuiAction, (width / 2) + anchorActions[0], ((height / 2) + 36) + anchorActions[1], Integer.parseInt("FFFFFF", 16));
 
         
         if (GuiHandler.showInventory) {
             List items = mc.player.inventory.mainInventory.subList(9, 36);
             for (int i = 0; i < items.size(); i++) {
                 ItemStack itemStack = (ItemStack) items.get(i);
-                int slotX = width - (i % 3 * 18 + 1) - 19;
-                int slotY = 2 + (i / 3 * 18 + 1);
+                int slotX = (width - (i % 3 * 18 + 1) - 19) + anchorInventory[0];
+                int slotY = (2 + (i / 3 * 18 + 1)) + anchorInventory[1];
 
                 GlStateUtils.blend(true);
                 GlStateUtils.depth(true);
@@ -79,9 +179,10 @@ public class OverlayGui extends Gui {
             }
         }
 
-
         
-        if (ElytraFlight.enabled) {
+        if (ElytraFlight.enabled
+                && !mc.player.isSpectator()
+                && !(mc.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() != Items.ELYTRA && mc.player.isCreative())) {
             if (ElytraFlight.easyTakeoff) {
                 renderCustomTexture((width / 2) - 147, height - textureHeight, textureWidth * 2, 0, textureWidth, textureHeight, texture, 1f);
             } else if (ElytraFlight.mode == ElytraFlight.Mode.BOOST) {
@@ -94,8 +195,8 @@ public class OverlayGui extends Gui {
         
         if (GuiHandler.showCoords) {
             String[] coords = CoordUtil.getCurrentCoordsDesc();
-            drawString(mc.fontRenderer, coords[1], 4, height - mc.fontRenderer.FONT_HEIGHT - 4, Integer.parseInt("FFFFFF", 16));
-            drawString(mc.fontRenderer, coords[0], 4, height - (mc.fontRenderer.FONT_HEIGHT * 2) - 6, Integer.parseInt("FFFFFF", 16));
+            drawString(mc.fontRenderer, coords[1], 4 + anchorCoords[0], (height - mc.fontRenderer.FONT_HEIGHT - 4) + anchorCoords[1], Integer.parseInt("FFFFFF", 16));
+            drawString(mc.fontRenderer, coords[0], 4 + anchorCoords[0], (height - (mc.fontRenderer.FONT_HEIGHT * 2) - 6) + anchorCoords[1], Integer.parseInt("FFFFFF", 16));
         }
 
         
@@ -114,31 +215,32 @@ public class OverlayGui extends Gui {
                 int color = potion.potionEffect.getPotion().getLiquidColor();
                 String text = potion.formattedTimeLeft();
                 int lineWidth = mc.fontRenderer.getStringWidth(text);
-                mc.fontRenderer.drawString(text, width - 4 - lineWidth, posY, 0xffffff, true);
+                mc.fontRenderer.drawString(text, (width - 4 - lineWidth) + anchorPotions[0], posY + anchorPotions[1], 0xffffff, true);
                 text = potion.formattedName();
-                mc.fontRenderer.drawString(text, width - 4 - lineWidth - mc.fontRenderer.getStringWidth(text) - 3, posY, color, true);
+                mc.fontRenderer.drawString(text, (width - 4 - lineWidth - mc.fontRenderer.getStringWidth(text) - 3) + anchorPotions[0], posY + anchorPotions[1], color, true);
                 posY -= mc.fontRenderer.FONT_HEIGHT + 2;
             }
         }
 
         
+        int statusX = (width / 2) + anchorStatus[0];
         if (Bodyguard.enabled && BaseFinder.enabled) {
             drawCenteredString(mc.fontRenderer, "YOU CANNOT HAVE BASEFINDER AND BODYGUARD ENABLED AT THE SAME TIME", width / 2, (height / 2) - 25, Integer.parseInt("FF0000", 16));
         } else if (ChatObserver.partyTPA)
-            drawCenteredString(mc.fontRenderer, "Party TPA enabled", width / 2, 25, Integer.parseInt("FF0000", 16));
+            drawCenteredString(mc.fontRenderer, "Party TPA enabled", statusX, 25 + anchorStatus[1], Integer.parseInt("FF0000", 16));
         else if (Bodyguard.enabled) {
-            drawCenteredString(mc.fontRenderer, Bodyguard.getStatusString(), width / 2, 25, Integer.parseInt("FFAA00", 16));
+            drawCenteredString(mc.fontRenderer, Bodyguard.getStatusString(), statusX, 25 + anchorStatus[1], Integer.parseInt("FFAA00", 16));
         } else if (BaseFinder.enabled) {
-            drawCenteredString(mc.fontRenderer, BaseFinder.getStatusString(), width / 2, 25, Integer.parseInt("FFAA00", 16));
+            drawCenteredString(mc.fontRenderer, BaseFinder.getStatusString(), statusX, 25 + anchorStatus[1], Integer.parseInt("FFAA00", 16));
         }
 
         
         if (targetGuiActive) {
-            drawCenteredString(mc.fontRenderer, "Select target", width / 2, (height / 2) + 25, Integer.parseInt("62A2C4", 16));
+            drawCenteredString(mc.fontRenderer, "Select target", (width / 2) + anchorTarget[0], ((height / 2) + 25) + anchorTarget[1], Integer.parseInt("62A2C4", 16));
         } else {
             
             if (System.currentTimeMillis() - lastPopupMessage < 2500) {
-                drawCenteredString(mc.fontRenderer, "Eliminate " + lastTargetedEnemy, width / 2, (height / 2) + 25, Integer.parseInt("FF0000", 16));
+                drawCenteredString(mc.fontRenderer, "Eliminate " + lastTargetedEnemy, (width / 2) + anchorTarget[0], ((height / 2) + 25) + anchorTarget[1], Integer.parseInt("FF0000", 16));
             }
         }
 
@@ -146,14 +248,14 @@ public class OverlayGui extends Gui {
         if (GuiHandler.ingameWaterMark)
             drawString(mc.fontRenderer,
                     (((Bartender.IMPACT_INSTALLED) ? "               + " : "") + Bartender.NAME + " " + Bartender.VERSION),
-                    4, 4, Integer.parseInt("AAAAAA", 16));
+                    4 + anchorWatermark[0], 4 + anchorWatermark[1], Integer.parseInt("AAAAAA", 16));
 
         
         if (!mc.isSingleplayer() && GuiHandler.showGroup && PlayerGroup.members.size() > 0) {
-            int x = 4;
+            int x = 4 + anchorGroup[0];
             drawString(mc.fontRenderer,
                     ("Group: " + ((PlayerGroup.groupAcceptTpa) ? "/tpa " : "") + ((PlayerGroup.groupAcceptTpaHere) ? "/tpahere" : "")),
-                    x, 38,
+                    x, 38 + anchorGroup[1],
                     Integer.parseInt((PlayerGroup.groupAcceptTpa)
                             ? "FF0000"
                             : ((PlayerGroup.groupAcceptTpaHere)
@@ -166,7 +268,7 @@ public class OverlayGui extends Gui {
 
                 
                 if (mc.player.getDisplayNameString().equals(PlayerGroup.members.get(i))) {
-                    drawString(mc.fontRenderer, selfSelector + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : ""), x, 4 + 48 + (i * 10),
+                    drawString(mc.fontRenderer, selfSelector + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : ""), x, (4 + 48 + (i * 10)) + anchorGroup[1],
                             Integer.parseInt((!PlayerGroup.isPlayerOnline(PlayerGroup.members.get(i))) ? "AAAAAA" : "FFFFFF", 16));
                 }
                 
@@ -178,21 +280,21 @@ public class OverlayGui extends Gui {
                         if (EntityRadar.nearbyGroupMembers().contains(PlayerGroup.members.get(i))) outOfRange = "";
                     }
 
-                    drawString(mc.fontRenderer, "  " + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : "") + outOfRange, x + 1, 4 + 48 + (i * 10),
+                    drawString(mc.fontRenderer, "  " + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : "") + outOfRange, x + 1, (4 + 48 + (i * 10)) + anchorGroup[1],
                             Integer.parseInt((!PlayerGroup.isPlayerOnline(PlayerGroup.members.get(i))) ? "AAAAAA" : "FFFFFF", 16));
                 }
 
-                groupListBottom = 4 + 48 + (i * 10);
+                groupListBottom = (4 + 48 + (i * 10)) + anchorGroup[1];
             }
         }
 
         
         if (GuiHandler.showTargetListing && !mc.isSingleplayer()) {
             
-            int x = 4;
+            int x = 4 + anchorPlayers[0];
             drawString(mc.fontRenderer,
                     "Hostile: " + Bodyguard.currentEnemies.size(),
-                    x, groupListBottom + 13,
+                    x, groupListBottom + 13 + anchorPlayers[1],
                     Integer.parseInt((Bodyguard.currentEnemies.isEmpty()) ? "62A2C4" : "FF0000", 16));
 
             
@@ -210,7 +312,7 @@ public class OverlayGui extends Gui {
                     }
 
                     drawString(mc.fontRenderer, prefix + availableTargets.get(i) + postFix,
-                            extraPixel + 4, groupListBottom + 27 + (i * 10),
+                            extraPixel + 4 + anchorPlayers[0], (groupListBottom + 27 + (i * 10)) + anchorPlayers[1],
                             Integer.parseInt((i == currentSelectedTargetIndex) ? "FFFFFF" : ((Bodyguard.currentEnemies.contains(availableTargets.get(i))) ? "FF0000" : "AAAAAA"), 16));
                 }
             }
@@ -226,12 +328,11 @@ public class OverlayGui extends Gui {
                     EntityPlayer ranged = EntityRadar.getEntityPlayer(combined.get(i));
                     if (ranged == null) {
                         postFix = " ?";
-                    }
-                    else{
-                        renderFaceTexture(4, groupListBottom + 27 + (i * 10), ((EntityOtherPlayerMP)ranged).getLocationSkin());
+                    } else {
+                        renderFaceTexture(4 + anchorPlayers[0], (groupListBottom + 27 + (i * 10)) + anchorPlayers[1], ((EntityOtherPlayerMP) ranged).getLocationSkin());
                     }
                     drawString(mc.fontRenderer, "  " + combined.get(i) + postFix,
-                            6, groupListBottom + 27 + (i * 10),
+                            6 + anchorPlayers[0], (groupListBottom + 27 + (i * 10)) + anchorPlayers[1],
                             Integer.parseInt((Bodyguard.currentEnemies.contains(combined.get(i))) ? "FF0000" : "AAAAAA", 16));
                 }
 
@@ -263,8 +364,8 @@ public class OverlayGui extends Gui {
             int food = mc.player.getFoodStats().getFoodLevel();
             float hp = mc.player.getHealth();
 
-            drawString(mc.fontRenderer, hp + " hp", (width / 2) - 90, height - 50, Integer.parseInt("FFFFFF", 16));
-            drawString(mc.fontRenderer, food + " food", (width / 2) - 90, height - 39, Integer.parseInt("FFFFFF", 16));
+            drawString(mc.fontRenderer, hp + " hp", (width / 2) - 90 + anchorNumbers[0], height - 50 + anchorNumbers[1], Integer.parseInt("FFFFFF", 16));
+            drawString(mc.fontRenderer, food + " food", (width / 2) - 90 + anchorNumbers[0], height - 39 + anchorNumbers[1], Integer.parseInt("FFFFFF", 16));
         }
     }
 
@@ -299,8 +400,8 @@ public class OverlayGui extends Gui {
         GL11.glPopMatrix();
     }
 
-    public static void renderFaceTexture(int x, int y,  ResourceLocation resourceLocation) {
-        if(resourceLocation==null) return;
+    public static void renderFaceTexture(int x, int y, ResourceLocation resourceLocation) {
+        if (resourceLocation == null) return;
         Minecraft mc = Minecraft.getMinecraft();
         
         

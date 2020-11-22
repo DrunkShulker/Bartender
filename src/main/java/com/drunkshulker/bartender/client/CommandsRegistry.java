@@ -14,6 +14,8 @@ public class CommandsRegistry {
         ClientCommandHandler.instance.registerCommand(new ChatPostFixCommand());
         ClientCommandHandler.instance.registerCommand(new BasefinderCommand());
         ClientCommandHandler.instance.registerCommand(new GuiCommand());
+        ClientCommandHandler.instance.registerCommand(new WikiCommand());
         ClientCommandHandler.instance.registerCommand(new PartyTpaCommand());
+        ClientCommandHandler.instance.registerCommand(new HudCommand());
 	}
 }

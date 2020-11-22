@@ -89,6 +89,8 @@ public class BaseFinder {
 		settings.pauseOnLostFocus = false;
 		settings.saveOptions();
 
+		Search.mainList.clear();
+
 		
 		OverlayGui.targetGuiActive=false;
 

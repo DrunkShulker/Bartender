@@ -37,8 +37,8 @@ public final class Sprint implements Listenable {
     private Listener<EventPlayerMotionUpdate> OnPlayerUpdate = new Listener<>(p_Event ->
     {
         if(!enabled) return;
-        if (p_Event.getEra() != MinecraftEvent.Era.PRE)
-            return;
+        if(mc.player.isCreative() || mc.player.isSpectator()) return;
+        if (p_Event.getEra() != MinecraftEvent.Era.PRE) return;
 
         switch (this.Mode) {
             case Rage:

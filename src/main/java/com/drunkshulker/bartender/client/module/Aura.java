@@ -48,7 +48,6 @@ public class Aura {
     public static boolean autoWeaponBySharpness = false;
     public static Entity creeperTarget = null;
 
-
     @SubscribeEvent
     public void playerTick(TickEvent.PlayerTickEvent event) {
         if (forceOff) return;

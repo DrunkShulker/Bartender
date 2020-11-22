@@ -78,11 +78,19 @@ public class ElytraFlight implements Listenable {
     {
         if (!enabled) return;
         if (mc.player == null) return;
-        if(mc.player.onGround&&mc.player.isSneaking()&&!mc.player.isElytraFlying()) return;
-        
-        if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() != Items.ELYTRA)
+        if(mc.player.onGround&&mc.player.isSneaking()&&!mc.player.isElytraFlying()) {
             return;
-        if (!mc.player.isElytraFlying() && mc.player.isSneaking()&&(EntityUtils.isInWater(mc.player)||EntityUtils.isAboveWater(mc.player))) return;
+        }
+        if(spacePressed&&mc.player.isSneaking()&&!mc.player.isElytraFlying()) {
+            return;
+        }
+        if (mc.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() != Items.ELYTRA
+            ||mc.player.isCreative()||mc.player.isSpectator()) {
+            return;
+        }
+        if (!mc.player.isElytraFlying() && mc.player.isSneaking()&&(EntityUtils.isInWater(mc.player)||EntityUtils.isAboveWater(mc.player))) {
+            return;
+        }
         if (!mc.player.isElytraFlying() && !mc.player.isSneaking()) {
             if (spamPacket) {
                 if (!InstantFlyTimer.passed(300)) return;

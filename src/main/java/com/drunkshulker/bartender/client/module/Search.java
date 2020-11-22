@@ -164,7 +164,7 @@ public class Search {
 	}
 	
 	private boolean isEnabled() {
-		return BaseFinder.enabled;
+		return BaseFinder.enabled||(Tracers.blocks&&StorageESP.enabled);
 	}
 	
 	@SubscribeEvent
@@ -213,7 +213,6 @@ public class Search {
         int blockColor = ColourUtils.toRGBA(cia[0], cia[1], cia[2], 150);
         return new Tuple<>(blockColor, side);
     }
-
 	
 	private Map<BlockPos, Tuple<Integer, Integer>> findBlocksInChunk(Chunk chunk, Set<Block> blocksToFind) {
         BlockPos pos1 = new BlockPos(chunk.getPos().getXStart(), 0, chunk.getPos().getZStart());

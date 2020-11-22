@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGui;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiPanel;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
+import com.drunkshulker.bartender.client.social.PlayerGroup;
 import com.drunkshulker.bartender.util.AssetLoader;
 import com.drunkshulker.bartender.util.Config;
 import com.drunkshulker.bartender.util.Preferences;
@@ -22,6 +24,17 @@ public class GuiConfig {
 	public static JsonObject config;
 	final static String FILENAME = "bartender-gui.json";
 	public static boolean usingDefaultConfig = false;
+
+	
+	public static final Map<String,Integer> DEFAULT_BINDS = new HashMap<String, Integer>() {{
+		put("utils->storageESP", 10);
+		put("utils->freecam", 3);
+		put("base finder->pause/continue",197);
+		put("group->end tasks", 207);
+		put("group->chorus", 209);
+		put("group->takeoff", 201);
+		put("elytra+->lock/unlock",4);
+	}};
 
 	public static HashMap<String, Integer> guiBinds;
 
@@ -55,6 +68,7 @@ public class GuiConfig {
 		config = new AssetLoader().loadJson("bartender-gui-default.json");
 		System.out.println("Default GUI config loaded");
 		usingDefaultConfig = true;
+
 	}
 	
 	public static void load() {

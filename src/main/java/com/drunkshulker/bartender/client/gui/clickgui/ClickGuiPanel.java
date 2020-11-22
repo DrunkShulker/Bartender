@@ -2,6 +2,7 @@ package com.drunkshulker.bartender.client.gui.clickgui;
 
 import com.drunkshulker.bartender.client.gui.GuiConfig;
 import com.drunkshulker.bartender.client.gui.clickgui.theme.GuiTheme;
+import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -195,6 +196,19 @@ public class ClickGuiPanel extends ClickGui{
 			BeveledBox.drawBeveledBox(x, y, x+w, y+17, 1, 0x00000000, 0x00000000, theme.headerNormal());
 			drawCenteredString(mc.fontRenderer,title, x+(w/2), y+5, Integer.parseInt(theme.headerText(), 16));
 		}
+		if(title.equals("flight")||title.equals("group")||title.equals("bodyguard")) {
+			
+			GL11.glPushMatrix();
+			GL11.glDisable(GL11.GL_LIGHTING);
+			GL11.glColor4f(1, 1, 1, 1);
+			GL11.glScalef(1, 1, 1);
+
+			mc.getTextureManager().bindTexture(OverlayGui.texture);
+
+			drawTexturedModalRect(x+4, y+4, 66, 0, 9, 9);
+
+			GL11.glPopMatrix();
+		}
 		
 		
 		if(expanded&&contents!=null&&contents.length>0) {
@@ -246,6 +260,7 @@ public class ClickGuiPanel extends ClickGui{
 	}
 
 	private void drawDropSlot() {
+		if(!GuiHandler.snapToGrid) return;
 		GuiTheme theme = GuiHandler.themes[GuiHandler.currentTheme];
 		GL11.glPushMatrix();
 		GL11.glTranslated(0, 0, 499); 
@@ -266,12 +281,14 @@ public class ClickGuiPanel extends ClickGui{
 	}
 	
 	int roundX(int x) {
+		if(!GuiHandler.snapToGrid) return x;
 		int r = (w+3)*(Math.round((x+w/2)/(w+3)));
 		if(r<0) r = 0;
 	    return r;
 	}
 
 	int roundY(int y) {
+		if(!GuiHandler.snapToGrid) return y;
 	    int r = 17*(Math.round(y/17));
 	    if(r<0) r = 0;
 	    return r;

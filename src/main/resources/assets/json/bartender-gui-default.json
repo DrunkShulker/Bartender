@@ -24,7 +24,6 @@
 						"GUI COLOR THEMES"
 					]
 				},
-
 				{
 					"title": "keybinds",
 					"type": "text",
@@ -37,7 +36,6 @@
 						"TOGGLE BARTENDER KEYBINDS IN PAUSE MENU"
 					]
 				},
-
 				{
 					"title": "draw player",
 					"type": "text",
@@ -47,7 +45,19 @@
 						"hidden"
 					],
 					"desc": [
-						"TOGGLE CLICKGUI PLAYER ENTITY"
+						"TOGGLE GUI PLAYER ENTITY"
+					]
+				},
+				{
+					"title": "snap",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"SNAP GUI PANELS TO GRID"
 					]
 				},
 				{
@@ -466,18 +476,6 @@
 					]
 				},
 				{
-					"title": "allow chat",
-					"type": "text",
-					"value": 0,
-					"values": [
-						"no",
-						"yes"
-					],
-					"desc": [
-						"ALLOW THE BODYGUARD BOT TALK IN CHAT."
-					]
-				},
-				{
 					"title": "P log",
 					"type": "text",
 					"value": 0,
@@ -489,6 +487,139 @@
 					"desc": [
 						"PROTECTED LOG BEHAVIOR = WHAT TO DO IF PROTECTED DISCONNECTS"
 					]
+				}
+			]
+		},
+		{
+			"name": "group",
+			"desc": [
+				"GROUP CONTROLS"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "here",
+					"type": "click",
+					"desc": [
+						"SEND /tpahere FOR ALL MEMBERS OF YOUR GROUP",
+						"THERE IS ABOUT 10 SEC DELAY BETWEEN EACH REQUEST"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "stand here",
+					"type": "click",
+					"desc": [
+						"COMMAND ALL GROUP MEMBERS TO STAND ON THE SPOT YOU ARE ON"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "tpaccept",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"none",
+						"/tpahere",
+						"/tpa",
+						"both"
+					],
+					"desc": [
+						"SELECT WHAT TPA REQUESTS SHOULD BE AUTO ACCEPTED",
+						"(ONLY WORKS FOR PLAYERS IN THE GROUP)"
+					]
+				},
+				{
+					"title": "friends",
+					"type": "text",
+					"value": 2,
+					"values": [
+						"impact",
+						"list",
+						"both",
+						"none"
+					],
+					"desc": [
+						"SELECT THE PLAYERS BARTENDER SHOULD NOT CONSIDER AS AN ENEMY"
+					]
+				},
+				{
+					"title": "click player",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"WHEN THIS IS TURNED ON:",
+						"- HIT PLAYER TO MARK THEM AS ENEMY",
+						"- MIDDLE CLICK GROUP MEMBER TO RETREAT"
+					]
+				},
+				{
+					"title": "leave group",
+					"type": "click",
+					"desc": [
+						"LOCALLY REMOVE ALL PLAYERS FROM YOUR GROUP"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "obby grief",
+					"type": "click",
+					"desc": [
+						"TELL GROUP MEMBERS TO START MINING NEARBY OBSIDIAN",
+						"THIS WILL GO ON FOREVER IF YOU DON'T END IT WITH THE 'end tasks' COMMAND"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "ground level",
+					"type": "click",
+					"desc": [
+						"DIG YOUR WAY OUT OF THE CAVE AND",
+						"AND TELL GROUP MEMBERS TO DO THE SAME"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "end tasks",
+					"type": "click",
+					"desc": [
+						"KILL ALL RUNNING TASKS ON ALL ACCOUNTS AND START THE DEFAULTS"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "chorus",
+					"type": "click",
+					"desc": [
+						"COMMAND ALL PLAYERS IN THE GROUP TO EAT A CHORUS FRUIT.",
+						"- AUTO EAT MUST BE ENABLED",
+						"- THE CHORUS FRUIT MUST BE IN YOUR HOTBAR"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "takeoff",
+					"type": "click",
+					"desc": [
+						"MAKE ALL YOUR ALTS TO ATTEMPT TAKEOFF.",
+						"THIS FAILS PRETTY OFTEN SO YOU NEED TO TRY IT MANY TIMES.",
+						"USING JESUS HACKS ON WATER MAKES TAKEOFF MUCH EASIER!"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "retreat",
+					"type": "click",
+					"desc": [
+						"CLEAR ENEMIES LIST (STOP FIGHTING)"
+					],
+					"closeOnClick": true
 				}
 			]
 		},
@@ -702,7 +833,6 @@
 				{
 					"title": "lock/unlock",
 					"type": "click",
-					"bind": 4,
 					"desc": [
 						"TOGGLE BETWEEN LOCKED AND FREE MODES"
 					],
@@ -807,6 +937,21 @@
 					]
 				},
 				{
+					"title": "storageESP",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"ESP FOR:"
+						,"- ENDER CHESTS"
+						,"- CHESTS"
+						,"- SHULKERS"
+					]
+				},
+				{
 					"title": "nametags",
 					"type": "text",
 					"value": 1,
@@ -895,7 +1040,6 @@
 					"title": "freecam",
 					"type": "text",
 					"value": 0,
-					"bind": 3,
 					"values": [
 						"OFF",
 						"ON"
@@ -930,142 +1074,7 @@
 				}
 			]
 		},
-		{
-			"name": "group",
-			"desc": [
-				"GROUP CONTROLS FOR THE BODYGUARDS"
-			],
-			"x": 0,
-			"y": 0,
-			"expanded": false,
-			"contents": [
-				{
-					"title": "here",
-					"type": "click",
-					"desc": [
-						"SEND /tpahere FOR ALL MEMBERS OF YOUR GROUP",
-						"THERE IS ABOUT 10 SEC DELAY BETWEEN EACH REQUEST"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "stand here",
-					"type": "click",
-					"desc": [
-						"COMMAND ALL GROUP MEMBERS TO STAND ON THE SPOT YOU ARE ON"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "tpaccept",
-					"type": "text",
-					"value": 1,
-					"values": [
-						"none",
-						"/tpahere",
-						"/tpa",
-						"both"
-					],
-					"desc": [
-						"SELECT WHAT TPA REQUESTS SHOULD BE AUTO ACCEPTED",
-						"(ONLY WORKS FOR PLAYERS IN THE GROUP)"
-					]
-				},
-				{
-					"title": "friends",
-					"type": "text",
-					"value": 2,
-					"values": [
-						"impact",
-						"list",
-						"both",
-						"none"
-					],
-					"desc": [
-						"SELECT THE PLAYERS BARTENDER SHOULD NOT CONSIDER AS AN ENEMY"
-					]
-				},
-				{
-					"title": "click player",
-					"type": "text",
-					"value": 0,
-					"values": [
-						"OFF",
-						"ON"
-					],
-					"desc": [
-						"WHEN THIS IS TURNED ON:",
-						"- HIT PLAYER TO MARK THEM AS ENEMY",
-						"- MIDDLE CLICK GROUP MEMBER TO RETREAT"
-					]
-				},
-				{
-					"title": "leave group",
-					"type": "click",
-					"desc": [
-						"LOCALLY REMOVE ALL PLAYERS FROM YOUR GROUP"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "obby grief",
-					"type": "click",
-					"desc": [
-						"TELL GROUP MEMBERS TO START MINING NEARBY OBSIDIAN",
-						"THIS WILL GO ON FOREVER IF YOU DON'T END IT WITH THE 'end tasks' COMMAND"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "ground level",
-					"type": "click",
-					"desc": [
-						"DIG YOUR WAY OUT OF THE CAVE AND",
-						"AND TELL GROUP MEMBERS TO DO THE SAME"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "end tasks",
-					"type": "click",
-					"bind": 207,
-					"desc": [
-						"KILL ALL RUNNING TASKS ON ALL ACCOUNTS AND START THE DEFAULTS"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "chorus",
-					"type": "click",
-					"bind": 209,
-					"desc": [
-						"COMMAND ALL PLAYERS IN THE GROUP TO EAT A CHORUS FRUIT.",
-						"- AUTO EAT MUST BE ENABLED",
-						"- THE CHORUS FRUIT MUST BE IN YOUR HOTBAR"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "takeoff",
-					"type": "click",
-					"bind": 201,
-					"desc": [
-						"MAKE ALL YOUR ALTS TO ATTEMPT TAKEOFF.",
-						"THIS FAILS PRETTY OFTEN SO YOU NEED TO TRY IT MANY TIMES.",
-						"USING JESUS HACKS ON WATER MAKES TAKEOFF MUCH EASIER!"
-					],
-					"closeOnClick": true
-				},
-				{
-					"title": "retreat",
-					"type": "click",
-					"desc": [
-						"CLEAR ENEMIES LIST (STOP FIGHTING)"
-					],
-					"closeOnClick": true
-				}
-			]
-		},
+
 		{
 			"name": "auto eat",
 			"desc": [
@@ -1241,7 +1250,7 @@
 				{
 					"title": "players",
 					"type": "text",
-					"value": 1,
+					"value": 0,
 					"values": [
 						"OFF",
 						"ON"
@@ -1264,6 +1273,19 @@
 					],
 					"desc": [
 						"MOB TRACERS"
+					]
+				},
+				{
+					"title": "blocks",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"TRACERS TO BASEFINDER TARGET BLOCKS.",
+						"ONLY WORKS WHEN STORAGE ESP IS ENABLED"
 					]
 				}
 			]
@@ -1605,11 +1627,23 @@
 					"type": "text",
 					"value": 0,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"ON/OFF"
+					]
+				},
+				{
+					"title": "remember slot",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"ON",
+						"OFF"
+					],
+					"desc": [
+						"REMEMBER PRIMARY ITEM AND EQUIP IT AGAIN AFTER TOTEM SWAP"
 					]
 				},
 				{
@@ -1617,8 +1651,8 @@
 					"type": "text",
 					"value": 1,
 					"values": [
-						"off",
-						"on"
+						"OFF",
+						"ON"
 					],
 					"desc": [
 						"SAFETY REMINDER TEXT IN PAUSE MENU"
@@ -1745,7 +1779,7 @@
 					"type": "click",
 					"desc": [
 						"STARTS BUILDING THE CURRENTLY LOADED SCHEMATIC.",
-						"(REQUIRES SCHEMATICA TO WORK)"
+						"(SCHEMATICA MOD REQUIRED)"
 					],
 					"closeOnClick": true
 				},
@@ -1794,7 +1828,7 @@
 					"title": "nomad hut",
 					"type": "click",
 					"desc": [
-						"BUILD DRUNK'S NOMAD HUT SCHEMATIC FROM OBSIDIAN"
+						"BUILD DRUNK'S NOMAD HUT SCHEMATIC (OBSIDIAN)"
 					],
 					"closeOnClick": true
 				},
@@ -1802,7 +1836,7 @@
 					"title": "tombstone",
 					"type": "click",
 					"desc": [
-						"BUILD TOMBSTONE SCHEMATIC FROM OBSIDIAN"
+						"BUILD TOMBSTONE SCHEMATIC (OBSIDIAN)"
 					],
 					"closeOnClick": true
 				},
@@ -1810,7 +1844,7 @@
 					"title": "swastika",
 					"type": "click",
 					"desc": [
-						"BUILD SWASTIKA SCHEMATIC FROM OBSIDIAN"
+						"BUILD SWASTIKA SCHEMATIC (OBSIDIAN)"
 					],
 					"closeOnClick": true
 				}
@@ -1830,8 +1864,8 @@
 					"type": "text",
 					"value": 0,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"WHEN TURNED ON, THIS PREVENTS YOU FROM EXECUTING",
@@ -1843,8 +1877,8 @@
 					"type": "text",
 					"value": 1,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"WHEN TURNED ON, ANYONE OUTSIDE YOU GROUP",
@@ -1856,11 +1890,23 @@
 					"type": "text",
 					"value": 1,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"ALLOW PLAYERS TO USE THE HELP COMMAND"
+					]
+				},
+				{
+					"title": "pride",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"ON",
+						"OFF"
+					],
+					"desc": [
+						"FORMATS YOUR CHAT MESSAGES IN RAINBOW COLOR"
 					]
 				},
 				{
@@ -1868,8 +1914,8 @@
 					"type": "text",
 					"value": 1,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"ALLOW PLAYERS TO ORDER DRINKS USING THE ORDER COMMAND"
@@ -1926,8 +1972,8 @@
 					"type": "text",
 					"value": 0,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"WRITE SOMETHING TO THE END OF EACH CHAT MESSAGE YOU SEND",
@@ -1939,8 +1985,8 @@
 					"type": "text",
 					"value": 1,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"WHEN THIS IS ON, EVERY TPA REQUEST IS AUTOMATICALLY ACCEPTED"
@@ -1959,8 +2005,8 @@
 					"type": "text",
 					"value": 1,
 					"values": [
-						"on",
-						"off"
+						"ON",
+						"OFF"
 					],
 					"desc": [
 						"WHEN THIS IS ON, PLAYERS CAN EXECUTE PORNHUB SEARCHES ON YOU"
@@ -2137,7 +2183,6 @@
 				{
 					"title": "pause/continue",
 					"type": "click",
-					"bind": 197,
 					"desc": [
 						"PAUSE/CONTINUE HUNT"
 					],

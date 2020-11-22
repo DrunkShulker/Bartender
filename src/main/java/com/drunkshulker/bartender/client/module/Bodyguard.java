@@ -102,7 +102,6 @@ public class Bodyguard {
 
 	public static boolean enabled = false, lastEnabled = false; 
 	public static boolean dontMove = false; 
-	public static boolean talkInChat = false; 
 
 	
 	public static boolean protectedOutOfRange(){
@@ -848,9 +847,6 @@ public class Bodyguard {
 					lastKnownProtectedLocation = null;
 				}
 				break;
-			case "allow chat":
-				talkInChat = setting.value == 1;
-				break;
 			case "look":
 				freeLook = setting.value == 0;
 				break;
@@ -879,9 +875,6 @@ public class Bodyguard {
 	}
 
 	public static void commitSuicide() {
-		if(talkInChat){
-			Minecraft.getMinecraft().player.sendChatMessage("> I did my best protecting "+PlayerGroup.mainAccount+". Committing /kill.");
-		}
 		Minecraft.getMinecraft().player.sendChatMessage("/kill");
 	}
 

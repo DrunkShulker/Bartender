@@ -34,7 +34,9 @@ public class SafeTotemSwap {
 	static long lastSwapStamp = operationIntervalMillis;
 	public static NearDeathBehavior nearDeathBehavior;
 	public static int totalUselessCount=0;
-
+	private static int slotBeforeSwap = FIRST_HOTBAR_SLOT;
+	private static boolean backToSlotNeeded = false;
+	private static boolean rememberSlot = false;
 	final static int totID = Item.getIdFromItem(Items.TOTEM_OF_UNDYING);
 
 	enum NearDeathBehavior{	
@@ -55,6 +57,12 @@ public class SafeTotemSwap {
 		
 		taskInProgress = Bartender.INVENTORY_UTILS.inProgress||System.currentTimeMillis()-lastSwapStamp<operationIntervalMillis;
 
+		
+		if(backToSlotNeeded&&rememberSlot&&Bartender.MC.player.getHeldItemOffhand().getCount()>swapOn){
+			backToSlotNeeded = false;
+			equipItem(slotBeforeSwap);
+		}
+
 		try {		
 			EntityLivingBase playerLB  = (EntityLivingBase) Minecraft.getMinecraft().getRenderViewEntity();
 			EntityPlayerSP playerSP = Minecraft.getMinecraft().player;
@@ -72,12 +80,12 @@ public class SafeTotemSwap {
 				
 				if(Minecraft.getMinecraft().player.getHealth()==20) {
 					
-					Bartender.msg("Prevented safe totem NDB on full HP!");
+					Bartender.msg("Full HP! NDB canceled.");
 				}else {
 					
 					Bartender.msg("ND behavior!");
 					if(nearDeathBehavior==NearDeathBehavior.DISCONNECT) {
-						BaseFinder.logOut("safe totem near death");
+						BaseFinder.logOut("Safe totem NDB");
 					}else if(nearDeathBehavior==NearDeathBehavior.SLASH_KILL) {
 						Bodyguard.commitSuicide();
 					}
@@ -88,7 +96,7 @@ public class SafeTotemSwap {
 			totemsReadyToSwitch = checkHotbarTots();
 						
 			if(playerLB.getHeldItemOffhand().isEmpty()
-					||(playerLB.getHeldItemOffhand().getCount()<=swapOn&& !runningLowOnStacks)
+					||(playerLB.getHeldItemOffhand().getCount()<=swapOn && !runningLowOnStacks)
 					||playerLB.getHeldItemOffhand().getItem()!=Items.TOTEM_OF_UNDYING) {
 				if(taskInProgress)return;
 				lastSwapStamp = System.currentTimeMillis();
@@ -134,7 +142,7 @@ public class SafeTotemSwap {
 		
 		if(bringToHotbar==-1) {
 			runningLowOnStacks = true;
-			Bartender.msg("Running low on tots!");
+			
 			int slotWithMostTots = -1;
 			int uselessStackCout = 0;
 			for (Integer slot : slotsWithTots) {
@@ -154,7 +162,7 @@ public class SafeTotemSwap {
 		else runningLowOnStacks = false;
 		
 		if(bringToHotbar==-1) {
-			Bartender.msg("Bring to hotbar not found!");
+			Bartender.msg("Safe totem could not find tots while preparing next swap!");
 			return;
 		}
 		
@@ -162,8 +170,15 @@ public class SafeTotemSwap {
 	}
 
 	public static void swap() {
+		if(rememberSlot){
+			int currentHeldItemSlot = Bartender.MC.player.inventory.currentItem;
+			if(FIRST_HOTBAR_SLOT!=currentHeldItemSlot){
+				slotBeforeSwap = currentHeldItemSlot;
+			}
+			backToSlotNeeded = true;
+		}
 		equipItem(FIRST_HOTBAR_SLOT);
-		KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindSwapHands.getKeyCode());
+		KeyBinding.onTick(Bartender.MC.gameSettings.keyBindSwapHands.getKeyCode());
 	}
 
 	
@@ -175,7 +190,7 @@ public class SafeTotemSwap {
 	}
 	
 	public static void equipItem(int slot) {
-		Minecraft.getMinecraft().player.inventory.currentItem = slot;
+		Bartender.MC.player.inventory.currentItem = slot;
 		
 	}
 
@@ -204,6 +219,9 @@ public class SafeTotemSwap {
 				break;
 			case "NDB count":
 				nearDeathCount = setting.value+1;
+				break;
+			case "remember slot":
+				rememberSlot = setting.value==0;
 				break;
 			default:
 				break;

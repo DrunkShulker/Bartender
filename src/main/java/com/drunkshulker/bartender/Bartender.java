@@ -1,6 +1,7 @@
 package com.drunkshulker.bartender;
 import java.io.File;
 
+import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.util.forge.ForgeEventProcessor;
 import com.drunkshulker.bartender.util.salhack.FontManager;
 import com.drunkshulker.bartender.util.salhack.TickRateManager;
@@ -41,7 +42,7 @@ public class Bartender
 {
     public static final String MOD_ID = "bartender";
     public static final String NAME = "Bartender";
-    public static final String VERSION = "1.2.6";
+    public static final String VERSION = "1.2.7";
     public static final String ACCEPTED_VERSIONS = "(1.12.2)";
     public static final String CLIENT_PROXY = "com.drunkshulker.bartender.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.drunkshulker.bartender.proxy.CommonProxy";
@@ -61,6 +62,7 @@ public class Bartender
     public static final EventBus EVENT_BUS = new EventManager();
     private static TickRateManager TICK_RATE_MANAGER = new TickRateManager();
     public static final FontManager FONT_MANAGER = new FontManager();
+
     @Instance
 	public static Bartender instance;
     
@@ -139,16 +141,11 @@ public class Bartender
     	Keybinds.register();
         MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
         MinecraftForge.EVENT_BUS.register(new ChatObserver());
-        
-        
-        MinecraftForge.EVENT_BUS.register(new GuiHandler());
 
+        MinecraftForge.EVENT_BUS.register(new GuiHandler());
         MinecraftForge.EVENT_BUS.register(new ForgeEventProcessor());
 
-        
         CommandsRegistry.registerAll();
-
-        
         ModulesRegistry.registerAll();
     }
 
@@ -160,8 +157,8 @@ public class Bartender
     @EventHandler
     public void postInit(FMLPostInitializationEvent event){
     	setCustomTitle();
+        OverlayGui.loadLayout();
     }
-
 
     
 	private void setCustomTitle() {
@@ -170,7 +167,7 @@ public class Bartender
     	if(KAMI_INSTALLED)title = "KAMI Blue + "+title;
     	if(MC.getSession()!=null)
     		if(MC.getSession().getUsername()!=null)
-    			title = title + " | Logged as "+Minecraft.getMinecraft().getSession().getUsername();
+    			title = title + " | Logged as "+MC.getSession().getUsername();
         Display.setTitle(title);
 	}
 

@@ -1,5 +1,6 @@
 package com.drunkshulker.bartender.client.module;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.social.PlayerFriends;
@@ -8,7 +9,11 @@ import com.drunkshulker.bartender.util.kami.EntityUtils;
 import com.drunkshulker.bartender.util.salhack.MathUtil;
 import com.drunkshulker.bartender.util.salhack.RenderUtil;
 import com.drunkshulker.bartender.util.salhack.events.render.RenderEvent;
+import it.unimi.dsi.fastutil.bytes.Byte2LongMap;
 import me.zero.alpine.fork.listener.EventHandler;
+import net.minecraft.util.Tuple;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.Minecraft;
@@ -16,6 +21,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.chunk.Chunk;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Tracers implements Listenable {
     Minecraft mc = Minecraft.getMinecraft();
@@ -30,12 +39,16 @@ public class Tracers implements Listenable {
 
     static TracerMobsMode tracerMobsMode = TracerMobsMode.NONE;
     static boolean players = true;
+    static boolean blocks = true;
 
     public static void applyPreferences(ClickGuiSetting[] contents) {
         for (ClickGuiSetting setting : contents) {
             switch (setting.title) {
                 case "players":
                     players = setting.value == 1;
+                    break;
+                case "blocks":
+                    blocks = setting.value == 1;
                     break;
                 case "mobs":
                     if (setting.value == 0) tracerMobsMode = TracerMobsMode.NONE;
@@ -53,8 +66,20 @@ public class Tracers implements Listenable {
     @EventHandler
     private Listener<RenderEvent> OnRenderEvent = new Listener<>(p_Event ->
     {
-        if (mc.getRenderManager() == null || mc.getRenderManager().options == null)
+        if (mc.getRenderManager() == null || mc.getRenderManager().options == null || mc.player == null)
             return;
+
+        if (blocks && StorageESP.enabled) {
+            Search.mainList.values().forEach((blockPosTupleMap) -> {
+                for (BlockPos p : blockPosTupleMap.keySet()) {
+                    Vec3d pos = new Vec3d(p.x+0.5, p.y+0.5, p.z+0.5).subtract(mc.getRenderManager().renderPosX, mc.getRenderManager().renderPosY, mc.getRenderManager().renderPosZ);
+                    mc.entityRenderer.setupCameraTransform(p_Event.getPartialTicks(), 0);
+                    final Vec3d forward = new Vec3d(0, 0, 1).rotatePitch(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationPitch)).rotateYaw(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationYaw));
+                    RenderUtil.drawLine3D((float) forward.x, (float) forward.y + mc.player.getEyeHeight(), (float) forward.z, (float) pos.x, (float) pos.y, (float) pos.z, 1f, 0xFFFFFFFF);
+                    mc.entityRenderer.setupCameraTransform(p_Event.getPartialTicks(), 0);
+                }
+            });
+        }
 
         if (OverlayGui.targetGuiActive) { 
             for (Entity entity : mc.world.loadedEntityList) {
@@ -71,14 +96,14 @@ public class Tracers implements Listenable {
             for (Entity entity : mc.world.loadedEntityList) {
                 final Vec3d pos = MathUtil.interpolateEntity(entity, p_Event.getPartialTicks()).subtract(mc.getRenderManager().renderPosX, mc.getRenderManager().renderPosY, mc.getRenderManager().renderPosZ);
 
-                if(!EntityUtils.isLiving(entity)) continue;
+                if (!EntityUtils.isLiving(entity)) continue;
 
-                if((players&&entity instanceof EntityPlayer)
-                ||(tracerMobsMode == TracerMobsMode.ALL)
-                ||(tracerMobsMode==TracerMobsMode.CREEPER&&entity instanceof EntityCreeper)
-                ||(tracerMobsMode==TracerMobsMode.HOSTILE&&EntityUtils.isHostileMob(entity))
-                ||(tracerMobsMode==TracerMobsMode.PASSIVE&&!EntityUtils.isHostileMob(entity))
-                ){
+                if ((players && entity instanceof EntityPlayer)
+                        || (tracerMobsMode == TracerMobsMode.ALL)
+                        || (tracerMobsMode == TracerMobsMode.CREEPER && entity instanceof EntityCreeper)
+                        || (tracerMobsMode == TracerMobsMode.HOSTILE && EntityUtils.isHostileMob(entity))
+                        || (tracerMobsMode == TracerMobsMode.PASSIVE && !EntityUtils.isHostileMob(entity))
+                ) {
                     mc.entityRenderer.setupCameraTransform(p_Event.getPartialTicks(), 0);
                     final Vec3d forward = new Vec3d(0, 0, 1).rotatePitch(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationPitch)).rotateYaw(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationYaw));
                     RenderUtil.drawLine3D((float) forward.x, (float) forward.y + mc.player.getEyeHeight(), (float) forward.z, (float) pos.x, (float) pos.y, (float) pos.z, 1f, getColor(entity));
@@ -104,7 +129,7 @@ public class Tracers implements Listenable {
     }
 
     private int getColor(Entity e) {
-        if (OverlayGui.targetGuiActive){ 
+        if (OverlayGui.targetGuiActive) { 
             if (e instanceof EntityPlayer) {
                 if (OverlayGui.availableTargets != null && !OverlayGui.availableTargets.isEmpty()) {
                     if (OverlayGui.availableTargets.get(OverlayGui.currentSelectedTargetIndex).equals(((EntityPlayer) e).getDisplayNameString())) {
@@ -115,15 +140,14 @@ public class Tracers implements Listenable {
             return 0x00000000;
         } else { 
             if (e instanceof EntityPlayer) {
-                if(players){
+                if (players) {
                     String name = ((EntityPlayer) e).getDisplayNameString();
-                    if(name.equals(mc.player.getDisplayNameString())) return 0x00000000;
-                    if(PlayerGroup.members.contains(name)) return 0xFF00FF21;
-                    if(PlayerFriends.friends.contains(name)) return 0xFF00FF21;
-                    if(PlayerFriends.impactFriends.contains(name)) return 0xFF00FF21;
-                    if(PlayerGroup.DEFAULTS.contains(name)) return 0xFFFF00DC;
-                }
-                else return 0x00000000;
+                    if (name.equals(mc.player.getDisplayNameString())) return 0x00000000;
+                    if (PlayerGroup.members.contains(name)) return 0xFF00FF21;
+                    if (PlayerFriends.friends.contains(name)) return 0xFF00FF21;
+                    if (PlayerFriends.impactFriends.contains(name)) return 0xFF00FF21;
+                    if (PlayerGroup.DEFAULTS.contains(name)) return 0xFFFF00DC;
+                } else return 0x00000000;
             }
         }
 

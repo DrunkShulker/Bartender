@@ -47,6 +47,8 @@ public class GuiHandler {
 	public static boolean showInventory = true;
 	public static boolean showCoords = true;
 	public static boolean showPotions = true;
+	public static boolean snapToGrid = true;
+
 	long lastDupeClickStamp = System.currentTimeMillis();
 	final long dupeClickIntervalMillis = 800;
 
@@ -86,8 +88,6 @@ public class GuiHandler {
 			if(mc.player.getHealth()==20&&!showHP)
 			event.setCanceled(true);
 		}
-
-
     }
 	
 	@SubscribeEvent
@@ -179,6 +179,9 @@ public class GuiHandler {
 				break;
 			case "numbers":
 				txtHpAndFood = setting.value==1;
+				break;
+			case "snap":
+				snapToGrid = setting.value==1;
 				break;
 			case "dimmed":
 				showDimmed = setting.value==0;

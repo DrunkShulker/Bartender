@@ -27,6 +27,7 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new AutoFire());
         MinecraftForge.EVENT_BUS.register(new AutoSpawn());
         Bartender.EVENT_BUS.subscribe(new Nametags());
+        Bartender.EVENT_BUS.subscribe(new StorageESP());
         MinecraftForge.EVENT_BUS.register(new Scaffold());
         Bartender.EVENT_BUS.subscribe(new ElytraFlight());
         Bartender.EVENT_BUS.subscribe(new NewChunks());

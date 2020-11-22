@@ -65,10 +65,7 @@ public class Nametags implements Listenable
     {
         if(!enabled||mc.player==null) return;
         mc.world.loadedEntityList.stream().filter(EntityUtils::isLiving).filter(entity -> !EntityUtils.isFakeLocalPlayer(entity)).filter(entity -> (entity instanceof EntityPlayer && mc.player != entity)).forEach(e ->
-        {
-            
-            RenderNameTagFor((EntityPlayer)e, p_Event);
-        });
+                RenderNameTagFor((EntityPlayer)e, p_Event));
     });
 
 
@@ -78,16 +75,12 @@ public class Nametags implements Listenable
                 p_Event.getScaledResolution().getScaledWidth(),
                 p_Event.getScaledResolution().getScaledHeight());
 
-        if (bounds != null)
-        {
+        if (bounds != null) {
             String name = StringUtils.stripControlCodes(e.getName());
-
             int color = -1;
-
             final String friend = e.getDisplayNameString();
 
-            if (PlayerFriends.impactFriends.contains(friend)||PlayerFriends.friends.contains(friend)|| PlayerGroup.members.contains(friend))
-            {
+            if (PlayerFriends.impactFriends.contains(friend)||PlayerFriends.friends.contains(friend)|| PlayerGroup.members.contains(friend)) {
                 name = friend;
                 color = 0x00FF21;
             } else if(PlayerGroup.DEFAULTS.contains(name)){
@@ -95,37 +88,36 @@ public class Nametags implements Listenable
                 color = 0xFF00DC;
             }
 
-            final EntityPlayer player = (EntityPlayer) e;
+            final EntityPlayer player = e;
             int responseTime = -1;
 
-            if (Ping)
-            {
-                try
-                {
+            if (Ping) {
+                try {
                     responseTime = (int) MathUtil.clamp(
                             mc.getConnection().getPlayerInfo(player.getUniqueID()).getResponseTime(), 0,
                             300);
                 }
-                catch (NullPointerException np)
-                {}
+                catch (NullPointerException np) {}
             }
 
             
+            int xPLus = 0;
+            if(!e.getHeldItemOffhand().isEmpty || e.getHeldItemOffhand().getItem() != Items.AIR){
+                xPLus += 8;
+            }
             String l_Name = name;
                     RenderUtil.drawStringWithShadow(l_Name,
-                    bounds[0] + (bounds[2] - bounds[0]) / 2 - RenderUtil.getStringWidth(l_Name) / 2,
+                    bounds[0] + (bounds[2] - bounds[0]) / 2 - RenderUtil.getStringWidth(l_Name) / 2 +xPLus,
                     bounds[1] + (bounds[3] - bounds[1]) - 8 - 1, color);
 
-            if (Armor)
-            {
+            if (Armor) {
                 final Iterator<ItemStack> items = e.getArmorInventoryList().iterator();
                 final ArrayList<ItemStack> stacks = new ArrayList<>();
 
-
                 stacks.add(e.getHeldItemOffhand());
 
-                while (items.hasNext())
-                {
+
+                while (items.hasNext()) {
                     final ItemStack stack = items.next();
                     if (stack != null && stack.getItem() != Items.AIR)
                     {
@@ -133,20 +125,15 @@ public class Nametags implements Listenable
                     }
                 }
                 stacks.add(e.getHeldItemMainhand());
-
                 Collections.reverse(stacks);
-
                 int x = 0;
 
                 
 
-                for (ItemStack stack : stacks)
-                {
-                    if (stack != null)
-                    {
+                for (ItemStack stack : stacks) {
+                    if (stack != null) {
                         final Item item = stack.getItem();
-                        if (item != Items.AIR)
-                        {
+                        if (item != Items.AIR) {
                             GlStateManager.pushMatrix();
                             GlStateManager.enableBlend();
                             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);

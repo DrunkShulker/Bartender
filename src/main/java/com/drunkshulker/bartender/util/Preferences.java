@@ -1,5 +1,7 @@
 package com.drunkshulker.bartender.util;
 
+import com.drunkshulker.bartender.Bartender;
+import com.drunkshulker.bartender.client.gui.GuiConfig;
 import com.drunkshulker.bartender.client.gui.GuiHandler;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGui;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiPanel;
@@ -10,6 +12,8 @@ import com.drunkshulker.bartender.client.social.PlayerGroup;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TextComponentString;
+
+import java.util.Map;
 
 public class Preferences {
 	
@@ -69,6 +73,7 @@ public class Preferences {
 				FullBright.applyPreferences(panel.getContents());
 				PeekPreview.applyPreferences(panel.getContents());
 				Nametags.applyPreferences(panel.getContents());
+				StorageESP.applyPreferences(panel.getContents());
 				break;
 			case "flight":
 				FlightBot.applyPreferences(panel.getContents());
@@ -91,6 +96,15 @@ public class Preferences {
 				break;
 			}
 			
+		}
+
+		if(GuiConfig.usingDefaultConfig){
+			if(PlayerGroup.DEFAULTS.contains(Bartender.MC.getSession().getUsername())){
+				
+				for (Map.Entry<String, Integer> entry:GuiConfig.DEFAULT_BINDS.entrySet()) {
+					GuiConfig.bindKey(entry.getKey(),entry.getValue());
+				}
+			}
 		}
 	}
 	
