@@ -32,7 +32,6 @@ public class Scaffold {
                 case "scaffold":
                     enabled = setting.value == 1;
                     break;
-
                 default:
                     break;
             }
@@ -70,7 +69,7 @@ public class Scaffold {
         BlockPos belowBlockPos = blockPos.down();
         BlockPos legitPos = new BlockPos(EntityUtils.getInterpolatedPos(mc.player, 2f));
 
-        if (towering) {
+        if (towering&&controlPressed) {
             if (mc.player.posY <= blockPos.y + 1.0f) {
                 return;
             }
@@ -96,7 +95,7 @@ public class Scaffold {
         
         if (!holding) mc.player.inventory.currentItem = oldSlot;
 
-        if (towering) {
+        if (towering&&controlPressed) {
             double motion = 0.42; 
             if (mc.player.onGround) {
                 towerStart = mc.player.posY;

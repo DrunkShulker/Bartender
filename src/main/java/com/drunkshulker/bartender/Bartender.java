@@ -11,6 +11,7 @@ import io.mappedbus.MappedBusWriter;
 import me.zero.alpine.fork.bus.EventBus;
 import me.zero.alpine.fork.bus.EventManager;
 import net.minecraft.util.text.TextComponentString;
+import org.apache.commons.lang3.SystemUtils;
 import org.lwjgl.opengl.Display;
 
 import com.drunkshulker.bartender.client.CommandsRegistry;
@@ -42,7 +43,7 @@ public class Bartender
 {
     public static final String MOD_ID = "bartender";
     public static final String NAME = "Bartender";
-    public static final String VERSION = "1.2.7";
+    public static final String VERSION = "1.2.8";
     public static final String ACCEPTED_VERSIONS = "(1.12.2)";
     public static final String CLIENT_PROXY = "com.drunkshulker.bartender.proxy.ClientProxy";
     public static final String COMMON_PROXY = "com.drunkshulker.bartender.proxy.CommonProxy";
@@ -77,9 +78,10 @@ public class Bartender
             
             if(!new File("/tmp").exists()) {
                 if(!new File("/tmp").mkdir()){
-                    System.out.println("tmp create failed");
+                    System.out.println("tmp create failed (win)");
                 }
             }
+
             
             File deleteTarget = new File(Bartender.MINECRAFT_DIR+"/bartender-gui-backup.json");
             if(deleteTarget.exists()){
@@ -94,9 +96,10 @@ public class Bartender
                     System.out.println("baritone cache clear failed");
                 }
             }
-            final String ipcPath = "/tmp/ipc";
+            String ipcPath = "/tmp/ipc";
+
             
-            File f= new File(ipcPath);
+            File f = new File(ipcPath);
             if(!f.delete()){
                 System.out.println("tmp delete failed");
             }

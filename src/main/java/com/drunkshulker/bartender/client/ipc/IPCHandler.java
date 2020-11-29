@@ -2,6 +2,7 @@ package com.drunkshulker.bartender.client.ipc;
 
 import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.ipc.message.*;
+import com.drunkshulker.bartender.client.module.BaseFinder;
 import com.drunkshulker.bartender.client.module.Bodyguard;
 import io.mappedbus.MappedBusMessage;
 import net.minecraft.client.Minecraft;
@@ -26,7 +27,8 @@ public class IPCHandler {
             DIMENSION_UPDATE = 9,
             TAKEOFF = 11,
             ASK_TPA_FROM_MAIN = 12,
-            GO_TO = 10;
+            GO_TO = 10,
+            DISCONNECT = 13;
 
     @SubscribeEvent
     public void listener(TickEvent.ClientTickEvent event) {
@@ -101,6 +103,11 @@ public class IPCHandler {
                         Bartender.IPC_READER.readMessage(message);
                         Bodyguard.reveiveMainTpaRequest(((AskTpaFromMainMessage)message).getSenderName());
                         break;
+                    case DISCONNECT:
+                        message = new DisconnectMessage();
+                        Bartender.IPC_READER.readMessage(message);
+                        BaseFinder.logOut("Group disconnect");
+                        break;
                     default:
                         break;
                 }
@@ -150,6 +157,9 @@ public class IPCHandler {
                     break;
                 case ASK_TPA_FROM_MAIN:
                     Bartender.IPC_WRITER.write(new AskTpaFromMainMessage(x,y,z,text));
+                    break;
+                case DISCONNECT:
+                    Bartender.IPC_WRITER.write(new DisconnectMessage(x,y,z));
                     break;
                 default:
                     break;

@@ -101,7 +101,7 @@ public class ChatObserver {
 
 	private void listenPartyJoin(String message, String sender, String text) {
 		if(message.contains("Party time! Type /tpa")){
-			if(message.contains(sender)){
+			if(message.contains(sender)&&!sender.equals(Bartender.MC.player.getDisplayNameString())){
 				lastPartyInvite = sender;
 				Bartender.msg("type /join for " +sender+"'s party!");
 			}

@@ -568,6 +568,14 @@
 					"closeOnClick": true
 				},
 				{
+					"title": "disconnect",
+					"type": "click",
+					"desc": [
+						"FORCE ALL GROUP MEMBERS TO LOG OUT"
+					],
+					"closeOnClick": true
+				},
+				{
 					"title": "obby grief",
 					"type": "click",
 					"desc": [
@@ -686,7 +694,7 @@
 				{
 					"title": "takeoff timer",
 					"type": "text",
-					"value": 4,
+					"value": 9,
 					"values": [
 						"50",
 						"100",
@@ -697,7 +705,10 @@
 						"350",
 						"400",
 						"450",
-						"500"
+						"500",
+						"600",
+						"700",
+						"800"
 					],
 					"desc": [
 						"MILLIS DELAY BETWEEN SPACE BAR HITS WHEN ATTEMPTING TO TAKE OFF"
@@ -759,7 +770,7 @@
 				{
 					"title": "speed",
 					"type": "text",
-					"value": 10,
+					"value": 12,
 					"values": [
 						"0.2",
 						"0.4",
@@ -769,6 +780,8 @@
 						"1.0",
 						"1.5",
 						"2.0",
+						"2.2",
+						"2.4",
 						"2.5",
 						"2.6",
 						"2.7",
@@ -934,6 +947,30 @@
 					],
 					"desc": [
 						"DON'T RENDER OVERLAYS"
+					]
+				},
+				{
+					"title": "auto refill",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"FILL HOTBAR SLOTS WHEN STACK SIZE GOES TOO LOW"
+					]
+				},
+				{
+					"title": "auto walk",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"AUTO HOLD 'W' key"
 					]
 				},
 				{
@@ -1633,6 +1670,14 @@
 					"desc": [
 						"ON/OFF"
 					]
+				},
+				{
+					"title": "swap now",
+					"type": "click",
+					"desc": [
+						"FORCE SWAP NOW"
+					],
+					"closeOnClick": true
 				},
 				{
 					"title": "remember slot",

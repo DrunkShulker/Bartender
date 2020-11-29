@@ -231,6 +231,9 @@ public class PlayerGroup {
 		case "takeoff":
 			Bodyguard.sendTakeOffCommand();
 			break;
+		case "disconnect":
+			Bodyguard.sendDisconnectCommand();
+			break;
 		default:
 			break;
 		}

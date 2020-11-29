@@ -34,6 +34,7 @@ public class GuiConfig {
 		put("group->chorus", 209);
 		put("group->takeoff", 201);
 		put("elytra+->lock/unlock",4);
+		put("utils->auto walk",2);
 	}};
 
 	public static HashMap<String, Integer> guiBinds;

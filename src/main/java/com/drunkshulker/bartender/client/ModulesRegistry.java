@@ -24,11 +24,13 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new AutoEat());
         MinecraftForge.EVENT_BUS.register(new ClickOnEntity());
         MinecraftForge.EVENT_BUS.register(new IPCHandler());
+        MinecraftForge.EVENT_BUS.register(new AutoWalk());
         MinecraftForge.EVENT_BUS.register(new AutoFire());
+        MinecraftForge.EVENT_BUS.register(new Scaffold());
         MinecraftForge.EVENT_BUS.register(new AutoSpawn());
+        MinecraftForge.EVENT_BUS.register(new AutoRefill());
         Bartender.EVENT_BUS.subscribe(new Nametags());
         Bartender.EVENT_BUS.subscribe(new StorageESP());
-        MinecraftForge.EVENT_BUS.register(new Scaffold());
         Bartender.EVENT_BUS.subscribe(new ElytraFlight());
         Bartender.EVENT_BUS.subscribe(new NewChunks());
         Bartender.EVENT_BUS.subscribe(new Tracers());

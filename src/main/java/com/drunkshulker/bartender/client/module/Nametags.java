@@ -142,8 +142,10 @@ public class Nametags implements Listenable
                                     bounds[0] + (bounds[2] - bounds[0]) / 2 + x - (16 * stacks.size() / 2),
                                     bounds[1] + (bounds[3] - bounds[1]) - mc.fontRenderer.FONT_HEIGHT - 19,
                                     0);
-                            mc.getRenderItem().renderItemAndEffectIntoGUI(stack, 0, 0);
-                            mc.getRenderItem().renderItemOverlays(mc.fontRenderer, stack, 0, 0);
+                            ItemStack nonEnchanted = new ItemStack(stack.getItem());
+                            nonEnchanted.setCount(stack.getCount());
+                            mc.getRenderItem().renderItemAndEffectIntoGUI(nonEnchanted, 0, 0);
+                            mc.getRenderItem().renderItemOverlays(mc.fontRenderer, nonEnchanted, 0, 0);
                             RenderHelper.disableStandardItemLighting();
                             GlStateManager.disableBlend();
                             GlStateManager.color(1, 1, 1, 1);

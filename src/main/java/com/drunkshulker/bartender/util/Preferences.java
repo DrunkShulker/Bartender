@@ -74,6 +74,8 @@ public class Preferences {
 				PeekPreview.applyPreferences(panel.getContents());
 				Nametags.applyPreferences(panel.getContents());
 				StorageESP.applyPreferences(panel.getContents());
+				AutoWalk.applyPreferences(panel.getContents());
+				AutoRefill.applyPreferences(panel.getContents());
 				break;
 			case "flight":
 				FlightBot.applyPreferences(panel.getContents());
@@ -116,6 +118,9 @@ public class Preferences {
 			break;
 		case "auto build":
 			AutoBuild.clickAction(setting.title);
+			break;
+		case "safe totem":
+			SafeTotemSwap.clickAction(setting.title);
 			break;
 		case "group":
 			PlayerGroup.clickAction(setting.title);

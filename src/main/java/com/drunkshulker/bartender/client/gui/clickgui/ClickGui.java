@@ -6,6 +6,7 @@ import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.input.Keybinds;
 import com.google.gson.JsonObject;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -19,7 +20,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 
-public class ClickGui extends GuiScreen{
+public class ClickGui extends GuiScreen {
 	
 	public static ClickGuiPanel[] panels;
 	
@@ -31,7 +32,7 @@ public class ClickGui extends GuiScreen{
 	public static int dragBeginX = 0;
 	public static int dragBeginY = 0;
 	public static String currentEditingBind = null;
-	
+
 	public static ClickGuiPanel currentDraggable;
 
 	@Override
@@ -88,7 +89,6 @@ public class ClickGui extends GuiScreen{
 					height-12,
 					Integer.parseInt("FFFFFF", 16));
 		}
-
     	drawPanels(mouseX, mouseY);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);

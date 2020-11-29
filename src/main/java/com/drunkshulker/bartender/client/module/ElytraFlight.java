@@ -78,7 +78,8 @@ public class ElytraFlight implements Listenable {
     {
         if (!enabled) return;
         if (mc.player == null) return;
-        if(mc.player.onGround&&mc.player.isSneaking()&&!mc.player.isElytraFlying()) {
+        
+        if(mc.player.isSneaking()&&!mc.player.isElytraFlying()) {
             return;
         }
         if(spacePressed&&mc.player.isSneaking()&&!mc.player.isElytraFlying()) {
@@ -224,7 +225,7 @@ public class ElytraFlight implements Listenable {
         }
     }
 
-    private static void reset(boolean cancelFlying) {
+    public static void reset(boolean cancelFlying) {
         wasInLiquid = false;
         if (mc.player != null) {
             mc.timer.tickLength = 50.0f;

@@ -68,11 +68,13 @@ public class Tracers implements Listenable {
     {
         if (mc.getRenderManager() == null || mc.getRenderManager().options == null || mc.player == null)
             return;
-
+        BlockPos playerPos = mc.player.getPosition();
         if (blocks && StorageESP.enabled) {
             Search.mainList.values().forEach((blockPosTupleMap) -> {
                 for (BlockPos p : blockPosTupleMap.keySet()) {
+                    if(BaseFinder.distance2D(playerPos,new BlockPos(p))>100) continue;
                     Vec3d pos = new Vec3d(p.x+0.5, p.y+0.5, p.z+0.5).subtract(mc.getRenderManager().renderPosX, mc.getRenderManager().renderPosY, mc.getRenderManager().renderPosZ);
+
                     mc.entityRenderer.setupCameraTransform(p_Event.getPartialTicks(), 0);
                     final Vec3d forward = new Vec3d(0, 0, 1).rotatePitch(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationPitch)).rotateYaw(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationYaw));
                     RenderUtil.drawLine3D((float) forward.x, (float) forward.y + mc.player.getEyeHeight(), (float) forward.z, (float) pos.x, (float) pos.y, (float) pos.z, 1f, 0xFFFFFFFF);

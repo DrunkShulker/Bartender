@@ -38,6 +38,13 @@ public class SafeTotemSwap {
 	private static boolean backToSlotNeeded = false;
 	private static boolean rememberSlot = false;
 	final static int totID = Item.getIdFromItem(Items.TOTEM_OF_UNDYING);
+	private static boolean forceSwapNow = false;
+
+	public static void clickAction(String title) {
+		if(title.equals("swap now")){
+			forceSwapNow = true;
+		}
+	}
 
 	enum NearDeathBehavior{	
 		NONE,
@@ -97,7 +104,8 @@ public class SafeTotemSwap {
 						
 			if(playerLB.getHeldItemOffhand().isEmpty()
 					||(playerLB.getHeldItemOffhand().getCount()<=swapOn && !runningLowOnStacks)
-					||playerLB.getHeldItemOffhand().getItem()!=Items.TOTEM_OF_UNDYING) {
+					||playerLB.getHeldItemOffhand().getItem()!=Items.TOTEM_OF_UNDYING
+					||forceSwapNow) {
 				if(taskInProgress)return;
 				lastSwapStamp = System.currentTimeMillis();
 				
@@ -177,6 +185,7 @@ public class SafeTotemSwap {
 			}
 			backToSlotNeeded = true;
 		}
+		forceSwapNow = false;
 		equipItem(FIRST_HOTBAR_SLOT);
 		KeyBinding.onTick(Bartender.MC.gameSettings.keyBindSwapHands.getKeyCode());
 	}

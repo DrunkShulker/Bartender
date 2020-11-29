@@ -224,17 +224,31 @@ public class Bodyguard {
 
 		
 		if(takeOffInProgress){
-			endAllTasks(false);
+			
+
+
 			
 			BaseFinder.lookAt(mc.player.getPositionVector().x,999,mc.player.getPositionVector().z,mc.player,false);
 			event.getMovementInput().moveForward = 1f;
+			event.getMovementInput().jump = true; 
+
 			
-			if(System.currentTimeMillis()-lastTakeOffSpaceStamp> FlightBot.takeOffDelay){
+			if(forceEasyTakeoff){
+				if(FlightBot.useBartenderFlight) ElytraFlight.easyTakeoff = true;
+			}
+			
+			if(System.currentTimeMillis()-lastTakeOffSpaceStamp > FlightBot.takeOffDelay){
 				lastTakeOffSpaceStamp = System.currentTimeMillis();
-				if(mc.player.isElytraFlying()) takeOffInProgress = false;
-				event.getMovementInput().jump = true;
-			}else {
-				event.getMovementInput().jump = false;
+				
+				
+
+
+				if(Bartender.MC.player.isElytraFlying()) {
+					forceEasyTakeoff = false;
+					takeOffInProgress = false;
+					if(FlightBot.useBartenderFlight) ElytraFlight.easyTakeoff = false;
+				}
+
 			}
 			return;
 		}
@@ -380,6 +394,8 @@ public class Bodyguard {
 		stopFollowProcess();
 		
 		BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
+
+		if(FlightBot.useBartenderFlight&&ElytraFlight.enabled&&Bartender.MC.player!=null&&!Bartender.MC.player.isElytraFlying()) ElytraFlight.reset(false);
 
 		setTask(BodyguardTask.IDLE_ALONE);
 		if(spreadForward){
@@ -571,12 +587,24 @@ public class Bodyguard {
 		IPCHandler.push(IPCHandler.GET_TO_GROUND_LEVEL, player.getDisplayNameString(), player.getPosition().x, player.getPosition().y, player.getPosition().z);
 	}
 
-	static boolean takeOffInProgress = false;
+	static boolean takeOffInProgress = false, forceEasyTakeoff = false;
 	public static void takeOff() {
+		forceEasyTakeoff = false;
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		if(player==null||player.getDisplayNameString().equals(PlayerGroup.mainAccount)) return;
 		
 		if(FlightBot.useBartenderFlight&&!ElytraFlight.enabled) ClickGuiSetting.handleClick(ClickGuiSetting.fromString("elytra+->state"), false); 
+
+		
+		AutoBuild.stop();
+
+		
+		if(BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().isActive()) BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().cancel();
+		
+		stopFollowProcess();
+		
+		BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
+
 
 		if(!takeOffInProgress){
 			takeOffInProgress = true;
@@ -585,8 +613,22 @@ public class Bodyguard {
 			{
 				public void run()
 				{
-					takeOffInProgress = false;
+					forceEasyTakeoff = true;
 					timer.cancel();
+				}
+			}, FlightBot.takeOffDelay);
+			Timer timer2 = new Timer();
+			timer.schedule(new TimerTask()
+			{
+				public void run()
+				{
+					takeOffInProgress = false;
+					forceEasyTakeoff = false;
+					ElytraFlight.spacePressed = false;
+					if(FlightBot.useBartenderFlight) ElytraFlight.easyTakeoff = false;
+					player.setSneaking(true);
+					if(FlightBot.useBartenderFlight) ElytraFlight.reset(true);
+					timer2.cancel();
 				}
 			}, FlightBot.takeOffMaxTime); 
 		}
@@ -595,6 +637,12 @@ public class Bodyguard {
 	public static void sendTakeOffCommand() {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		IPCHandler.push(IPCHandler.TAKEOFF, player.getDisplayNameString(), player.getPosition().x, player.getPosition().y, player.getPosition().z);
+	}
+
+	public static void sendDisconnectCommand() {
+		EntityPlayerSP player = Minecraft.getMinecraft().player;
+		IPCHandler.push(IPCHandler.DISCONNECT, player.getDisplayNameString(), player.getPosition().x, player.getPosition().y, player.getPosition().z);
+		BaseFinder.logOut("Group disconnect");
 	}
 
 	private static void followTarget(){
@@ -828,7 +876,7 @@ public class Bodyguard {
 	public static String getStatusString() {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		if(player==null) return currentTask.toString();
-		else if(PlayerGroup.mainAccount!=null&&player.getDisplayNameString().equals(PlayerGroup.mainAccount)) return "YOU SHOULD NOT ENABLE BODYGUARD ON YOU MAIN ACC!";
+		else if(PlayerGroup.mainAccount!=null&&player.getDisplayNameString().equals(PlayerGroup.mainAccount)) return "YOU SHOULD NOT ENABLE BODYGUARD ON YOUR MAIN ACC!";
 		return currentTask.toString();
 	}
 	
