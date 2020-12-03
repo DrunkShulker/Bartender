@@ -29,6 +29,7 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new Scaffold());
         MinecraftForge.EVENT_BUS.register(new AutoSpawn());
         MinecraftForge.EVENT_BUS.register(new AutoRefill());
+        MinecraftForge.EVENT_BUS.register(new TotemPopCounter());
         Bartender.EVENT_BUS.subscribe(new Nametags());
         Bartender.EVENT_BUS.subscribe(new StorageESP());
         Bartender.EVENT_BUS.subscribe(new ElytraFlight());

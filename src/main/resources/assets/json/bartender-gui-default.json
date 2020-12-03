@@ -121,6 +121,18 @@
 					]
 				},
 				{
+					"title": "pop counter",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"hide",
+						"show"
+					],
+					"desc": [
+						"ADD TOTEM POP AND SWAP COUNT TO GROUP & HOSTILE PANELS"
+					]
+				},
+				{
 					"title": "numbers",
 					"type": "text",
 					"value": 0,

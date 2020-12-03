@@ -265,10 +265,12 @@ public class OverlayGui extends Gui {
             for (int i = 0; i < PlayerGroup.members.size(); i++) {
                 String selfSelector = "> ";
                 String mainDetector = " <";
+                String popCount = "";
+                if(TotemPopCounter.enabled) popCount += TotemPopCounter.getDisplay(PlayerGroup.members.get(i));
 
                 
                 if (mc.player.getDisplayNameString().equals(PlayerGroup.members.get(i))) {
-                    drawString(mc.fontRenderer, selfSelector + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : ""), x, (4 + 48 + (i * 10)) + anchorGroup[1],
+                    drawString(mc.fontRenderer, selfSelector + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : "") + popCount, x, (4 + 48 + (i * 10)) + anchorGroup[1],
                             Integer.parseInt((!PlayerGroup.isPlayerOnline(PlayerGroup.members.get(i))) ? "AAAAAA" : "FFFFFF", 16));
                 }
                 
@@ -280,7 +282,7 @@ public class OverlayGui extends Gui {
                         if (EntityRadar.nearbyGroupMembers().contains(PlayerGroup.members.get(i))) outOfRange = "";
                     }
 
-                    drawString(mc.fontRenderer, "  " + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : "") + outOfRange, x + 1, (4 + 48 + (i * 10)) + anchorGroup[1],
+                    drawString(mc.fontRenderer, "  " + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : "") + outOfRange + popCount, x + 1, (4 + 48 + (i * 10)) + anchorGroup[1],
                             Integer.parseInt((!PlayerGroup.isPlayerOnline(PlayerGroup.members.get(i))) ? "AAAAAA" : "FFFFFF", 16));
                 }
 
@@ -331,6 +333,9 @@ public class OverlayGui extends Gui {
                     } else {
                         renderFaceTexture(4 + anchorPlayers[0], (groupListBottom + 27 + (i * 10)) + anchorPlayers[1], ((EntityOtherPlayerMP) ranged).getLocationSkin());
                     }
+
+                    if(TotemPopCounter.enabled) postFix += TotemPopCounter.getDisplay(combined.get(i));
+
                     drawString(mc.fontRenderer, "  " + combined.get(i) + postFix,
                             6 + anchorPlayers[0], (groupListBottom + 27 + (i * 10)) + anchorPlayers[1],
                             Integer.parseInt((Bodyguard.currentEnemies.contains(combined.get(i))) ? "FF0000" : "AAAAAA", 16));

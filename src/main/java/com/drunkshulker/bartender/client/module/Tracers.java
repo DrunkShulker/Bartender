@@ -21,10 +21,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.chunk.Chunk;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Tracers implements Listenable {
     Minecraft mc = Minecraft.getMinecraft();
@@ -118,7 +114,6 @@ public class Tracers implements Listenable {
 
     public boolean isHostileSelectionTarget(Entity e) {
         if (!OverlayGui.targetGuiActive) return false;
-
         if (e == Minecraft.getMinecraft().player) return false;
 
         if (e instanceof EntityPlayer) {

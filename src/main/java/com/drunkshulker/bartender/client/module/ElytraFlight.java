@@ -287,10 +287,11 @@ public class ElytraFlight implements Listenable {
             mc.player.motionX = 0;
             mc.player.motionZ = 0;
         }
-        if (mc.player.isSneaking()) mc.player.motionY = -1;
-        else if (spacePressed) mc.player.motionY = 1;
-        else mc.player.motionY = (-MathUtil.degToRad(mc.player.rotationPitch)) * mc.player.movementInput.moveForward;
-
+        if(!Freecam.enabled){
+            if (mc.player.isSneaking()) mc.player.motionY = -1;
+            else if (spacePressed) mc.player.motionY = 1;
+            else mc.player.motionY = (-MathUtil.degToRad(mc.player.rotationPitch)) * mc.player.movementInput.moveForward;
+        }
         mc.player.prevLimbSwingAmount = 0;
         mc.player.limbSwingAmount = 0;
         mc.player.limbSwing = 0;
@@ -301,10 +302,9 @@ public class ElytraFlight implements Listenable {
     private Listener<EventNetworkPacketEvent> PacketEvent = new Listener<>(p_Event ->
     {
         if (!enabled) return;
-
         if (p_Event.getPacket() instanceof CPacketPlayer && PitchSpoof) {
 
-            if(!mc.player.isElytraFlying())return;
+            if(!mc.player.isElytraFlying()) return;
             if(!mc.player.onGround&&mc.player.isSneaking()&&!mc.player.isElytraFlying()) return;
 
             if (p_Event.getPacket() instanceof CPacketPlayer.PositionRotation && PitchSpoof) {

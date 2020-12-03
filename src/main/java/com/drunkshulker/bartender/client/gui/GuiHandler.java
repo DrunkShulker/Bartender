@@ -9,6 +9,7 @@ import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.gui.overlaygui.PauseOverlayGui;
 
 import com.drunkshulker.bartender.client.module.Dupe;
+import com.drunkshulker.bartender.client.module.TotemPopCounter;
 import com.drunkshulker.bartender.util.forge.ForgeLoadingScreen;
 import com.drunkshulker.bartender.util.salhack.events.render.EventRenderGameOverlay;
 import net.minecraft.client.Minecraft;
@@ -139,6 +140,9 @@ public class GuiHandler {
 			switch (setting.title) {
 			case "AP overlay":
 				showAP = setting.value == 1;
+				break;
+			case "pop counter":
+				TotemPopCounter.enabled = setting.value == 1;
 				break;
 			case "HP overlay":
 				showHP = setting.value == 1;			
