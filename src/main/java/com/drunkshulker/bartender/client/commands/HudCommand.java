@@ -40,7 +40,7 @@ public class HudCommand implements ICommand {
         return aliases;
     }
 
-    static public final List<String> targets = new ArrayList<>(Arrays.asList("actions","watermark", "group", "players", "inventory", "coords" , "potions", "status", "target", "numbers"));
+    static public final List<String> targets = new ArrayList<>(Arrays.asList("actions","armor","watermark", "group", "players", "inventory", "coords" , "potions", "status", "target", "numbers"));
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {

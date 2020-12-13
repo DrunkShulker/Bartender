@@ -198,11 +198,11 @@
 					"type": "text",
 					"value": 0,
 					"values": [
-						"hidden",
-						"visible"
+						"better",
+						"vanilla"
 					],
 					"desc": [
-						"HIDE VANILLA ARMOR OVERLAY"
+						"REPLACE VANILLA ARMOR OVERLAY WITH BETTER ONE"
 					]
 				},
 				{
@@ -780,6 +780,20 @@
 					]
 				},
 				{
+					"title": "hide",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"OFF",
+						"ON",
+						"FLIGHT"
+
+					],
+					"desc": [
+						"WEAR INVISIBLE ELYTRA!"
+					]
+				},
+				{
 					"title": "speed",
 					"type": "text",
 					"value": 12,
@@ -1268,7 +1282,7 @@
 		{
 			"name": "dupe",
 			"desc": [
-				"DUPING TOOLS"
+				"CRAFTING DUPE AUTOMATION FOR 8B8T"
 			],
 			"x": 0,
 			"y": 0,
@@ -1281,7 +1295,7 @@
 						"DUPE THE CURRENT SELECTED ITEM IN HOTBAR",
 						"- ONLY WORKS ON 8B8T",
 						"- THE AUTO CLICKER TARGETS THE FIRST CRAFTING RECIPE SLOT FROM TOP LEFT",
-						"- YOU NEED 1 STACK OF DUPING MATERIAL IN YOUR INVENTORY (WOODEN PLANKS RECOMMENDED)"
+						"- YOU NEED DUPING MATERIAL IN YOUR INVENTORY (WOODEN PLANKS RECOMMENDED)"
 					],
 					"closeOnClick": true
 				}
@@ -1663,6 +1677,89 @@
 			]
 		},
 		{
+			"name": "cosmetic",
+			"desc": [
+				"WEAR ANY ITEM ON HEAD ARMOR SLOT","USE /SETHAT COMMAND TO CHANGE HAT"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "hat",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"ON/OFF"
+					]
+				},
+				{
+					"title": "cape",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"ON/OFF"
+					]
+				},
+				{
+					"title": "friends",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"NO",
+						"YES"
+					],
+					"desc": [
+						"SHOW HAT FOR PLAYERS IN THIS CATEGORY"
+					]
+				},
+				{
+					"title": "group",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"NO",
+						"YES"
+					],
+					"desc": [
+						"SHOW HAT FOR PLAYERS IN THIS CATEGORY"
+					]
+				},
+				{
+					"title": "self",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"NO",
+						"YES"
+					],
+					"desc": [
+						"SHOW HAT FOR PLAYERS IN THIS CATEGORY"
+					]
+				},
+				{
+					"title": "others",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"NO",
+						"YES"
+					],
+					"desc": [
+						"SHOW HAT FOR PLAYERS IN THIS CATEGORY"
+					]
+				}
+			]
+		},
+		{
 			"name": "safe totem",
 			"desc": [
 				"AUTOTOTEM FOR 32K PVP & STACKED TOTS"
@@ -1674,13 +1771,14 @@
 				{
 					"title": "state",
 					"type": "text",
-					"value": 0,
+					"value": 2,
 					"values": [
-						"ON",
-						"OFF"
+						"OFF",
+						"CLASSIC",
+						"YAC SWAP"
 					],
 					"desc": [
-						"ON/OFF"
+						"SELECT MODE OR TURN OFF"
 					]
 				},
 				{
@@ -1701,18 +1799,6 @@
 					],
 					"desc": [
 						"REMEMBER PRIMARY ITEM AND EQUIP IT AGAIN AFTER TOTEM SWAP"
-					]
-				},
-				{
-					"title": "reminder",
-					"type": "text",
-					"value": 1,
-					"values": [
-						"OFF",
-						"ON"
-					],
-					"desc": [
-						"SAFETY REMINDER TEXT IN PAUSE MENU"
 					]
 				},
 				{

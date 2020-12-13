@@ -50,6 +50,7 @@ public class OverlayGui extends Gui {
     static int[] anchorTarget = new int[]{0, 0};
     static int[] anchorNumbers = new int[]{0, 0};
     static int[] anchorActions = new int[]{0, 0};
+    static int[] anchorAP = new int[]{0, 0};
 
     public static final ResourceLocation texture = new ResourceLocation(Bartender.MOD_ID, "textures/gui/overlay.png");
     static final int textureWidth = 22;
@@ -128,6 +129,10 @@ public class OverlayGui extends Gui {
         if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
             anchorActions = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
         } else anchorActions = new int[]{0, 0};
+        n = "armor";
+        if (transforms.get(n) != null && transforms.get(n).isJsonArray()) {
+            anchorAP = new int[]{transforms.get(n).getAsJsonArray().get(0).getAsInt(), transforms.get(n).getAsJsonArray().get(1).getAsInt()};
+        } else anchorAP = new int[]{0, 0};
     }
 
     public static void resetLayout() {
@@ -165,6 +170,27 @@ public class OverlayGui extends Gui {
                 ItemStack itemStack = (ItemStack) items.get(i);
                 int slotX = (width - (i % 3 * 18 + 1) - 19) + anchorInventory[0];
                 int slotY = (2 + (i / 3 * 18 + 1)) + anchorInventory[1];
+
+                GlStateUtils.blend(true);
+                GlStateUtils.depth(true);
+                RenderHelper.enableGUIStandardItemLighting();
+                mc.renderItem.zLevel = 0.0f;
+                mc.renderItem.renderItemAndEffectIntoGUI(itemStack, slotX, slotY);
+                mc.renderItem.renderItemOverlays(mc.fontRenderer, itemStack, slotX, slotY);
+                mc.renderItem.zLevel = 0.0f;
+                RenderHelper.disableStandardItemLighting();
+                GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+                GlStateUtils.depth(false);
+            }
+        }
+
+        
+        if(!GuiHandler.showAP&&!mc.player.isCreative()&&!mc.player.isSpectator()){
+            List items = mc.player.inventory.armorInventory;
+            for (int i = 0; i < items.size(); i++) {
+                ItemStack itemStack = (ItemStack) items.get(i);
+                int slotX = ((width/2) - (i % 4 * 22 + 1) + 75) + anchorAP[0];
+                int slotY = (height-56 + (i / 4 * 18 + 1)) + anchorAP[1];
 
                 GlStateUtils.blend(true);
                 GlStateUtils.depth(true);
@@ -225,7 +251,7 @@ public class OverlayGui extends Gui {
         
         int statusX = (width / 2) + anchorStatus[0];
         if (Bodyguard.enabled && BaseFinder.enabled) {
-            drawCenteredString(mc.fontRenderer, "YOU CANNOT HAVE BASEFINDER AND BODYGUARD ENABLED AT THE SAME TIME", width / 2, (height / 2) - 25, Integer.parseInt("FF0000", 16));
+            drawCenteredString(mc.fontRenderer, "YOU CANT HAVE BASEFINDER AND BODYGUARD ENABLED AT THE SAME TIME", width / 2, (height / 2) - 25, Integer.parseInt("FF0000", 16));
         } else if (ChatObserver.partyTPA)
             drawCenteredString(mc.fontRenderer, "Party TPA enabled", statusX, 25 + anchorStatus[1], Integer.parseInt("FF0000", 16));
         else if (Bodyguard.enabled) {
@@ -347,12 +373,14 @@ public class OverlayGui extends Gui {
         boolean survivalMode = mc.playerController.getCurrentGameType() != GameType.CREATIVE && mc.playerController.getCurrentGameType() != GameType.SPECTATOR;
 
         
-        if (SafeTotemSwap.enabled && GuiHandler.showSafetotem && survivalMode && SafeTotemSwap.totalCount > 0) {
-            final int ss = 20;
-            int color = 0xFFFF0000;
-            if (SafeTotemSwap.totemsReadyToSwitch) color = 0xFF00FF00; 
-            BeveledBox.drawBeveledBox(width / 2 - (4 * ss) - (ss / 2), height - ss - 1, width / 2 - (3 * ss) - (ss / 2), height - 1, 2, color, color, 0x44B200FF);
-
+        if (SafeTotemSwap.enabled() && GuiHandler.showSafetotem && survivalMode && SafeTotemSwap.totalCount > 0) {
+            
+            if(SafeTotemSwap.state == SafeTotemSwap.Mode.CLASSIC){
+                final int ss = 20;
+                int color = 0xFFFF0000;
+                if (SafeTotemSwap.totemsReadyToSwitch) color = 0xFF00FF00; 
+                BeveledBox.drawBeveledBox(width / 2 - (4 * ss) - (ss / 2), height - ss - 1, width / 2 - (3 * ss) - (ss / 2), height - 1, 2, color, color, 0x44B200FF);
+            }
             
             if (SafeTotemSwap.totalCount - SafeTotemSwap.totalUselessCount == SafeTotemSwap.totalCount) {
                 drawCenteredString(mc.fontRenderer, SafeTotemSwap.totalCount + "", (width / 2) - 109, height - 33, Integer.parseInt("FFFFFF", 16));

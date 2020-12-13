@@ -71,7 +71,7 @@ public class AutoFire {
     public void onMouseInput(TickEvent.ClientTickEvent event) {
         if(Minecraft.getMinecraft().player==null) return;
         if(!enabled) return;
-        if(SafeTotemSwap.enabled&&SafeTotemSwap.taskInProgress) return;
+        if(SafeTotemSwap.enabled()&&SafeTotemSwap.taskInProgress) return;
         if(Dupe.inProgress()) return;
         if(AutoEat.eating) return;
         Minecraft mc = Minecraft.getMinecraft();

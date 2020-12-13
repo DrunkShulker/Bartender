@@ -1,6 +1,7 @@
 package com.drunkshulker.bartender.client.module;
 
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 
 import net.minecraft.client.Minecraft;
@@ -47,6 +48,7 @@ public class PlayerParticles {
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
+		
 		if(event.side.isClient() && enabled)
 		{
 			EntityPlayerSP player = Minecraft.getMinecraft().player;

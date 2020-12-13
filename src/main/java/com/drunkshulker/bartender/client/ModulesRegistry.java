@@ -1,6 +1,7 @@
 package com.drunkshulker.bartender.client;
 
 import com.drunkshulker.bartender.Bartender;
+import com.drunkshulker.bartender.client.cape.Capes;
 import com.drunkshulker.bartender.client.input.ClickOnEntity;
 import com.drunkshulker.bartender.client.ipc.IPCHandler;
 import com.drunkshulker.bartender.client.module.*;
@@ -29,7 +30,9 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new Scaffold());
         MinecraftForge.EVENT_BUS.register(new AutoSpawn());
         MinecraftForge.EVENT_BUS.register(new AutoRefill());
+        MinecraftForge.EVENT_BUS.register(new Cosmetic());
         MinecraftForge.EVENT_BUS.register(new TotemPopCounter());
+
         Bartender.EVENT_BUS.subscribe(new Nametags());
         Bartender.EVENT_BUS.subscribe(new StorageESP());
         Bartender.EVENT_BUS.subscribe(new ElytraFlight());

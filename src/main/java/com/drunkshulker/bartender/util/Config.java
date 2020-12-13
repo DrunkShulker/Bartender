@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.input.Keybinds;
 import com.drunkshulker.bartender.client.module.BaseFinder;
+import com.drunkshulker.bartender.client.module.Cosmetic;
 import com.drunkshulker.bartender.client.module.Search;
 import com.drunkshulker.bartender.client.social.PlayerFriends;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
@@ -23,6 +24,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 
 public class Config {
@@ -66,7 +68,10 @@ public class Config {
 			
 			
 			CHAT_POST_FIX = jsonObject.get("chat_post_fix").getAsString();
+
 			
+			Cosmetic.currentHat = Item.getByNameOrId(jsonObject.get("hat").getAsString());
+
 			
 			BaseFinder.customTargetGoal = new BlockPos(
 			jsonObject.get("bf_custom_goal_x").getAsInt(),0,
@@ -120,8 +125,8 @@ public class Config {
 		
 		jsonObject.addProperty("chat_post_fix", CHAT_POST_FIX);
 
-
 		
+		jsonObject.addProperty("hat", Item.getIdFromItem(Cosmetic.currentHat)+"");
 
 		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -144,7 +149,7 @@ public class Config {
 		
 		
 		PlayerGroup.defaultGroup();
-		
+
 		
 		CHAT_POST_FIX = getDefaultChatPostFix();
 		

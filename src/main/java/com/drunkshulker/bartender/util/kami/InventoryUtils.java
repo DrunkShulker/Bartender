@@ -2,12 +2,14 @@ package com.drunkshulker.bartender.util.kami;
 
 import java.util.ArrayList;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.module.SafeTotemSwap;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.inventory.ClickType;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -18,6 +20,35 @@ public class InventoryUtils {
         moveToSlot(0, slotFrom, slotTo);
     }
 
+    public static void yacInventorySwap(int from, int to) {
+        if(inProgress) return;
+        inProgress = true;
+
+        Thread thread = new Thread(() -> {
+            try {
+                
+                if(mc.currentScreen != null) {
+                    
+                    mc.player.closeScreenAndDropStack();
+                    Thread.sleep(100);
+                }
+                Thread.sleep(10);
+                mc.playerController.windowClick(mc.player.inventoryContainer.windowId, from, SafeTotemSwap.FIRST_HOTBAR_SLOT, ClickType.SWAP, mc.player);
+                Thread.sleep(300);
+                mc.playerController.windowClick(mc.player.inventoryContainer.windowId, to, SafeTotemSwap.FIRST_HOTBAR_SLOT, ClickType.SWAP, mc.player);
+                Thread.sleep(300);
+                mc.playerController.windowClick(mc.player.inventoryContainer.windowId, from, SafeTotemSwap.FIRST_HOTBAR_SLOT, ClickType.SWAP, mc.player);
+                Thread.sleep(200);
+                
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            inProgress = false;
+        });
+        thread.start();
+    }
+
     public static ArrayList<Integer> getSlots(int min, int max, int itemID) {
         ArrayList<Integer> slots = new ArrayList<>();
         for(int i = min; i <= max; i++) {
@@ -26,7 +57,7 @@ public class InventoryUtils {
             }
         }
         
-        if(slots.isEmpty()==false) return slots; 
+        if(!slots.isEmpty()) return slots;
         else return null;
     }
 
@@ -35,11 +66,26 @@ public class InventoryUtils {
         return getSlots(0, 8, itemId);
     }
 
-
     public static ArrayList<Integer> getSlotsNoHotbar(int itemId) {
         return getSlots(9, 35, itemId);
     }
 
+    public static Integer yacGetSlots(Container inv, Item item, int[] not, int amountMin, int amountMax) {
+        for (int i = 0; i < inv.getInventory().size(); i++) {
+            a:
+            {
+                for (int j = 0; j < not.length; j++) {
+                    if(i == not[j])
+                        break a;
+                }
+
+                ItemStack stack = inv.getSlot(i).getStack();
+                if (stack.getItem().equals(item) && stack.getCount() >= amountMin && stack.getCount() <= amountMax)
+                    return i;
+            }
+        }
+        return null;
+    }
 
     public static ArrayList<Integer> getSlotsFullInv(int min, int max, int itemId) {
     	ArrayList<Integer> slots = new ArrayList<>();
@@ -254,5 +300,5 @@ public class InventoryUtils {
 	    };
 	    thread.start();
     }
-    
+
 }

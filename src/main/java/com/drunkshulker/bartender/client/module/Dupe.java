@@ -2,6 +2,7 @@ package com.drunkshulker.bartender.client.module;
 
 import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.GuiHandler;
+import com.drunkshulker.bartender.util.kami.InventoryUtils;
 import org.lwjgl.input.Mouse;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import net.minecraft.client.Minecraft;
@@ -54,7 +55,7 @@ public class Dupe {
 
             
             idBefore = Item.getIdFromItem(mc.player.inventory.getCurrentItem().getItem());
-            countBefore = Bartender.INVENTORY_UTILS.countItem(0,8, idBefore);
+            countBefore = InventoryUtils.countItem(0,8, idBefore);
             slotBefore = mc.player.inventory.currentItem;
             
             Bartender.INVENTORY_UTILS.throwAllInSlot(slotBefore+36,500);
@@ -74,7 +75,7 @@ public class Dupe {
 
             
             
-            if(Bartender.INVENTORY_UTILS.countItem(0,8,idBefore)>countBefore){
+            if(InventoryUtils.countItem(0,8,idBefore)>countBefore){
                 abort("<Bartender> Dupe success.");
             }
         }

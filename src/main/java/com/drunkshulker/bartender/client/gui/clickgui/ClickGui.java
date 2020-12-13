@@ -148,9 +148,13 @@ public class ClickGui extends GuiScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		if(keyCode==Keyboard.KEY_BACK){
-			
-			GuiConfig.bindKey(currentEditingBind, 0);
-			currentEditingBind=null;
+			if(currentEditingBind==null){
+				resetLayout();
+			}else {
+				
+				GuiConfig.bindKey(currentEditingBind, 0);
+				currentEditingBind=null;
+			}
 		}else if(keyCode==Keyboard.KEY_ESCAPE){
 			
 			currentEditingBind=null;

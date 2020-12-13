@@ -45,6 +45,7 @@ public class ElytraFlight implements Listenable {
     private Timer AccelerationResetTimer = new Timer();
     private Timer InstantFlyTimer = new Timer();
     private boolean SendMessage = false;
+    public static boolean magicElytra = true,magicElytraAirborne = true;
     
     static Minecraft mc = Minecraft.getMinecraft();
 
@@ -331,6 +332,10 @@ public class ElytraFlight implements Listenable {
                 case "boost":
                     boost = setting.values.get(setting.value).getAsFloat();
                     setMode(mode);
+                    break;
+                case "hide":
+                    magicElytra = setting.value == 1;
+                    magicElytraAirborne = setting.value == 2;
                     break;
                 default:
                     break;

@@ -24,14 +24,5 @@ public class PauseOverlayGui extends GuiScreen
 						Integer.parseInt("FFFFFF", 16));
 			}
         }
-    	
-    	if(SafeTotemSwap.enabled
-				&&SafeTotemSwap.pauseReminder
-				&&!mc.isSingleplayer()){
-			drawString(mc.fontRenderer,"Safe totem does not work if you pause the game.",
-					2,
-					2,
-					Integer.parseInt("FF0000", 16));
-		}
     }
 }

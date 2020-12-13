@@ -73,7 +73,7 @@ public class AutoEat {
     @SubscribeEvent
 	public void playerTick(TickEvent.PlayerTickEvent event){
     	if(!enabled) return;
-    	if(SafeTotemSwap.enabled&&SafeTotemSwap.taskInProgress) return;
+    	if(SafeTotemSwap.enabled()&&SafeTotemSwap.taskInProgress) return;
     	if(Minecraft.getMinecraft().player==null) return;
     	Minecraft mc = Minecraft.getMinecraft();
 
@@ -98,7 +98,7 @@ public class AutoEat {
 
         FoodStats stats = mc.player.getFoodStats();
 
-        if (!SafeTotemSwap.enabled &&isValid(mc.player.getHeldItemOffhand(), stats.getFoodLevel())) {
+        if (!SafeTotemSwap.enabled() && isValid(mc.player.getHeldItemOffhand(), stats.getFoodLevel())) {
             mc.player.setActiveHand(EnumHand.OFF_HAND);
 
             

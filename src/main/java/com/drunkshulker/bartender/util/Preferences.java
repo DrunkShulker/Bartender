@@ -83,6 +83,9 @@ public class Preferences {
 			case "dupe":
 				Dupe.applyPreferences(panel.getContents());
 				break;
+			case "cosmetic":
+				Cosmetic.applyPreferences(panel.getContents());
+				break;
 			case "elytra+":
 				ElytraFlight.applyPreferences(panel.getContents());
 				break;
