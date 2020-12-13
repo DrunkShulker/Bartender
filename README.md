@@ -15,6 +15,7 @@ Thanks to the following projects for making Bartender possible:
 - [Salhack](https://github.com/ionar2/salhack)
 - [Baritone](https://github.com/cabaletta/baritone)
 - [Forge](https://files.minecraftforge.net/)
+- [YAC Client](https://github.com/TudbuT/yacpub)
 
 ## Support
 - Before reporting anything, see if your problem is already answered [here](https://github.com/DrunkShulker/Bartender/wiki/Known-issues-and-solutions).
