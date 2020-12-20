@@ -25,13 +25,17 @@ public class CapeLayer implements LayerRenderer<AbstractClientPlayer> {
 
     @Override
     public void doRenderLayer(AbstractClientPlayer entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        if(!Cosmetic.useCape)return;
-        if(Bartender.MC.player==null||Bartender.MC.player.isSpectator()||(Bartender.MC.player.isElytraFlying()&&!ElytraFlight.magicElytraAirborne)) return;
-        if(Bartender.MC.player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == Items.ELYTRA && !ElytraFlight.magicElytra) {
+
+        if(Bartender.MC.player==null||Bartender.MC.player.isSpectator()||(entity.isElytraFlying()&&!ElytraFlight.magicElytraAirborne)) return;
+        if(entity.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == Items.ELYTRA && !ElytraFlight.magicElytra) {
             return;
         }
-        final UUID playerUUID = Minecraft.getMinecraft().getSession().getProfile().getId();
-        if (!entity.getPersistentID().equals(playerUUID)) return;
+        final UUID playerUUID = Bartender.MC.getSession().getProfile().getId();
+        if (!Cosmetic.useCape&&entity.getPersistentID().equals(playerUUID)) return;
+        
+        if(!entity.getPersistentID().equals(playerUUID)&&!Capes.capeOwners.containsKey(entity.getPersistentID())){
+            return;
+        }
         if (!entity.isInvisible() && entity.isWearing(EnumPlayerModelParts.CAPE)) {
             float f9 = 0.14F;
             float f10 = 0.0F;
@@ -41,7 +45,7 @@ public class CapeLayer implements LayerRenderer<AbstractClientPlayer> {
             }
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             try {
-                this.playerRenderer.bindTexture(Capes.getCachedTexture());
+                this.playerRenderer.bindTexture(Capes.getTextureFor(entity.getPersistentID()));
             } catch (NullPointerException ignored) {
             }
             GlStateManager.pushMatrix();

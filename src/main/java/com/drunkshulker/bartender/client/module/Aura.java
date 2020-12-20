@@ -60,7 +60,6 @@ public class Aura {
         if (lastHitTicks >= tickDelay) lastHitTicks = tickDelay;
         if (cancelDueDelay()) return;
 
-
         
         lastHitTicks = 0;
         lastHitMillis = System.currentTimeMillis();

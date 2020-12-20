@@ -222,10 +222,13 @@ public class ClickGui extends GuiScreen {
 	}
 	
 	public static void resetLayout() {
-		for (int i = 0; i < panels.length; i++) {
+		for (int i = 0, y = 0; i < panels.length; i++) {
 			panels[i].expanded = false;
-			panels[i].x = 0;
-			panels[i].y = 17*i;
+			panels[i].x = (i>10)?122:0;
+			if(i>10) {
+				panels[i].y = 17*y;
+				y++;
+			} else panels[i].y = 17*i;
 		}
 		
 		GuiConfig.save();

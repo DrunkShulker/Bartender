@@ -21,7 +21,7 @@ public class UseProcessor implements ElementProcessor {
 	public void process(Loader loader, Element element, Diagram diagram,
 			Transform transform) throws ParsingException {
 
-		String ref = element.getAttributeNS("http:
+		String ref = element.getAttributeNS("http:/"+"/www.w3.org/1999/xlink", "href");
 		String href = Util.getAsReference(ref);
 		
 		Figure referenced = diagram.getFigureByID(href);

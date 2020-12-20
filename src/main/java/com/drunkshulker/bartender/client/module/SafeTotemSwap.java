@@ -202,7 +202,7 @@ public class SafeTotemSwap {
         ArrayList<Integer> slotsWithTots = InventoryUtils.getSlots(9, 45, totID);
         int bringToHotbar = -1;
         if (slotsWithTots == null) {
-            Bartender.msg("YAC safe totem prepare swap failure!");
+            
             return -1;
         }
         for (Integer slot : slotsWithTots) {

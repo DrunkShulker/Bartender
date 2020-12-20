@@ -65,7 +65,7 @@ public class DefsProcessor implements ElementProcessor {
 				gradient.setY2(Float.parseFloat(lin.getAttribute("y2")));
 			}
 			
-			String ref = lin.getAttributeNS("http:
+			String ref = lin.getAttributeNS("http:/"+"/www.w3.org/1999/xlink", "href");
 			if (stringLength(ref) > 0) {
 				gradient.reference(ref.substring(1));
 				toResolve.add(gradient);
@@ -115,7 +115,7 @@ public class DefsProcessor implements ElementProcessor {
 				gradient.setR(Float.parseFloat(rad.getAttribute("r")));
 			}
 			
-			String ref = rad.getAttributeNS("http:
+			String ref = rad.getAttributeNS("http:/"+"/www.w3.org/1999/xlink", "href");
 			if (stringLength(ref) > 0) {
 				gradient.reference(ref.substring(1));
 				toResolve.add(gradient);

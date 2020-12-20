@@ -16,9 +16,11 @@ import com.drunkshulker.bartender.util.Config;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import scala.actors.threadpool.Arrays;
 
@@ -59,7 +61,19 @@ public class ChatObserver {
 			"tequila",
 			"red bull"
 	};
+
 	
+	@SubscribeEvent
+	public void onEntityDeath(LivingDeathEvent event) {
+		if (event.getEntityLiving() instanceof EntityPlayer)	{
+			EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+			if(partyTPA&&player.getDisplayNameString().equals(Bartender.MC.getSession().getUsername())){
+				Bartender.msg("Party TPA turned off because you died.");
+				ClickGuiSetting.handleClick(ClickGuiSetting.fromString("chat->party tpa"),false);
+			}
+		}
+	}
+
 	@SubscribeEvent
 	public void onServerChatEvent(ClientChatReceivedEvent event){
 		String message = event.getMessage().getUnformattedText();
@@ -101,7 +115,17 @@ public class ChatObserver {
 
 	private void listenPartyJoin(String message, String sender, String text) {
 		if(message.contains("Party time! Type /tpa")){
-			if(message.contains(sender)&&!sender.equals(Bartender.MC.player.getDisplayNameString())){
+			
+			final char[] allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".toCharArray();
+			for (int i = 0; i < sender.length(); i++) {
+				char r = sender.charAt(i);
+				boolean pass = false;
+				for (char c: allowedChars){
+					if(c==r) pass = true;
+				}
+				if (!pass) return;
+			}
+			if(message.contains(sender)){
 				lastPartyInvite = sender;
 				Bartender.msg("type /join for " +sender+"'s party!");
 			}

@@ -10,11 +10,11 @@ import org.w3c.dom.Element;
 
 public class Util {
 	
-	public static final String INKSCAPE = "http:
+	public static final String INKSCAPE = "http:/"+"/www.inkscape.org/namespaces/inkscape";
 	
-	public static final String SODIPODI = "http:
+	public static final String SODIPODI = "http:/"+"/sodipodi.sourceforge.net/DTD/sodipodi-0.dtd";
 	
-	public static final String XLINK = "http:
+	public static final String XLINK = "http:/"+"/www.w3.org/1999/xlink";
 
 	
 	static NonGeometricData getNonGeometricData(Element element) {

@@ -8,10 +8,7 @@ import com.drunkshulker.bartender.client.gui.overlaygui.MainMenuOverlayGui;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.gui.overlaygui.PauseOverlayGui;
 
-import com.drunkshulker.bartender.client.module.Dupe;
-import com.drunkshulker.bartender.client.module.ElytraFlight;
-import com.drunkshulker.bartender.client.module.PlayerParticles;
-import com.drunkshulker.bartender.client.module.TotemPopCounter;
+import com.drunkshulker.bartender.client.module.*;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
 import com.drunkshulker.bartender.util.forge.ForgeLoadingScreen;
 import com.drunkshulker.bartender.util.salhack.events.render.EventRenderGameOverlay;
@@ -28,6 +25,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.lwjgl.opengl.GL11;
 
 public class GuiHandler {
 
@@ -128,37 +126,31 @@ public class GuiHandler {
         }
     }
 
-    
     ItemStack noGlowElytraStack = null;
     @SubscribeEvent
     public void render(RenderPlayerEvent.Pre e) {
         if (Bartender.MC.player == null) return;
-        
             noGlowElytraStack = e.getEntityPlayer().getItemStackFromSlot(EntityEquipmentSlot.CHEST);
             if (noGlowElytraStack.getItem() != Items.ELYTRA) {
                 noGlowElytraStack = null;
                 return;
             }
 
-        if(ElytraFlight.magicElytra&&(e.getEntityPlayer().getDisplayNameString().equals(Bartender.MC.player.getDisplayNameString())||PlayerGroup.DEFAULTS.contains(e.getEntityPlayer().getDisplayNameString()))&&!Bartender.MC.player.isElytraFlying()){
+        if(ElytraFlight.magicElytra&&!Bartender.MC.player.isElytraFlying()){
             e.getEntityPlayer().inventory.armorInventory.set(EntityEquipmentSlot.CHEST.getIndex(), new ItemStack(Items.AIR));
         }
-        else if(ElytraFlight.magicElytraAirborne&&(e.getEntityPlayer().getDisplayNameString().equals(Bartender.MC.player.getDisplayNameString())||PlayerGroup.DEFAULTS.contains(e.getEntityPlayer().getDisplayNameString()))){
+        else if(ElytraFlight.magicElytraAirborne){
             e.getEntityPlayer().inventory.armorInventory.set(EntityEquipmentSlot.CHEST.getIndex(), new ItemStack(Items.AIR));
         }
-        else if (PlayerGroup.DEFAULTS.contains(e.getEntityPlayer().getDisplayNameString())) {
+        else if (ElytraFlight.showGlowing) {
             e.getEntityPlayer().inventory.armorInventory.set(EntityEquipmentSlot.CHEST.getIndex(), new ItemStack(noGlowElytraStack.getItem(), noGlowElytraStack.getCount()));
         }
-        
 
     }
     @SubscribeEvent
     public void render(RenderPlayerEvent.Post e) {
-        
             if (Bartender.MC.player == null || noGlowElytraStack == null) return;
-            
             e.getEntityPlayer().inventory.armorInventory.set(EntityEquipmentSlot.CHEST.getIndex(), noGlowElytraStack);
-        
     }
 
     public static void applyPreferences(ClickGuiSetting[] contents) {

@@ -25,7 +25,7 @@ public class EntityRadar {
             if(e instanceof EntityPlayer) {
             	if(((EntityPlayer) e).getDisplayNameString().equals(Bartender.MC.player.getDisplayNameString())) continue;
                 a.add(((EntityPlayer) e).getDisplayNameString());
-            } else if(Aura.creeperWatch&&e instanceof EntityCreeper&&e.getDistance(Bartender.MC.player)<6){
+            } else if(!Bartender.MC.player.isCreative()&&Aura.creeperWatch&&e instanceof EntityCreeper&&e.getDistance(Bartender.MC.player)<6){
             	Aura.creeperTarget = e;
 			}
         }

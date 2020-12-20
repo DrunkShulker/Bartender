@@ -794,9 +794,21 @@
 					]
 				},
 				{
+					"title": "glow",
+					"type": "text",
+					"value": 1,
+					"values": [
+						"YES",
+						"NO"
+					],
+					"desc": [
+						"DISABLE GLOW"
+					]
+				},
+				{
 					"title": "speed",
 					"type": "text",
-					"value": 12,
+					"value": 10,
 					"values": [
 						"0.2",
 						"0.4",
@@ -837,7 +849,7 @@
 				{
 					"title": "boost",
 					"type": "text",
-					"value": 7,
+					"value": 4,
 					"values": [
 						"0.5",
 						"1.0",
@@ -1679,7 +1691,7 @@
 		{
 			"name": "cosmetic",
 			"desc": [
-				"WEAR ANY ITEM ON HEAD ARMOR SLOT","USE /SETHAT COMMAND TO CHANGE HAT"
+				"EDIT YOUR LOOK"
 			],
 			"x": 0,
 			"y": 0,
@@ -1694,13 +1706,13 @@
 						"ON"
 					],
 					"desc": [
-						"ON/OFF"
+						"ON/OFF","USE /SETHAT <ITEM_NAME_OR_ID> COMMAND TO CHANGE HAT"
 					]
 				},
 				{
 					"title": "cape",
 					"type": "text",
-					"value": 0,
+					"value": 1,
 					"values": [
 						"OFF",
 						"ON"

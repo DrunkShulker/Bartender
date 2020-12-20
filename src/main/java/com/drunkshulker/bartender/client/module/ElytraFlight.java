@@ -1,10 +1,8 @@
 package com.drunkshulker.bartender.client.module;
 
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
-import com.drunkshulker.bartender.util.kami.BlockUtils;
 import com.drunkshulker.bartender.util.kami.EntityUtils;
 import com.drunkshulker.bartender.util.salhack.MathUtil;
-import com.drunkshulker.bartender.util.salhack.PlayerUtil;
 import com.drunkshulker.bartender.util.salhack.Timer;
 
 import com.drunkshulker.bartender.util.salhack.events.network.EventNetworkPacketEvent;
@@ -29,6 +27,7 @@ public class ElytraFlight implements Listenable {
     public static float boost = 1.82f;
     public static boolean easyTakeoff = false;
     public static boolean slowDown = false;
+    public static boolean showGlowing = true;
     
     
     
@@ -336,6 +335,9 @@ public class ElytraFlight implements Listenable {
                 case "hide":
                     magicElytra = setting.value == 1;
                     magicElytraAirborne = setting.value == 2;
+                    break;
+                case "glow":
+                    showGlowing = setting.value == 1;
                     break;
                 default:
                     break;

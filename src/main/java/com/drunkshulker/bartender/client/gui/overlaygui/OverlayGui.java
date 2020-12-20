@@ -274,7 +274,7 @@ public class OverlayGui extends Gui {
         if (GuiHandler.ingameWaterMark)
             drawString(mc.fontRenderer,
                     (((Bartender.IMPACT_INSTALLED) ? "               + " : "") + Bartender.NAME + " " + Bartender.VERSION),
-                    4 + anchorWatermark[0], 4 + anchorWatermark[1], Integer.parseInt("AAAAAA", 16));
+                    16 + anchorWatermark[0], 4 + anchorWatermark[1], Integer.parseInt("AAAAAA", 16));
 
         
         if (!mc.isSingleplayer() && GuiHandler.showGroup && PlayerGroup.members.size() > 0) {
@@ -296,7 +296,7 @@ public class OverlayGui extends Gui {
 
                 
                 if (mc.player.getDisplayNameString().equals(PlayerGroup.members.get(i))) {
-                    drawString(mc.fontRenderer, selfSelector + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : "") + popCount, x, (4 + 48 + (i * 10)) + anchorGroup[1],
+                    drawString(mc.fontRenderer, selfSelector + PlayerGroup.members.get(i) + ((PlayerGroup.mainAccount.equals(PlayerGroup.members.get(i))) ? mainDetector : "") + popCount, x-1, (4 + 48 + (i * 10)) + anchorGroup[1],
                             Integer.parseInt((!PlayerGroup.isPlayerOnline(PlayerGroup.members.get(i))) ? "AAAAAA" : "FFFFFF", 16));
                 }
                 
@@ -363,7 +363,7 @@ public class OverlayGui extends Gui {
                     if(TotemPopCounter.enabled) postFix += TotemPopCounter.getDisplay(combined.get(i));
 
                     drawString(mc.fontRenderer, "  " + combined.get(i) + postFix,
-                            6 + anchorPlayers[0], (groupListBottom + 27 + (i * 10)) + anchorPlayers[1],
+                            9 + anchorPlayers[0], (groupListBottom + 27 + (i * 10)) + anchorPlayers[1],
                             Integer.parseInt((Bodyguard.currentEnemies.contains(combined.get(i))) ? "FF0000" : "AAAAAA", 16));
                 }
 
