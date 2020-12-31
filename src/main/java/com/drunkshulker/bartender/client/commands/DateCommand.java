@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.drunkshulker.bartender.Bartender;
 import com.google.common.collect.Lists;
 
 import net.minecraft.command.CommandException;
@@ -44,7 +45,7 @@ public class DateCommand implements ICommand {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {		
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss | EEE, MMM d, ''yy");
 		String time = dateFormat.format(new Date(System.currentTimeMillis())); 
-		sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_GREEN, time));
+		Bartender.msg(time);
 	}
 
 	@Override

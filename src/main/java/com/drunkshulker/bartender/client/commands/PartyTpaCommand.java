@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.input.ChatObserver;
 import com.google.common.collect.Lists;
 
@@ -45,7 +46,7 @@ public class PartyTpaCommand implements ICommand {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if(ChatObserver.lastPartyInvite.equals("")){
-            sender.sendMessage(format(TextFormatting.RED, "No party TPA invites received"));
+            Bartender.msg("No party TPA invites received");
             return;
         }
         Minecraft.getMinecraft().player.sendChatMessage("/tpa "+ChatObserver.lastPartyInvite);

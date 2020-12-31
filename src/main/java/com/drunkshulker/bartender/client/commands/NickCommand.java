@@ -1,11 +1,8 @@
 package com.drunkshulker.bartender.client.commands;
 
 import com.drunkshulker.bartender.Bartender;
-import com.drunkshulker.bartender.client.gui.GuiConfig;
-import com.drunkshulker.bartender.client.gui.clickgui.ClickGui;
-import com.drunkshulker.bartender.client.social.PlayerGroup;
+import com.drunkshulker.bartender.client.module.Nick;
 import com.google.common.collect.Lists;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -20,7 +17,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class GuiCommand implements ICommand {
+public class NickCommand implements ICommand {
 
 	@Override
 	public int compareTo(ICommand arg0) {
@@ -29,52 +26,24 @@ public class GuiCommand implements ICommand {
 
 	@Override
 	public String getName() {
-		return "gui";
+		return "setnick";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		return "/gui <action>";
+		return "/setnick <nickname>";
 	}
 
 	@Override
 	public List<String> getAliases() {
 		List<String> aliases = Lists.<String>newArrayList();
-		aliases.add("/gui");
+		aliases.add("/setnick");
 		return aliases;
 	}
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		
-		if(args==null||args.length==0) {
-			Bartender.msg("Please provide args.");
-			
-		}
-		
-		else if(args[0].equalsIgnoreCase("import")) {
-			if(Bartender.OFFER_IMPORTS){
-				GuiConfig.importSettings();
-			} else {
-				Bartender.msg("No gui backup to import");
-				
-			}
-		}
-		
-		else if(args[0].equalsIgnoreCase("layout")) {
-			Bartender.msg("Gui layout reset");
-			
-			ClickGui.resetLayout();
-		}
-		
-		else if(args[0].equalsIgnoreCase("defaults")) {
-			Bartender.msg("All gui settings set to defaults");
-			
-			GuiConfig.defaults();
-			
-			ClickGui.panels = GuiConfig.getPanels();
-		}
-
+		Nick.setCustom(args[0]);
 	}
 
 	@Override

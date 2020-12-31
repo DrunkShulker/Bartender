@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.drunkshulker.bartender.Bartender;
 import com.google.common.collect.Lists;
 
 import net.minecraft.command.CommandException;
@@ -49,10 +50,9 @@ public class WikiCommand implements ICommand {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
                 Desktop.getDesktop().browse(new URI("https:/"+"/github.com/DrunkShulker/Bartender/wiki"));
-                sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_GREEN, "Launching default web browser.."));
+                Bartender.msg("Launching default web browser..");
             } catch (IOException | URISyntaxException e) {
-                
-                sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Failed to launch web browser"));
+                Bartender.msg("Failed to launch web browser");
             }
         }
 

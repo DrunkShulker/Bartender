@@ -3,6 +3,7 @@ package com.drunkshulker.bartender.client.commands;
 import java.util.Collections;
 import java.util.List;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.util.Config;
 import com.google.common.collect.Lists;
 
@@ -45,33 +46,33 @@ public class ChatPostFixCommand implements ICommand {
 		
 		
 		if(args==null||args.length==0) {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, "Current chatfix is: "+Config.CHAT_POST_FIX));
+			Bartender.msg("Current chatfix is: "+Config.CHAT_POST_FIX);
 		}
 		
 		else if(args[0].equalsIgnoreCase("set")) {
 			if(args.length==2) {
 				Config.CHAT_POST_FIX = args[1];
 				Config.save();
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, "Chatfix set: "+Config.CHAT_POST_FIX));
+				Bartender.msg("Chatfix set: "+Config.CHAT_POST_FIX);
 			}
 			else {
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+				Bartender.msg("Invalid args.");
 			}
 		}
 		
 		else if(args[0].equalsIgnoreCase("clear")) {	
 			Config.CHAT_POST_FIX = "";
 			Config.save();
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, "Chatfix cleared. "));
+			Bartender.msg("Chatfix cleared. ");
 		}
 		else if(args[0].equalsIgnoreCase("default")) {	
 			Config.CHAT_POST_FIX = Config.getDefaultChatPostFix();
 			Config.save();
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, "Default chatfix set. "));
+			Bartender.msg("Default chatfix set. ");
 		}
 		
 		else {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+			Bartender.msg("Invalid args.");
 		}
 	}
 

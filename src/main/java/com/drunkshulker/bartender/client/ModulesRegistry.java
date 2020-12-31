@@ -32,7 +32,7 @@ public class ModulesRegistry {
         MinecraftForge.EVENT_BUS.register(new AutoRefill());
         MinecraftForge.EVENT_BUS.register(new Cosmetic());
         MinecraftForge.EVENT_BUS.register(new TotemPopCounter());
-
+        MinecraftForge.EVENT_BUS.register(new Nick());
         Bartender.EVENT_BUS.subscribe(new Nametags());
         Bartender.EVENT_BUS.subscribe(new StorageESP());
         Bartender.EVENT_BUS.subscribe(new ElytraFlight());
@@ -49,6 +49,7 @@ public class ModulesRegistry {
         Bartender.EVENT_BUS.subscribe(new FullBright());
         Bartender.EVENT_BUS.subscribe(new PeekPreview());
         Bartender.EVENT_BUS.subscribe(new TpsCalculator());
+        Bartender.EVENT_BUS.subscribe(new RoofESP());
 	}
 
 }

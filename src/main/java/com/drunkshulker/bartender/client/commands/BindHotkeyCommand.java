@@ -3,6 +3,7 @@ package com.drunkshulker.bartender.client.commands;
 import java.util.Collections;
 import java.util.List;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.util.Config;
 import com.google.common.collect.Lists;
 
@@ -48,7 +49,7 @@ public class BindHotkeyCommand implements ICommand {
 		
 		
 		if(args==null||args.length<2) {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.RED, "Invalid args"));
+			Bartender.msg("Invalid args");
 			return;
 		}
 		
@@ -58,7 +59,7 @@ public class BindHotkeyCommand implements ICommand {
 			slot = Integer.parseInt(args[1]);
 		}
 		catch(Exception e) {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.RED, "Invalid args"));
+			Bartender.msg("Invalid args");
 			return;
 		}
 		
@@ -67,11 +68,11 @@ public class BindHotkeyCommand implements ICommand {
 			Config.HOTKEY_COMMANDS[slot] = args[0].replace("_", " ");
 		}
 		else {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.RED, "Invalid slot. Available slots are: 1, 2, 3, 4, 5, 6, 7, 8 and 9"));
+			Bartender.msg("Invalid slot. Available slots are: 1, 2, 3, 4, 5, 6, 7, 8 and 9");
 			return;
 		}
 
-		sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, args[0].replace("_", " ") + " is now binded to hotkey " + (slot+1)));
+		Bartender.msg(args[0].replace("_", " ") + " is now binded to hotkey " + (slot+1));
 		Config.save();
 	}
 

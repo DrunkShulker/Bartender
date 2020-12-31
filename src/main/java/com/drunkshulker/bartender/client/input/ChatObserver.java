@@ -11,6 +11,7 @@ import java.util.TimerTask;
 
 import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
+import com.drunkshulker.bartender.client.module.SafeTotemSwap;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
 import com.drunkshulker.bartender.util.Config;
 
@@ -70,6 +71,9 @@ public class ChatObserver {
 			if(partyTPA&&player.getDisplayNameString().equals(Bartender.MC.getSession().getUsername())){
 				Bartender.msg("Party TPA turned off because you died.");
 				ClickGuiSetting.handleClick(ClickGuiSetting.fromString("chat->party tpa"),false);
+			}
+			if(player.getDisplayNameString().equals(Bartender.MC.getSession().getUsername())){
+				SafeTotemSwap.playerDeath();
 			}
 		}
 	}
@@ -161,7 +165,7 @@ public class ChatObserver {
 	
 	public void safeSendPublicChatMessage(String messageText) {
 		if(messageText.equals(lastSafeChatMessage)) {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> Someone is spamming you!"));
+			Bartender.msg("Someone is spamming you!");
 			return;
 		}
 		lastSafeChatMessage = messageText;
@@ -207,14 +211,19 @@ public class ChatObserver {
 	    					response.append(inputLine);
 	    				}
 	    				in.close();
-	    				
-	    				
-	    				String r = botMsgPrefix+" "+senderf+"'s PornHub search: "+ response.substring(response.indexOf("<title>") + 7, response.indexOf("</title>"));
-						r = r.replaceAll("[^A-Za-z0-9()$'!|#+*%&^£?:.,_> \\[\\]]", "");
-	    				safeSendPublicChatMessage(r.substring(0, r.length()-13));
+
+	    				final String deletedVidCheck = "Free Porn Videos &amp; Sex Movies - Porno, XXX, Porn Tube &#124; Pornhub";
+	    				if(response.substring(response.indexOf("<title>") + 7, response.indexOf("</title>")).equals(deletedVidCheck)){
+							safeSendPublicChatMessage(botMsgPrefix+" "+senderf+"'s search failed because PornHub deleted this video :(");
+						} else {
+							
+							String r = botMsgPrefix+" "+senderf+"'s PornHub search: "+ response.substring(response.indexOf("<title>") + 7, response.indexOf("</title>"));
+							r = r.replaceAll("[^A-Za-z0-9()$'!|#+*%&^£?:.,_> \\[\\]]", "");
+							safeSendPublicChatMessage(r.substring(0, r.length()-13));
+						}
 	    			} else {
-	    				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> "+commandPrefix+"sex failed due to pornhub api."));
-	    			}}catch (Exception e) {Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> "+commandPrefix+"sex failed with exception!"));}
+	    				Bartender.msg(""+commandPrefix+"sex failed due to pornhub api.");
+	    			}}catch (Exception e) {Bartender.msg(""+commandPrefix+"sex failed with exception!");}
 	    	    	timer.cancel();
 	    	    	timer=null;
 	    	    }
@@ -394,17 +403,17 @@ public class ChatObserver {
 
 	private static void advertisePornhub() {
 		if(!pornhub) {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> Pornhub is not enabled!"));
+			Bartender.msg("Pornhub is not enabled!");
 			return;
 		}
 		else {
-			Minecraft.getMinecraft().player.sendChatMessage(botMsgPrefix+" Type "+commandPrefix+"sex to execute a random PornHub search!");
+			Bartender.msg(botMsgPrefix+" Type "+commandPrefix+"sex to execute a random PornHub search!");
 		}
 	}
 
 	private static void advertiseParty() {
 		if(!partyTPA) {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> Party tpa is not enabled!"));
+			Bartender.msg("Party tpa is not enabled!");
 			return;
 		}
 		else {
@@ -414,7 +423,7 @@ public class ChatObserver {
 
 	private static void advertiseDrinks() {
 		if(!allowDrinks) {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<"+Bartender.NAME+"> Drinks command is not enabled!"));
+			Bartender.msg("Drinks command is not enabled!");
 			return;
 		}
 		else {

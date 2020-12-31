@@ -21,7 +21,6 @@ public class ImageUtils {
             image = ImageIO.read(new URL(url));
         } catch (IOException e) {
             e.printStackTrace();
-            
         }
         return image;
     }

@@ -892,6 +892,7 @@
 
 			]
 		},
+
 		{
 			"name": "new chunks",
 			"desc": [
@@ -961,6 +962,132 @@
 					"type": "click",
 					"desc": [
 						"ERASE MEMORY TO AVOID LAG"
+					],
+					"closeOnClick": true
+				}
+			]
+		},
+		{
+			"name": "nick",
+			"desc": [
+				"U WILL NEED /nick FOR THIS TO WORK"
+			],
+			"x": 0,
+			"y": 0,
+			"expanded": false,
+			"contents": [
+				{
+					"title": "state",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"BASIC",
+						"PRIDE"
+					],
+					"desc": [
+						"SELECT MODE"
+					]
+				},
+				{
+					"title": "source",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"NAME",
+						"CUSTOM"
+					],
+					"desc": [
+						"NICK SOURCE","USE /setnick FOR CUSTOM NICK"
+					]
+				},
+				{
+					"title": "color",
+					"type": "text",
+					"value": 5,
+					"values": [
+						"0",
+						"1",
+						"2",
+						"3",
+						"4",
+						"5",
+						"6",
+						"7",
+						"8",
+						"9",
+						"a",
+						"b",
+						"c",
+						"d",
+						"e",
+						"f"
+
+					],
+					"desc": [
+						"TEXT COLOR"
+					]
+				},
+				{
+					"title": "bold",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"USE BOLD TEXT"
+					]
+				},
+				{
+					"title": "strike",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"USE STRIKETHROUGH"
+					]
+				},
+				{
+					"title": "underline",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"USE UNDERLINE"
+					]
+				},
+				{
+					"title": "interval",
+					"type": "text",
+					"value": 6,
+					"values": [
+						"500",
+						"1000",
+						"2000",
+						"3000",
+						"4000",
+						"5000",
+						"6000",
+						"7000",
+						"8000"
+					],
+					"desc": [
+						"UPDATE INTERVAL IN MILLIS"
+					]
+				},
+				{
+					"title": "clear",
+					"type": "click",
+					"desc": [
+						"CLEAR NICK"
 					],
 					"closeOnClick": true
 				}
@@ -1072,6 +1199,18 @@
 					],
 					"desc": [
 						"DON'T RENDER ARMOR ON PLAYER ENTITY"
+					]
+				},
+				{
+					"title": "roofESP",
+					"type": "text",
+					"value": 0,
+					"values": [
+						"OFF",
+						"ON"
+					],
+					"desc": [
+						"ESP FOR NETHER ROOF ENTRY POINTS"
 					]
 				},
 				{

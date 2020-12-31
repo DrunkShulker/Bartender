@@ -249,7 +249,7 @@ public class GuiConfig {
 				GuiConfig.save();
 				GuiConfig.load();
 				Preferences.apply();
-				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Imported "+totalImports+" settings."));
+				Bartender.msg("Imported "+totalImports+" settings.");
 				File deleteTarget = new File(Bartender.MINECRAFT_DIR+"/bartender-gui-backup.json");
 				if(deleteTarget.exists()){
 					if(!deleteTarget.delete()){
@@ -258,12 +258,12 @@ public class GuiConfig {
 				}
 
 			}catch (Exception e){
-				Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Failed to import gui settings"));
+				Bartender.msg("Failed to import gui settings");
 				e.printStackTrace();
 			}
 
 		} else {
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Failed to import gui settings, backup not found"));
+			Bartender.msg("Failed to import gui settings, backup not found");
 		}
 		Bartender.OFFER_IMPORTS = false;
 	}

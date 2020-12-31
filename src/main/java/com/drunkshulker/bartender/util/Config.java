@@ -15,6 +15,7 @@ import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.input.Keybinds;
 import com.drunkshulker.bartender.client.module.BaseFinder;
 import com.drunkshulker.bartender.client.module.Cosmetic;
+import com.drunkshulker.bartender.client.module.Nick;
 import com.drunkshulker.bartender.client.module.Search;
 import com.drunkshulker.bartender.client.social.PlayerFriends;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
@@ -73,6 +74,9 @@ public class Config {
 			Cosmetic.currentHat = Item.getByNameOrId(jsonObject.get("hat").getAsString());
 
 			
+			Nick.customNick = jsonObject.get("nick").getAsString();
+
+			
 			BaseFinder.customTargetGoal = new BlockPos(
 			jsonObject.get("bf_custom_goal_x").getAsInt(),0,
 			jsonObject.get("bf_custom_goal_z").getAsInt());
@@ -129,6 +133,9 @@ public class Config {
 		jsonObject.addProperty("hat", Item.getIdFromItem(Cosmetic.currentHat)+"");
 
 		
+		jsonObject.addProperty("nick", Nick.customNick);
+
+		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(jsonObject).replace("\\\"", "");
 		try {
@@ -152,7 +159,10 @@ public class Config {
 
 		
 		CHAT_POST_FIX = getDefaultChatPostFix();
+
 		
+		Nick.customNick = "Gay";
+
 		save();
 		
 	}

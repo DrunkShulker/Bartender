@@ -45,6 +45,9 @@ public class Preferences {
 			case "safe totem":
 				SafeTotemSwap.applyPreferences(panel.getContents());
 				break;
+			case "nick":
+				Nick.applyPreferences(panel.getContents());
+				break;
 			case "group":
 				PlayerGroup.applyPreferences(panel.getContents());
 				break;
@@ -76,6 +79,7 @@ public class Preferences {
 				StorageESP.applyPreferences(panel.getContents());
 				AutoWalk.applyPreferences(panel.getContents());
 				AutoRefill.applyPreferences(panel.getContents());
+				RoofESP.applyPreferences(panel.getContents());
 				break;
 			case "flight":
 				FlightBot.applyPreferences(panel.getContents());
@@ -97,7 +101,7 @@ public class Preferences {
 				Scaffold.applyPreferences(panel.getContents());
 				break;
 			default:
-				if(Minecraft.getMinecraft().player!=null)Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> ERROR PREFERENCE NOT HANDLED IN: "+panel.getTitle()));
+				if(Minecraft.getMinecraft().player!=null)Bartender.msg("ERROR PREFERENCE NOT HANDLED IN: "+panel.getTitle());
 				break;
 			}
 			
@@ -145,6 +149,9 @@ public class Preferences {
 			break;
 		case "dupe":
 			Dupe.clickAction(setting.title);
+			break;
+		case "nick":
+			Nick.clickAction(setting.title);
 			break;
 		default:
 			break;

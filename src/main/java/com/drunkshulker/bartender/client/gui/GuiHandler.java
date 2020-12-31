@@ -136,7 +136,7 @@ public class GuiHandler {
                 return;
             }
 
-        if(ElytraFlight.magicElytra&&!Bartender.MC.player.isElytraFlying()){
+        if(ElytraFlight.magicElytra&&!e.getEntityPlayer().isElytraFlying()){
             e.getEntityPlayer().inventory.armorInventory.set(EntityEquipmentSlot.CHEST.getIndex(), new ItemStack(Items.AIR));
         }
         else if(ElytraFlight.magicElytraAirborne){

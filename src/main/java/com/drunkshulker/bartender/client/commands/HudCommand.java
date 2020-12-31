@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.overlaygui.OverlayGui;
 import com.drunkshulker.bartender.client.social.PlayerFriends;
 import com.google.common.collect.Lists;
@@ -47,28 +48,28 @@ public class HudCommand implements ICommand {
 
         
         if (args == null || args.length == 0) {
-            sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Please provide args."));
+            Bartender.msg("Please provide args.");
         }
         
         else if (args[0].equalsIgnoreCase("reset")) {
             OverlayGui.resetLayout();
-            sender.sendMessage(format(TextFormatting.YELLOW, "Hud reset."));
+            Bartender.msg("Hud reset.");
         }
         
         else if (args[0].equalsIgnoreCase("help")) {
-            sender.sendMessage(format(TextFormatting.YELLOW, "Usage: "+getUsage(sender)));
-            sender.sendMessage(format(TextFormatting.YELLOW, "Use TAB key to autocomplete the options."));
-            sender.sendMessage(format(TextFormatting.YELLOW, "Use '/hud reset' to reset everything back to normal."));
+            Bartender.msg("Usage: "+getUsage(sender));
+            Bartender.msg("Use TAB key to autocomplete the options.");
+            Bartender.msg("Use '/hud reset' to reset everything back to normal.");
         }
         
         else if (args[0].equalsIgnoreCase("move")) {
             if (args.length == 4) {
                 if (!targetExists(args[1])) {
-                    sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid move target '"+args[1]+"'"));
+                    Bartender.msg("Invalid move target '"+args[1]+"'");
                     return;
                 }
                 if (args[2] == null || (dirToInt(args[2])[0] == 0 && dirToInt(args[2])[1] == 0)) {
-                    sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid move direction."));
+                    Bartender.msg("Invalid move direction.");
                     return;
                 }
                 int moveAmount;
@@ -76,16 +77,16 @@ public class HudCommand implements ICommand {
                     moveAmount = Integer.parseInt(args[3]);
                 }
                 catch(Exception e) {
-                    sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args. Usage: " + getUsage(sender)));
+                    Bartender.msg("Invalid args. Usage: " + getUsage(sender));
                     return;
                 }
                 int[] direction = dirToInt(args[2]);
                 OverlayGui.moveTarget(args[1], moveAmount*direction[0],moveAmount*direction[1]);
             } else {
-                sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args. Usage: " + getUsage(sender)));
+                Bartender.msg("Invalid args. Usage: " + getUsage(sender));
             }
         } else {
-            sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args. Usage: " + getUsage(sender)));
+           Bartender.msg("Invalid args. Usage: " + getUsage(sender));
         }
     }
 

@@ -3,6 +3,7 @@ package com.drunkshulker.bartender.client.commands;
 import java.util.Collections;
 import java.util.List;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.social.PlayerFriends;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
 import com.drunkshulker.bartender.util.Config;
@@ -48,18 +49,18 @@ public class FriendsCommand implements ICommand {
 		
 		
 		if(args==null||args.length==0) {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, (PlayerFriends.toJsonArray().size()==0)
+			Bartender.msg( (PlayerFriends.toJsonArray().size()==0)
 					? "You have no friends."
-					:PlayerFriends.toJsonArray().toString()));
+					:PlayerFriends.toJsonArray().toString());
 		}
 		
 		else if(args[0].equalsIgnoreCase("add")) {
 			if(args.length==2) {
-				if(args[1].contains("~")) sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED,"Please use the player's real name, not /nick."));
+				if(args[1].contains("~")) Bartender.msg("Please use the player's real name, not /nick.");
 				else PlayerFriends.addFriend(args[1]);
 			}
 			else {
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+				Bartender.msg("Invalid args.");
 			}
 		}
 		
@@ -68,13 +69,13 @@ public class FriendsCommand implements ICommand {
 				PlayerFriends.removeFriend(args[1]);
 			}
 			else {
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+				Bartender.msg("Invalid args.");
 			}
 		}
 		
 		else if(args[0].equalsIgnoreCase("refresh")) {
 			PlayerFriends.loadImpactFriends();
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, "Impact friends loaded:" + PlayerFriends.impactFriends.toString()));
+			Bartender.msg("Impact friends loaded:" + PlayerFriends.impactFriends.toString());
 		}
 	}
 

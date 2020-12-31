@@ -3,6 +3,7 @@ package com.drunkshulker.bartender.client.social;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.commands.GroupCommand;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.client.module.AutoBuild;
@@ -124,12 +125,12 @@ public class PlayerGroup {
 					AutoBuild.prepareTpa();
 					Bodyguard.prepareTpa();
 					
-					Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Accepting /tpahere to: " + member));
+					Bartender.msg(" Accepting /tpahere to: " + member);
 					Minecraft.getMinecraft().player.sendChatMessage("/tpaccept");
 					return;
 				}
 			}
-			Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> Ignoring /tpahere to: " + message.split("\\s+")[0]));
+			Bartender.msg("Ignoring /tpahere to: " + message.split("\\s+")[0]);
 		}
 		
 		
@@ -242,6 +243,6 @@ public class PlayerGroup {
 	public static void setMainAcc(String name) {
 		mainAccount = name;
 		Config.save();
-		Minecraft.getMinecraft().player.sendMessage(new TextComponentString("<Bartender> " + name + " is now priority group member!"));
+		Bartender.msg( name + " is now main group member!");
 	}
 }

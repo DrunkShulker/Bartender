@@ -1,5 +1,6 @@
 package com.drunkshulker.bartender.client.commands;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.module.Cosmetic;
 import com.drunkshulker.bartender.util.Config;
 import com.google.common.collect.Lists;
@@ -44,18 +45,18 @@ public class HatCommand implements ICommand {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {		
 
 		if(args.length == 0){
-			sender.sendMessage(format(TextFormatting.DARK_RED, "Hat set failed. No item provided"));
+			Bartender.msg("Hat set failed. No item provided");
 			return;
 		}
 
 		Item item = Item.getByNameOrId(args[0]);
 		if(item == null || item == Items.AIR){
-			sender.sendMessage(format(TextFormatting.DARK_RED, "Hat set failed. Unknown item."));
+			Bartender.msg("Hat set failed. Unknown item.");
 			return;
 		}
 
 		Cosmetic.currentHat = item;
-		sender.sendMessage(format(TextFormatting.YELLOW, "Hat set success."));
+		Bartender.msg("Hat set success.");
 		Config.save();
 	}
 

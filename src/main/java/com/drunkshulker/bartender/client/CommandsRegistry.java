@@ -18,5 +18,6 @@ public class CommandsRegistry {
         ClientCommandHandler.instance.registerCommand(new PartyTpaCommand());
         ClientCommandHandler.instance.registerCommand(new HudCommand());
         ClientCommandHandler.instance.registerCommand(new HatCommand());
+        ClientCommandHandler.instance.registerCommand(new NickCommand());
 	}
 }

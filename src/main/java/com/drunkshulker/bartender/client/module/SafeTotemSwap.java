@@ -50,6 +50,14 @@ public class SafeTotemSwap {
         }
     }
 
+    public static void playerDeath() {
+        if(state==Mode.CLASSIC){
+            
+        }else if(Mode.YAC==state) {
+            
+        }
+    }
+
     public enum Mode {
         OFF,
         CLASSIC,
@@ -163,13 +171,13 @@ public class SafeTotemSwap {
                         }
                     }
                 }
-            } catch (Exception e) {
-            }
+            } catch (Exception e) {}
 
             taskInProgress = InventoryUtils.inProgress || System.currentTimeMillis() - lastSwapStamp < 400 + operationIntervalMillis;
             ItemStack stack = Bartender.MC.player.getHeldItemOffhand();
-            if (stack.getCount() <= swapOn) {
+            if (stack.getCount() <= swapOn&& totalCount > swapOn) {
                 int slotToSwap = yacPrepareSwap();
+
                 if (slotToSwap >= 0) {
                     InventoryUtils.yacInventorySwap(slotToSwap, OFFHAND_SLOT);
                 }

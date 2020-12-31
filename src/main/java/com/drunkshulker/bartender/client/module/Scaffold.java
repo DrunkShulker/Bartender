@@ -49,7 +49,7 @@ public class Scaffold {
         if (!enabled) return;
 
         if (SafeTotemSwap.enabled() && SafeTotemSwap.taskInProgress) return;
-        if (AutoEat.eating) return;
+        if (AutoEat.eating||Freecam.enabled) return;
         if (Minecraft.getMinecraft().player == null) return;
         Minecraft mc = Minecraft.getMinecraft();
 

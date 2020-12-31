@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.module.BaseFinder;
 import com.drunkshulker.bartender.client.module.BaseFinder.FinderTask;
 import com.drunkshulker.bartender.util.Config;
@@ -47,7 +48,7 @@ public class BasefinderCommand implements ICommand {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {		
 		
 		if(args==null||args.length<1) {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.RED, "Invalid args"));
+			Bartender.msg("Invalid args");
 			return;
 		}
 		if(args[0].equalsIgnoreCase("goal")) {
@@ -56,11 +57,11 @@ public class BasefinderCommand implements ICommand {
 				try {
 					x = Integer.parseInt(args[1]);
 					z = Integer.parseInt(args[2]);
-				} catch (Exception e) {sender.sendMessage(format(net.minecraft.util.text.TextFormatting.RED, "Invalid args")); return;}
+				} catch (Exception e) {Bartender.msg("Invalid args"); return;}
 				
 				BaseFinder.setCustomGoal(x,z);
 			}
-			else sender.sendMessage(format(net.minecraft.util.text.TextFormatting.RED, "Invalid args"));		
+			else Bartender.msg("Invalid args");		
 		}
 	}
 

@@ -55,18 +55,18 @@ public class GroupCommand implements ICommand {
 		
 		
 		if(args==null||args.length==0) {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, (PlayerGroup.toJsonArray().size()==0)
+			Bartender.msg((PlayerGroup.toJsonArray().size()==0)
 					? "There are no players in your group."
-					:PlayerGroup.toJsonArray().toString()));
+					:PlayerGroup.toJsonArray().toString());
 		}
 		
 		else if(args[0].equalsIgnoreCase("add")) {
 			if(args.length==2) {
-				if(args[1].contains("~")) sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED,"Never use player's /nick in your group!"));
+				if(args[1].contains("~")) Bartender.msg("Never use player's /nick in your group!");
 				else PlayerGroup.addPlayer(args[1]);
 			}
 			else {
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+				Bartender.msg("Invalid args.");
 			}
 		}
 		
@@ -75,7 +75,7 @@ public class GroupCommand implements ICommand {
 				PlayerGroup.removePlayer(args[1]);
 			}
 			else {
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+				Bartender.msg("Invalid args.");
 			}
 		}
 		
@@ -83,7 +83,7 @@ public class GroupCommand implements ICommand {
 			PlayerGroup.members.clear();
 			PlayerGroup.members.add(Minecraft.getMinecraft().player.getDisplayNameString());
 			Config.save();
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.YELLOW, "You left the group."));
+			Bartender.msg("You left the group.");
 		}
 		
 		else if(args[0].equalsIgnoreCase("toggle")) {
@@ -121,10 +121,10 @@ public class GroupCommand implements ICommand {
 					
 					
 				}
-				else sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+				else Bartender.msg("Invalid args.");
 			}
 			else {
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+				Bartender.msg("Invalid args.");
 			}
 	
 		}
@@ -132,7 +132,7 @@ public class GroupCommand implements ICommand {
 		else if(args[0].equalsIgnoreCase("here")) {
 			
 			if(PlayerGroup.members.isEmpty()) {
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Your group is empty."));
+				Bartender.msg("Your group is empty.");
 				return;
 			}
 				
@@ -164,12 +164,12 @@ public class GroupCommand implements ICommand {
 				PlayerGroup.setMainAcc(args[1]);
 			}
 			else {
-				sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Invalid args."));
+				Bartender.msg("Invalid args.");
 			}
 		}
 		
 		else {
-			sender.sendMessage(format(net.minecraft.util.text.TextFormatting.DARK_RED, "Usage: " + getUsage(sender)));
+			Bartender.msg("Usage: " + getUsage(sender));
 		}
 	}
 

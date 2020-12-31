@@ -38,12 +38,12 @@ public class Dupe {
 
         
         if(System.currentTimeMillis()-startTimeStamp > timeoutMillis){
-            abort("<Bartender> Dupe failed. Timed out.");
+            abort("Dupe failed. Timed out.");
         }
 
         if(currentWaitPhase==WaitPhase.DROP){
             if(mc.player.inventory.getCurrentItem().isEmpty()){
-                abort("<Bartender> Dupe failed. Empty slot.");
+                abort("Dupe failed. Empty slot.");
                 return;
             }
             
@@ -62,7 +62,7 @@ public class Dupe {
             
             mc.displayGuiScreen(new GuiInventory(mc.player));
             if(!mc.player.getRecipeBook().isGuiOpen()){
-                abort("<Bartender> Recipe book was closed. Dupe failed.");
+                abort("Recipe book was closed. Dupe failed.");
                 return;
             }
             
@@ -76,14 +76,14 @@ public class Dupe {
             
             
             if(InventoryUtils.countItem(0,8,idBefore)>countBefore){
-                abort("<Bartender> Dupe success.");
+                abort("Dupe success.");
             }
         }
     }
 
     private static void abort(String msg) {
         Minecraft mc = Minecraft.getMinecraft();
-        mc.player.sendMessage(new TextComponentString(msg));
+        Bartender.msg(msg);
         currentWaitPhase = WaitPhase.NONE;
         
         mc.displayGuiScreen(null);
