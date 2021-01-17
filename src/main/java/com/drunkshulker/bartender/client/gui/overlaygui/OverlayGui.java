@@ -165,22 +165,45 @@ public class OverlayGui extends Gui {
 
         
         if (GuiHandler.showInventory) {
-            List items = mc.player.inventory.mainInventory.subList(9, 36);
-            for (int i = 0; i < items.size(); i++) {
-                ItemStack itemStack = (ItemStack) items.get(i);
-                int slotX = (width - (i % 3 * 18 + 1) - 19) + anchorInventory[0];
-                int slotY = (2 + (i / 3 * 18 + 1)) + anchorInventory[1];
+            
+            if(GuiHandler.inventoryVertical){
+                List items = mc.player.inventory.mainInventory.subList(9, 36);
+                for (int i = 0; i < items.size(); i++) {
+                    ItemStack itemStack = (ItemStack) items.get(i);
+                    int slotX = (width - (i % 3 * 18 + 1) - 19) + anchorInventory[0];
+                    int slotY = (2 + (i / 3 * 18 + 1)) + anchorInventory[1];
 
-                GlStateUtils.blend(true);
-                GlStateUtils.depth(true);
-                RenderHelper.enableGUIStandardItemLighting();
-                mc.renderItem.zLevel = 0.0f;
-                mc.renderItem.renderItemAndEffectIntoGUI(itemStack, slotX, slotY);
-                mc.renderItem.renderItemOverlays(mc.fontRenderer, itemStack, slotX, slotY);
-                mc.renderItem.zLevel = 0.0f;
-                RenderHelper.disableStandardItemLighting();
-                GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-                GlStateUtils.depth(false);
+                    GlStateUtils.blend(true);
+                    GlStateUtils.depth(true);
+                    RenderHelper.enableGUIStandardItemLighting();
+                    mc.renderItem.zLevel = 0.0f;
+                    mc.renderItem.renderItemAndEffectIntoGUI(itemStack, slotX, slotY);
+                    mc.renderItem.renderItemOverlays(mc.fontRenderer, itemStack, slotX, slotY);
+                    mc.renderItem.zLevel = 0.0f;
+                    RenderHelper.disableStandardItemLighting();
+                    GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+                    GlStateUtils.depth(false);
+                }
+            }
+            
+            else {
+                List items = mc.player.inventory.mainInventory.subList(9, 36);
+                for (int i = 0; i < items.size(); i++) {
+                    ItemStack itemStack = (ItemStack) items.get(i);
+                    int slotX = ((width/2) - 83 + (i % 9 * 18 + 1)) + anchorInventory[0];
+                    int slotY = height - 69 - (2 + (i / 9 * 18 + 1)) + anchorInventory[1];
+
+                    GlStateUtils.blend(true);
+                    GlStateUtils.depth(true);
+                    RenderHelper.enableGUIStandardItemLighting();
+                    mc.renderItem.zLevel = 0.0f;
+                    mc.renderItem.renderItemAndEffectIntoGUI(itemStack, slotX, slotY);
+                    mc.renderItem.renderItemOverlays(mc.fontRenderer, itemStack, slotX, slotY);
+                    mc.renderItem.zLevel = 0.0f;
+                    RenderHelper.disableStandardItemLighting();
+                    GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+                    GlStateUtils.depth(false);
+                }
             }
         }
 

@@ -147,7 +147,7 @@ public class InventoryUtils {
         
     }
 
-    private static void inventoryClick(int slot, ClickType type) {
+    public static void inventoryClick(int slot, ClickType type) {
         mc.playerController.windowClick(mc.player.inventoryContainer.windowId, slot, 0, type, mc.player);
     }
 

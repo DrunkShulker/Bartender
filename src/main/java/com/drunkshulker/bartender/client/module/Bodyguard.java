@@ -884,8 +884,8 @@ public class Bodyguard {
 		for (ClickGuiSetting setting : contents) {
 			switch (setting.title) {
 			case "state":
-				enabled = setting.value == 1;
-				if(!enabled&&Minecraft.getMinecraft().player!=null){
+
+				if(!enabled&&enabled != (setting.value == 1)&&Minecraft.getMinecraft().player!=null){
 					if(FlightBot.enabled) {
 						FlightBot.enabled=false; 
 					}
@@ -894,6 +894,7 @@ public class Bodyguard {
 					endAllTasks(false);
 					lastKnownProtectedLocation = null;
 				}
+				enabled = setting.value == 1;
 				break;
 			case "look":
 				freeLook = setting.value == 0;

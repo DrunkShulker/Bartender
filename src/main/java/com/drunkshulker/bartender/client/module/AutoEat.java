@@ -4,6 +4,7 @@ import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 
 import baritone.api.BaritoneAPI;
+import com.drunkshulker.bartender.util.baritone.PauseProcess;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
@@ -24,7 +25,6 @@ public class AutoEat {
 	
     static float foodLevel = 1;
     static float healthLevel = 1;
-    static private boolean pauseBaritone = true;
 
     private int lastSlot = -1;
     public static boolean eating = false, enabled = false, fireResistance=true;
@@ -76,6 +76,9 @@ public class AutoEat {
     	if(SafeTotemSwap.enabled()&&SafeTotemSwap.taskInProgress) return;
     	if(Minecraft.getMinecraft().player==null) return;
     	Minecraft mc = Minecraft.getMinecraft();
+
+    	
+        if(eating) BaritoneAPI.getProvider().getPrimaryBaritone().getPathingControlManager().registerProcess(new PauseProcess());
 
     	
     	boolean needFireResistance = fireResistance&&mc.player.isBurning()&&!mc.player.isPotionActive(MobEffects.FIRE_RESISTANCE);

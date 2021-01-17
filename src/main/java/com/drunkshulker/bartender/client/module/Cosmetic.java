@@ -30,6 +30,9 @@ public class Cosmetic {
 					useHat = setting.value == 1;
 					break;
                 case "cape":
+                    if(useCape!=(setting.value == 1)&&Bartender.MC.player!=null&&setting.value == 0){
+                        Bartender.msg("Please restart your game if you want to see other capes like optifine cape");
+                    }
                     useCape = setting.value == 1;
                     break;
 				case "friends":

@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.drunkshulker.bartender.Bartender;
+import com.drunkshulker.bartender.client.commands.helper.CommandsHelper;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
 
 import com.google.gson.JsonElement;
@@ -47,6 +48,8 @@ public class Update {
                         if (!Bartender.MAPPED_BUS_INITIALIZED) Minecraft.getMinecraft()
                                 .player.sendMessage(new TextComponentString("<" + Bartender.NAME + "> Failed to initialize IPC! Bodyguard will be unable to communicate with the group."));
 
+
+                        CommandsHelper.onJoinMp();
                         
                         
                         

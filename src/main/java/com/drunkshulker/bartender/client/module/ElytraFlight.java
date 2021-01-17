@@ -1,7 +1,9 @@
 package com.drunkshulker.bartender.client.module;
 
+import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.util.kami.EntityUtils;
+import com.drunkshulker.bartender.util.kami.InventoryUtils;
 import com.drunkshulker.bartender.util.salhack.MathUtil;
 import com.drunkshulker.bartender.util.salhack.Timer;
 
@@ -11,8 +13,13 @@ import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketEntityAction.Action;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -65,6 +72,47 @@ public class ElytraFlight implements Listenable {
             if (mode == Mode.CONTROL) setMode(Mode.BOOST);
             else setMode(Mode.CONTROL);
         }
+        else if (title.equals("stop now")) {
+            forceStop();
+        }
+    }
+
+    static boolean stopInProgress = false;
+    private static void forceStop() {
+        if(SafeTotemSwap.taskInProgress||Bodyguard.enabled) return;
+        if(InventoryUtils.inProgress||AutoEat.eating||Freecam.enabled) return;
+        if(stopInProgress||!mc.player.isElytraFlying()) return;
+
+        Thread thread = new Thread(){
+            public void run(){
+                stopInProgress = true;
+                mc.displayGuiScreen(new GuiInventory(mc.player));
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    
+                    e.printStackTrace();
+                }
+                InventoryUtils.inventoryClick(6, ClickType.PICKUP);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    
+                    e.printStackTrace();
+                }
+
+                InventoryUtils.inventoryClick(6, ClickType.PICKUP);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    
+                    e.printStackTrace();
+                }
+                mc.displayGuiScreen(null);
+                stopInProgress = false;
+            }
+        };
+        thread.start();
     }
 
     public enum Mode {

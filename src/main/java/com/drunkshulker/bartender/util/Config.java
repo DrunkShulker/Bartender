@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import com.drunkshulker.bartender.Bartender;
+import com.drunkshulker.bartender.client.commands.ScriptCommand;
+import com.drunkshulker.bartender.client.commands.helper.CommandsHelper;
 import com.drunkshulker.bartender.client.input.Keybinds;
 import com.drunkshulker.bartender.client.module.BaseFinder;
 import com.drunkshulker.bartender.client.module.Cosmetic;
@@ -77,6 +79,9 @@ public class Config {
 			Nick.customNick = jsonObject.get("nick").getAsString();
 
 			
+			CommandsHelper.scripts = jsonObject.get("scripts").getAsJsonArray();
+
+			
 			BaseFinder.customTargetGoal = new BlockPos(
 			jsonObject.get("bf_custom_goal_x").getAsInt(),0,
 			jsonObject.get("bf_custom_goal_z").getAsInt());
@@ -136,6 +141,9 @@ public class Config {
 		jsonObject.addProperty("nick", Nick.customNick);
 
 		
+		jsonObject.add("scripts", CommandsHelper.scripts);
+
+		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(jsonObject).replace("\\\"", "");
 		try {
@@ -162,6 +170,9 @@ public class Config {
 
 		
 		Nick.customNick = "Gay";
+
+		
+		CommandsHelper.scripts = new JsonArray();
 
 		save();
 		

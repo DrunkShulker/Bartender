@@ -250,7 +250,8 @@
 					"value": 1,
 					"values": [
 						"OFF",
-						"ON"
+						"V",
+						"H"
 					],
 					"desc": [
 						"SHOW INVENTORY OVERLAY"
@@ -886,6 +887,14 @@
 					"type": "click",
 					"desc": [
 						"TOGGLE BETWEEN LOCKED AND FREE MODES"
+					],
+					"closeOnClick": true
+				},
+				{
+					"title": "stop now",
+					"type": "click",
+					"desc": [
+						"USE THIS TO STOP FLYING MID AIR"
 					],
 					"closeOnClick": true
 				}

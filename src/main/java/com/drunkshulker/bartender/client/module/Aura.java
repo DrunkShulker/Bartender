@@ -3,9 +3,11 @@ package com.drunkshulker.bartender.client.module;
 import java.util.ArrayList;
 import java.util.Random;
 
+import baritone.api.BaritoneAPI;
 import com.drunkshulker.bartender.Bartender;
 import com.drunkshulker.bartender.client.gui.clickgui.ClickGuiSetting;
 import com.drunkshulker.bartender.client.social.PlayerGroup;
+import com.drunkshulker.bartender.util.baritone.PauseProcess;
 import com.drunkshulker.bartender.util.kami.EntityUtils;
 import com.drunkshulker.bartender.util.kami.EntityUtils.EntityPriority;
 
@@ -67,6 +69,7 @@ public class Aura {
         if (rMillisDelay > 0) rLastHitMillis = random.nextInt((int) rMillisDelay);
 
         Entity target = creeperTarget;
+        if(target!=null) BaritoneAPI.getProvider().getPrimaryBaritone().getPathingControlManager().registerProcess(new PauseProcess());
 
         
         if (Bodyguard.enabled || !Bodyguard.currentEnemies.isEmpty()) {

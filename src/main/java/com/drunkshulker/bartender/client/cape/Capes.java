@@ -2,6 +2,8 @@
 package com.drunkshulker.bartender.client.cape;
 
 import com.drunkshulker.bartender.Bartender;
+import com.drunkshulker.bartender.client.module.Cosmetic;
+import com.drunkshulker.bartender.client.social.PlayerGroup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
@@ -62,7 +64,7 @@ public class Capes {
     @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent event) {
         if (!(event.getEntity() instanceof EntityPlayer)) return; 
-        if (event.getEntity().getPersistentID().equals(Bartender.MC.getSession().getProfile().getId())) renderCape();
+        if (event.getEntity().getPersistentID().equals(Bartender.MC.getSession().getProfile().getId())&&Cosmetic.useCape) renderCape();
     }
 
     private void renderCape() {

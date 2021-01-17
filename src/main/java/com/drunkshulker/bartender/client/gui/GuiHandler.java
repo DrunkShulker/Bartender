@@ -43,7 +43,7 @@ public class GuiHandler {
     public static boolean showPotionIcons = false;
     public static boolean showTargetListing = true;
     public static boolean showBindInfo = true;
-    public static boolean showInventory = true;
+    public static boolean showInventory = true, inventoryVertical = false;
     public static boolean showCoords = true;
     public static boolean showPotions = true;
     public static boolean snapToGrid = true;
@@ -182,7 +182,8 @@ public class GuiHandler {
                     showPlayer = setting.value == 0;
                     break;
                 case "inventory":
-                    showInventory = setting.value == 1;
+                    showInventory = setting.value != 0;
+                    inventoryVertical = setting.value == 1;
                     break;
                 case "safe totem":
                     showSafetotem = setting.value == 1;
