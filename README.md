@@ -1,5 +1,4 @@
-# What's Bartender?
-Bartender is an utility mod for Minecraft 1.12.2. It was designed for [8b8t.xyz](https://www.8b8t.xyz/) anarchy server. 8b8t recently updated to Minecraft 1.16. This means you can still use Bartender, but most of it's features are broken. 
+Open source utility mod for Minecraft 1.12.2. Bartender was designed for [8b8t.xyz](https://www.8b8t.xyz/) anarchy server.
 
 You can use any mod with Bartender, but only Impact is tested to be compatible. **This mod is made for Windows**. It runs on Mac too, but all features do not function properly! (Don't waste your money in alt accounts if you are Mac user)
 
